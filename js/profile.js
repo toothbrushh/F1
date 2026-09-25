@@ -4,6 +4,7 @@
 // 網址參數 ?id=hamilton&season=2026 決定要顯示誰
 // ============================================================
 import { loadDriverProfile, loadTeamProfile, loadStories } from './api.js';
+import { avatar, hydratePhotos } from './photos.js';
 import {
   esc, nationalityFlag, countryFlag, teamColor, teamLink, driverLink, driverName, formatFullDate,
 } from './utils.js';
@@ -76,8 +77,9 @@ async function renderDriver() {
   const firstSeason = p.firstSeason;
   $root.innerHTML = `
     <section class="hero" style="--c:${color}">
-      <div class="hero-no">${esc(d.permanentNumber || '')}</div>
-      <div>
+      ${avatar(d.url, driverName(d), 'lg')}
+      <div class="hero-text">
+        ${d.permanentNumber ? `<span class="hero-no">${esc(d.permanentNumber)}</span>` : ''}
         <p class="muted">${nationalityFlag(d.nationality)} ${esc(d.nationality)}${d.code ? ` · ${esc(d.code)}` : ''}</p>
         <h1>${esc(driverName(d))}</h1>
         <p>${lastTeam ? teamLink(lastTeam, season) : ''}
@@ -134,11 +136,11 @@ async function renderTeam() {
 
   $root.innerHTML = `
     <section class="hero team-hero" style="--c:${color}">
-      <div class="hero-swatch"></div>
-      <div>
+      ${avatar(t.url, t.name, 'lg', 'square')}
+      <div class="hero-text">
         <p class="muted">${nationalityFlag(t.nationality)} ${esc(t.nationality)}</p>
         <h1>${esc(t.name)}</h1>
-        <p>${season} 車手：${p.drivers.map((d) => driverLink(d, season)).join('、') || '—'}</p>
+        <p>${season} 車手：${p.drivers.map((d) => `<span class="hero-driver">${avatar(d.url, driverName(d))}${driverLink(d, season)}</span>`).join('') || '—'}</p>
       </div>
     </section>
 
@@ -176,7 +178,7 @@ async function renderTeam() {
     </article>`;
 }
 
-(kind === 'driver' ? renderDriver() : renderTeam()).catch((err) => {
+(kind === 'driver' ? renderDriver() : renderTeam()).then(() => hydratePhotos($root)).catch((err) => {
   console.error(err);
   $root.innerHTML = `<div class="card empty"><p>載入失敗：${esc(err.message)}</p>
     <p class="muted small">可能是網路問題或 API 暫時忙碌，稍後再試。</p>

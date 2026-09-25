@@ -157,8 +157,10 @@ select, .btn, .chip {
 .next-card { background: linear-gradient(135deg, rgba(225, 6, 0, .14), var(--surface) 60%); }
 
 .podium { list-style: none; padding: 0; margin: 0; }
-.podium li { display: flex; align-items: center; gap: 8px; padding: 4px 0; flex-wrap: wrap; }
-.podium small { color: var(--muted); }
+.podium li { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.podium .avatar { margin-right: 0; }
+.podium-name { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.podium small { color: var(--muted); font-size: .75rem; }
 .medal { width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; font-size: .75rem; font-weight: 800; color: #111; }
 .m1 { background: var(--gold); } .m2 { background: var(--silver); } .m3 { background: var(--bronze); }
 
@@ -254,8 +256,29 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
 }
 .hero h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); margin: 0 0 .2em; }
 .hero p { margin: 0; }
-.hero-no { font-size: clamp(3rem, 12vw, 5rem); font-weight: 900; font-style: italic; color: var(--c); line-height: 1; min-width: 1.2em; text-align: center; }
-.hero-swatch { width: 64px; height: 64px; border-radius: 14px; background: var(--c); flex: 0 0 auto; }
+.hero-no { float: right; font-size: clamp(2.4rem, 9vw, 4.5rem); font-weight: 900; font-style: italic; color: var(--c); line-height: 1; opacity: .9; margin-left: 12px; }
+.hero-text { flex: 1; min-width: 0; }
+.hero-driver { display: inline-flex; align-items: center; margin-right: 14px; }
+
+/* ---------- 照片 ---------- */
+/* 照片載入前顯示名字縮寫；載入後圖片蓋在上面 */
+.avatar {
+  position: relative; flex: 0 0 auto; display: inline-grid; place-items: center; overflow: hidden;
+  vertical-align: middle; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted);
+  font-weight: 700; margin-right: 8px;
+}
+.avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; opacity: 0; transition: opacity .3s; }
+.avatar.has-photo img { opacity: 1; }
+.avatar.has-photo .avatar-initials { visibility: hidden; }
+.avatar-round { border-radius: 50%; }
+.avatar-square { border-radius: 8px; }
+.avatar-square img { object-position: center; }
+.avatar-sm { width: 28px; height: 28px; font-size: .65rem; }
+.avatar-md { width: 56px; height: 56px; font-size: .95rem; }
+.avatar-lg { width: 132px; height: 132px; font-size: 2rem; border: 3px solid var(--c, var(--border)); margin-right: 0; }
+.avatar-lg.avatar-square { border-radius: 18px; }
+.leader { display: flex; align-items: center; gap: 4px; }
+.leader .big { margin: 0; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 16px; }
 .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; }
 .stat b { font-size: 1.8rem; font-variant-numeric: tabular-nums; }
@@ -301,7 +324,9 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
   body { font-size: 14px; }
   .card { padding: 12px; }
   .two-col { grid-template-columns: 1fr; }
-  .hero { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .hero { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .hero-text { width: 100%; }
+  .avatar-lg { width: 110px; height: 110px; }
   .step { flex-basis: 78px; }
   .data td, .data th { padding: 7px 6px; }
   .bar { display: none; }
