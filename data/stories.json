@@ -1,0 +1,512 @@
+{
+  "_說明": "車手與車隊的中文故事。key 是 API 裡的 driverId / constructorId（可在網址 ?id= 看到）。aliases 用來把不同代號對應到同一篇故事。想新增就照格式加一筆！",
+  "aliases": {
+    "verstappen": "max_verstappen",
+    "arvid_lindblad": "lindblad",
+    "sauber": "audi",
+    "kick_sauber": "audi",
+    "alfa": "audi",
+    "bmw_sauber": "audi",
+    "racing_bulls": "rb",
+    "alphatauri": "rb",
+    "toro_rosso": "rb",
+    "minardi": "rb",
+    "renault": "alpine",
+    "lotus_f1": "alpine",
+    "benetton": "alpine",
+    "racing_point": "aston_martin",
+    "force_india": "aston_martin",
+    "jordan": "aston_martin",
+    "brawn": "mercedes"
+  },
+  "drivers": {
+    "max_verstappen": {
+      "nickname": "Mad Max",
+      "tagline": "17 歲出道、18 歲奪冠，改寫無數「最年輕」紀錄的天才。",
+      "paragraphs": [
+        "Max Verstappen 出生於 1997 年，父親 Jos Verstappen 是前 F1 車手，母親 Sophie Kumpen 是頂尖的卡丁車手。他幾乎是在賽車場長大的，小時候就被父親以極嚴格的方式訓練。",
+        "2015 年他以 17 歲之齡代表 Toro Rosso 出賽，成為 F1 史上最年輕的車手。2016 年賽季中被提拔到 Red Bull，第一場比賽（西班牙站）就拿下冠軍，年僅 18 歲，至今仍是最年輕的分站冠軍。",
+        "2021 年他與 Lewis Hamilton 纏鬥整季，在阿布達比最後一圈超車奪得首座世界冠軍，是 F1 史上最具爭議也最戲劇化的結局之一。之後他在 2022–2024 年連續稱霸，其中 2023 年單季 19 勝創下紀錄。"
+      ],
+      "highlights": [
+        "4 屆世界冠軍（2021–2024）",
+        "最年輕的 F1 出賽車手（17 歲）與分站冠軍（18 歲）",
+        "2023 年單季 19 勝、10 連勝的紀錄"
+      ]
+    },
+    "hamilton": {
+      "nickname": "Sir Lewis",
+      "tagline": "7 屆世界冠軍，勝場與竿位的歷史紀錄保持人。",
+      "paragraphs": [
+        "Lewis Hamilton 生於 1985 年的英國斯蒂夫尼奇。父親為了支持他的卡丁車夢想同時兼好幾份工作。他 13 歲就被 McLaren 老闆 Ron Dennis 簽入青訓計畫，是 F1 第一位黑人車手。",
+        "2007 年新秀球季就差一分拿下總冠軍，2008 年在巴西站最後一個彎完成超車，驚險奪得首冠。2013 年轉投 Mercedes，隨著渦輪混合動力時代來臨，他在 2014、2015、2017–2020 年再奪六冠，追平 Michael Schumacher 的 7 冠紀錄。",
+        "場外他積極推動賽車運動的多元與平權，2021 年受封爵士。2025 年他加盟 Ferrari，展開生涯最受矚目的新篇章。"
+      ],
+      "highlights": [
+        "7 屆世界冠軍（2008、2014、2015、2017、2018、2019、2020）",
+        "史上最多分站冠軍與竿位",
+        "2025 年起效力 Ferrari"
+      ]
+    },
+    "leclerc": {
+      "nickname": "Il Predestinato（天選之人）",
+      "tagline": "來自摩納哥的 Ferrari 當家車手，單圈速度頂尖。",
+      "paragraphs": [
+        "Charles Leclerc 生於 1997 年的摩納哥，已故車手 Jules Bianchi 是他的教父兼啟蒙導師。他在 2016 年 GP3、2017 年 F2 都是新秀年就奪冠，被視為下一個超級巨星。",
+        "2018 年在 Sauber 完成 F1 首季後，隔年就被 Ferrari 提拔。2019 年在比利時站拿下首勝，一週後又在 Ferrari 主場蒙札奪冠，讓整個義大利瘋狂。",
+        "過去他在家鄉摩納哥站總是運氣不佳，直到 2024 年終於在自家門口拿下冠軍，完成夢想。"
+      ],
+      "highlights": [
+        "2019 年蒙札站為 Ferrari 奪冠",
+        "2024 年摩納哥主場奪冠",
+        "生涯竿位數在現役車手中名列前茅"
+      ]
+    },
+    "russell": {
+      "nickname": "Mr. Saturday",
+      "tagline": "排位賽高手，從 Williams 一路打拼到 Mercedes 領軍。",
+      "paragraphs": [
+        "George Russell 生於 1998 年英國，2017 年 GP3 冠軍、2018 年 F2 冠軍。2019 年起在當時戰力墊底的 Williams 待了三年，常把慢車開進 Q2，因此有「Mr. Saturday」的稱號。",
+        "2020 年 Hamilton 染疫缺賽，他臨時代打 Mercedes，在薩基爾站一度領跑，展現實力。2022 年正式成為 Mercedes 車手，同年在巴西站拿下生涯首勝。"
+      ],
+      "highlights": [
+        "2018 年 F2 冠軍",
+        "2022 年聖保羅站生涯首勝",
+        "Hamilton 離隊後成為 Mercedes 的領頭羊"
+      ]
+    },
+    "antonelli": {
+      "nickname": "Kimi",
+      "tagline": "Mercedes 欽點接替 Hamilton 的義大利神童。",
+      "paragraphs": [
+        "Andrea Kimi Antonelli 生於 2006 年義大利波隆那，從小就被 Mercedes 納入青訓。他在初級方程式一路奪冠，並跳過 F3 直接升上 F2。",
+        "2025 年 18 歲的他接下 Hamilton 在 Mercedes 的席位，是近年最受矚目的新人之一，在加拿大站首度登上頒獎台。"
+      ],
+      "highlights": [
+        "18 歲升上 Mercedes 正式車手",
+        "跳過 F3，直接從 F2 進入 F1"
+      ]
+    },
+    "norris": {
+      "nickname": "Lando",
+      "tagline": "從網路紅人到世界冠軍的 McLaren 看家球星。",
+      "paragraphs": [
+        "Lando Norris 生於 1999 年英國布里斯托，2019 年加入 McLaren 出道，一直效力至今。他幽默的個性與直播活動讓他在年輕車迷中人氣極高。",
+        "隨著 McLaren 戰力回升，他在 2024 年邁阿密站拿下遲來的生涯首勝。2025 年他與隊友 Piastri 及 Verstappen 激烈爭冠，最終在阿布達比收官戰奪得首座世界冠軍。"
+      ],
+      "highlights": [
+        "2025 年世界冠軍",
+        "2024 年邁阿密站生涯首勝",
+        "整個 F1 生涯都效力 McLaren"
+      ]
+    },
+    "piastri": {
+      "nickname": "Oscar",
+      "tagline": "冷靜到不像新人的澳洲快手。",
+      "paragraphs": [
+        "Oscar Piastri 生於 2001 年澳洲墨爾本。他在 2020 年 F3、2021 年 F2 都是新秀年就奪冠，這樣的連霸在初級方程式非常罕見。",
+        "2022 年 Alpine 宣布他為正式車手，他本人卻否認並選擇 McLaren，最後由合約認定委員會判定 McLaren 勝訴。2023 年出道後進步神速，2024 年匈牙利站拿下首勝，成為 McLaren 的雙核心之一。"
+      ],
+      "highlights": [
+        "F3、F2 連續兩年新秀即奪冠",
+        "2024 年匈牙利站生涯首勝"
+      ]
+    },
+    "alonso": {
+      "nickname": "El Nano",
+      "tagline": "F1 史上出賽次數最多的傳奇，年過四十依然頂尖。",
+      "paragraphs": [
+        "Fernando Alonso 生於 1981 年西班牙奧維耶多，2001 年在 Minardi 出道。2005 年與 2006 年替 Renault 連奪兩屆世界冠軍，終結了 Michael Schumacher 的時代，當時是史上最年輕的世界冠軍。",
+        "之後他效力 McLaren、Ferrari，三度拿下年度亞軍，卻始終沒能再奪第三冠。他還跨足其他賽事，拿下兩屆利曼 24 小時冠軍並挑戰印第 500 與達卡拉力。",
+        "2023 年加盟 Aston Martin，40 多歲仍多次站上頒獎台，是 F1 史上出賽次數最多的車手。"
+      ],
+      "highlights": [
+        "2 屆世界冠軍（2005、2006）",
+        "兩屆利曼 24 小時耐力賽冠軍",
+        "F1 史上出賽最多的車手"
+      ]
+    },
+    "stroll": {
+      "nickname": "Lance",
+      "tagline": "加拿大車手，父親是 Aston Martin 車隊老闆。",
+      "paragraphs": [
+        "Lance Stroll 生於 1998 年加拿大蒙特婁，父親是億萬富翁 Lawrence Stroll。他在 2016 年拿下歐洲 F3 冠軍，2017 年替 Williams 出道，並在亞塞拜然站以 18 歲之齡登上頒獎台。",
+        "2020 年他在濕地的土耳其站拿下竿位。父親收購車隊並改名為 Aston Martin 後，他一直是車隊的正式車手。"
+      ],
+      "highlights": [
+        "2017 年亞塞拜然站登上頒獎台",
+        "2020 年土耳其站竿位"
+      ]
+    },
+    "gasly": {
+      "nickname": "Pierre",
+      "tagline": "被降級後逆襲，在蒙札寫下奇蹟的法國車手。",
+      "paragraphs": [
+        "Pierre Gasly 生於 1996 年法國盧昂，2016 年 GP2 冠軍。2019 年升上 Red Bull 卻表現不如預期，賽季中被降回二隊 Toro Rosso。",
+        "他沒有被擊倒，2020 年在蒙札替 AlphaTauri 拿下不可思議的冠軍，是那個年代少數由中段車隊拿下的勝利。2023 年起效力法國車隊 Alpine。"
+      ],
+      "highlights": [
+        "2020 年義大利站奪冠",
+        "2016 年 GP2 冠軍"
+      ]
+    },
+    "colapinto": {
+      "nickname": "Franco",
+      "tagline": "讓整個阿根廷重新愛上 F1 的年輕人。",
+      "paragraphs": [
+        "Franco Colapinto 生於 2003 年阿根廷。2024 年賽季中他替 Williams 臨危受命出道，是 2001 年後第一位阿根廷籍 F1 車手，並在第二場比賽就拿到積分。",
+        "他在阿根廷擁有驚人的人氣，2025 年轉投 Alpine，繼續在 F1 打拼。"
+      ],
+      "highlights": [
+        "2001 年後首位阿根廷 F1 車手",
+        "2024 年亞塞拜然站拿到生涯首分"
+      ]
+    },
+    "albon": {
+      "nickname": "Alex",
+      "tagline": "代表泰國出賽的倫敦人，Williams 的中流砥柱。",
+      "paragraphs": [
+        "Alexander Albon 生於 1996 年倫敦，父親是英國人、母親是泰國人，他選擇以泰國國籍出賽。2019 年在 Toro Rosso 出道，半季後就被提拔到 Red Bull，並在 2020 年兩度登上頒獎台。",
+        "2021 年失去席位擔任預備車手，2022 年加入 Williams 重新出發，成為車隊的核心，常常把中後段的賽車開進積分區。"
+      ],
+      "highlights": [
+        "2020 年穆傑羅站、巴林站登上頒獎台",
+        "Williams 近年的主要得分來源"
+      ]
+    },
+    "sainz": {
+      "nickname": "Smooth Operator",
+      "tagline": "拉力賽傳奇之子，走到哪都能贏得尊重。",
+      "paragraphs": [
+        "Carlos Sainz 生於 1994 年馬德里，父親 Carlos Sainz Sr. 是兩屆世界拉力錦標賽冠軍。他 2015 年替 Toro Rosso 出道，之後效力 Renault、McLaren。",
+        "2021 年加入 Ferrari，2022 年英國站拿下首勝。2024 年澳洲站，他在盲腸手術後僅兩週就復出並奪冠，成為經典故事。2025 年加盟 Williams。"
+      ],
+      "highlights": [
+        "2022 年英國站生涯首勝",
+        "2024 年澳洲站術後復出奪冠"
+      ]
+    },
+    "hadjar": {
+      "nickname": "Le Petit Prost（小普羅斯特）",
+      "tagline": "情感豐沛又快得驚人的法國新星。",
+      "paragraphs": [
+        "Isack Hadjar 生於 2004 年巴黎，擁有法國與阿爾及利亞血統，因駕駛風格與外型被戲稱為「小 Prost」。2024 年 F2 年度亞軍。",
+        "2025 年替 Racing Bulls 出道，首戰澳洲站在暖胎圈就撞車，失落的畫面讓人心疼；但他很快站穩腳步，並在荷蘭站拿下第一座頒獎台。2026 年升上 Red Bull 主隊。"
+      ],
+      "highlights": [
+        "2025 年荷蘭站首度登上頒獎台",
+        "2026 年升上 Red Bull"
+      ]
+    },
+    "lawson": {
+      "nickname": "Liam",
+      "tagline": "紐西蘭車手，在 Red Bull 體系中不斷證明自己。",
+      "paragraphs": [
+        "Liam Lawson 生於 2002 年紐西蘭。2023 年 Ricciardo 受傷時他臨時代打，表現亮眼；2024 年賽季末正式取得席位。",
+        "2025 年初他被提拔到 Red Bull 主隊，但只跑了兩場就被換回二隊。他沒有放棄，在 Racing Bulls 繼續用成績說話。"
+      ],
+      "highlights": [
+        "2023 年代打出道並拿到積分",
+        "2025 年曾短暫升上 Red Bull"
+      ]
+    },
+    "lindblad": {
+      "nickname": "Arvid",
+      "tagline": "Red Bull 青訓培養的英國新秀。",
+      "paragraphs": [
+        "Arvid Lindblad 生於 2007 年，擁有英國與瑞典血統，是 Red Bull 青訓體系的重點培養對象。他在初級方程式展現快速的單圈實力，2025 年參加 F2。",
+        "2026 年他獲得 Racing Bulls 的正式席位，成為新一代的 F1 新人。"
+      ],
+      "highlights": [
+        "2026 年 F1 出道"
+      ]
+    },
+    "ocon": {
+      "nickname": "Esteban",
+      "tagline": "從貧困家庭一路打拼上 F1 的分站冠軍。",
+      "paragraphs": [
+        "Esteban Ocon 生於 1996 年法國，家人曾賣掉房子、住在露營車裡支持他賽車。2016 年替 Manor 出道，之後效力 Force India。",
+        "2021 年他在混亂的匈牙利站替 Alpine 拿下生涯首勝。2025 年加盟 Haas。"
+      ],
+      "highlights": [
+        "2021 年匈牙利站奪冠",
+        "2014 年歐洲 F3 冠軍（擊敗 Verstappen）"
+      ]
+    },
+    "bearman": {
+      "nickname": "Ollie",
+      "tagline": "18 歲臨時代打 Ferrari 就拿到積分的英國新星。",
+      "paragraphs": [
+        "Oliver Bearman 生於 2005 年英國，是 Ferrari 青訓車手。2024 年沙烏地阿拉伯站，Sainz 因盲腸炎缺賽，他在練習賽後才接到通知臨時上陣，最後以第 7 名完賽拿到積分，一戰成名。",
+        "2025 年他成為 Haas 的正式車手。"
+      ],
+      "highlights": [
+        "18 歲代表 Ferrari 出道並拿到積分",
+        "2025 年起成為正式車手"
+      ]
+    },
+    "hulkenberg": {
+      "nickname": "Hulk",
+      "tagline": "等了十多年、兩百多場比賽，終於站上頒獎台。",
+      "paragraphs": [
+        "Nico Hülkenberg 生於 1987 年德國，2009 年 GP2 冠軍，2010 年新秀年就在巴西站拿下竿位。2015 年他還替 Porsche 贏得利曼 24 小時冠軍。",
+        "他長年被視為最強的中段車手之一，卻一直是「出賽最多但從未登上頒獎台」的紀錄保持人。2025 年英國站，他替 Sauber 從後段發車一路衝到第 3 名，終於打破魔咒，全場為他喝采。"
+      ],
+      "highlights": [
+        "2010 年巴西站新秀竿位",
+        "2015 年利曼 24 小時冠軍",
+        "2025 年英國站生涯首座頒獎台"
+      ]
+    },
+    "bortoleto": {
+      "nickname": "Gabriel",
+      "tagline": "F3、F2 連霸的巴西新希望。",
+      "paragraphs": [
+        "Gabriel Bortoleto 生於 2004 年巴西聖保羅，由 Fernando Alonso 的經紀公司栽培。他在 2023 年 F3、2024 年 F2 都是新秀年奪冠。",
+        "2025 年加入 Sauber 出道，是多年來巴西第一位正式 F1 車手，並隨車隊迎接 Audi 時代。"
+      ],
+      "highlights": [
+        "F3、F2 新秀年連續奪冠",
+        "巴西睽違多年的正式 F1 車手"
+      ]
+    },
+    "perez": {
+      "nickname": "Checo",
+      "tagline": "墨西哥英雄，輪胎管理大師。",
+      "paragraphs": [
+        "Sergio Pérez 生於 1990 年墨西哥瓜達拉哈拉，2011 年替 Sauber 出道，以極佳的輪胎管理聞名。2020 年薩基爾站，他在第一圈掉到最後一名，卻一路追回拿下生涯首勝。",
+        "2021 年加入 Red Bull，在阿布達比決戰中死守 Hamilton，協助 Verstappen 奪冠，被稱為「國防部長」。2023 年拿下年度亞軍。離開一年後，他在 2026 年加入新車隊 Cadillac 重返 F1。"
+      ],
+      "highlights": [
+        "2020 年薩基爾站從最後一名逆轉奪冠",
+        "2023 年年度亞軍",
+        "2026 年加入 Cadillac"
+      ]
+    },
+    "bottas": {
+      "nickname": "Valtteri",
+      "tagline": "Mercedes 王朝的關鍵拼圖，芬蘭硬漢。",
+      "paragraphs": [
+        "Valtteri Bottas 生於 1989 年芬蘭，2013 年替 Williams 出道。2017 年接替退休的世界冠軍 Nico Rosberg 加入 Mercedes，在五年內拿下 10 場分站冠軍，協助車隊連奪車隊冠軍。",
+        "之後他效力 Alfa Romeo / Sauber，2025 年回到 Mercedes 擔任預備車手，2026 年與 Pérez 一起加入 Cadillac。"
+      ],
+      "highlights": [
+        "10 場分站冠軍",
+        "兩度年度亞軍（2019、2020）"
+      ]
+    },
+    "senna": {
+      "nickname": "Magic",
+      "tagline": "無數人心中史上最偉大的車手。",
+      "paragraphs": [
+        "Ayrton Senna 生於 1960 年巴西聖保羅，以驚人的排位賽速度與雨戰能力聞名。1988、1990、1991 年替 McLaren 三度奪得世界冠軍，並六度在摩納哥奪冠。",
+        "他與隊友 Alain Prost 的宿怨是 F1 史上最著名的對決。1994 年他在義大利伊莫拉的比賽中意外身亡，震驚全世界，也促成了 F1 大幅改善安全性。"
+      ],
+      "highlights": [
+        "3 屆世界冠軍（1988、1990、1991）",
+        "6 次摩納哥站冠軍"
+      ]
+    },
+    "michael_schumacher": {
+      "nickname": "Schumi",
+      "tagline": "帶領 Ferrari 建立王朝的 7 屆世界冠軍。",
+      "paragraphs": [
+        "Michael Schumacher 生於 1969 年德國，1994、1995 年替 Benetton 奪冠。1996 年加盟當時低迷的 Ferrari，與團隊一起重建，並在 2000–2004 年連續五年奪冠。",
+        "他以 7 屆世界冠軍與 91 場分站冠軍的紀錄稱霸多年。2013 年退休後在滑雪時發生嚴重意外，至今仍是全世界車迷掛念的對象。"
+      ],
+      "highlights": [
+        "7 屆世界冠軍",
+        "2000–2004 年替 Ferrari 五連霸"
+      ]
+    },
+    "prost": {
+      "nickname": "The Professor（教授）",
+      "tagline": "以智慧與計算取勝的 4 屆世界冠軍。",
+      "paragraphs": [
+        "Alain Prost 生於 1955 年法國，以冷靜、精打細算的比賽風格被稱為「教授」。他在 1985、1986、1989 與 1993 年拿下世界冠軍。",
+        "他和 Senna 在 McLaren 的同隊恩怨，以及 1989、1990 年鈴鹿站的衝突，是 F1 最經典的篇章之一。"
+      ],
+      "highlights": [
+        "4 屆世界冠軍",
+        "與 Senna 的傳奇對決"
+      ]
+    },
+    "lauda": {
+      "nickname": "Niki",
+      "tagline": "從烈火中重生的鐵人。",
+      "paragraphs": [
+        "Niki Lauda 生於 1949 年奧地利，1975 年替 Ferrari 奪冠。1976 年他在紐柏林賽道發生嚴重火燒車事故，幾乎喪命，卻在短短六週後就重返賽場。",
+        "他在 1977 年再度奪冠，1984 年替 McLaren 拿下第三冠。退休後他創辦航空公司，晚年擔任 Mercedes 車隊的非執行主席，2019 年辭世。電影《決戰終點線》（Rush）講的就是他的故事。"
+      ],
+      "highlights": [
+        "3 屆世界冠軍（1975、1977、1984）",
+        "1976 年嚴重事故後六週即復出"
+      ]
+    },
+    "vettel": {
+      "nickname": "Seb",
+      "tagline": "Red Bull 王朝的四連霸冠軍。",
+      "paragraphs": [
+        "Sebastian Vettel 生於 1987 年德國。2008 年他替小車隊 Toro Rosso 在雨中的蒙札奪冠，震驚車壇。",
+        "2010–2013 年他替 Red Bull 連續四年奪得世界冠軍。之後效力 Ferrari 與 Aston Martin，2022 年退休，並致力於環保與社會議題。"
+      ],
+      "highlights": [
+        "4 屆世界冠軍（2010–2013）",
+        "2008 年替 Toro Rosso 在蒙札奪冠"
+      ]
+    },
+    "tsunoda": {
+      "nickname": "Yuki",
+      "tagline": "個性直率、速度驚人的日本車手。",
+      "paragraphs": [
+        "角田裕毅（Yuki Tsunoda）生於 2000 年日本神奈川縣，是 Honda 與 Red Bull 共同培養的車手。2020 年在 F2 表現亮眼，隔年就升上 F1。",
+        "2021 年他替 AlphaTauri 出道，首戰巴林站就拿到積分。他在無線電裡直來直往的發言讓他很受車迷喜愛。2025 年日本主場站前，他被提拔到 Red Bull 主隊。"
+      ],
+      "highlights": [
+        "2021 年出道首戰即拿到積分",
+        "2025 年升上 Red Bull"
+      ]
+    }
+  },
+  "teams": {
+    "red_bull": {
+      "nickname": "Red Bull Racing",
+      "tagline": "能量飲料品牌打造的冠軍機器。",
+      "paragraphs": [
+        "Red Bull 在 2004 年底買下 Jaguar 車隊，2005 年以 Red Bull Racing 的名稱參賽。在傳奇設計師 Adrian Newey 的操刀下，車隊從中段班迅速崛起。",
+        "2010–2013 年，Sebastian Vettel 帶領車隊連奪四屆車手與車隊雙冠軍。進入 Max Verstappen 時代後，車隊在 2021–2024 年再拿下四屆車手冠軍，2023 年更幾乎每場都贏。",
+        "2026 年新規則上路，Red Bull 開始使用與 Ford 合作、自家研發的動力單元，是全新的挑戰。"
+      ],
+      "highlights": [
+        "Vettel 四連霸（2010–2013）",
+        "Verstappen 四連霸（2021–2024）",
+        "2026 年起使用自製 Red Bull Ford 動力單元"
+      ]
+    },
+    "ferrari": {
+      "nickname": "Scuderia Ferrari（躍馬）",
+      "tagline": "F1 歷史最悠久、最成功的車隊，也是最有名的品牌。",
+      "paragraphs": [
+        "Enzo Ferrari 創立的 Scuderia Ferrari 是唯一從 1950 年第一屆世界錦標賽參賽至今的車隊，擁有最多的車隊冠軍與分站冠軍。",
+        "Niki Lauda 在 1970 年代替車隊奪冠；Michael Schumacher 在 2000–2004 年建立了五連霸王朝。2007 年 Kimi Räikkönen 奪得車隊最近一座車手冠軍。",
+        "Ferrari 的車迷被稱為 Tifosi，他們染紅了每一座賽道，尤其是義大利主場蒙札。"
+      ],
+      "highlights": [
+        "唯一從 1950 年參賽至今的車隊",
+        "史上最多車隊冠軍",
+        "Schumacher 時代五連霸（2000–2004）"
+      ]
+    },
+    "mercedes": {
+      "nickname": "Silver Arrows（銀箭）",
+      "tagline": "締造 F1 史上最長王朝的德國車廠。",
+      "paragraphs": [
+        "Mercedes 在 1954–1955 年就曾參賽，由 Juan Manuel Fangio 奪冠。2010 年他們買下剛奪得雙冠的 Brawn GP，以原廠車隊身分回歸。",
+        "2014 年渦輪混合動力時代開始，Mercedes 的引擎遙遙領先，連續八年（2014–2021）拿下車隊冠軍，Lewis Hamilton 與 Nico Rosberg 包辦了這段期間多數的車手冠軍。車隊領隊 Toto Wolff 是這段王朝的推手。"
+      ],
+      "highlights": [
+        "連續 8 年車隊冠軍（2014–2021），F1 最長紀錄",
+        "Hamilton 在此拿下 6 屆世界冠軍"
+      ]
+    },
+    "mclaren": {
+      "nickname": "Papaya（木瓜橘）",
+      "tagline": "從谷底重返巔峰的英國老牌車隊。",
+      "paragraphs": [
+        "紐西蘭車手 Bruce McLaren 在 1963 年創立車隊，1966 年開始參加 F1。1988 年 Senna 與 Prost 聯手，16 場比賽贏了 15 場，是史上最強的賽季之一。",
+        "2010 年代車隊一度跌到谷底，甚至排在車隊榜倒數。經過重建，McLaren 在 2024 年奪得睽違 26 年的車隊冠軍，2025 年再度衛冕，Lando Norris 也拿下車手冠軍。"
+      ],
+      "highlights": [
+        "1988 年 16 戰 15 勝",
+        "2024、2025 年連續奪得車隊冠軍",
+        "Senna、Prost、Häkkinen、Hamilton、Norris 都在此奪冠"
+      ]
+    },
+    "aston_martin": {
+      "nickname": "Aston Martin",
+      "tagline": "英國豪華跑車品牌，目標打造冠軍車隊。",
+      "paragraphs": [
+        "這支車隊的前身可追溯到 1991 年的 Jordan，之後歷經 Midland、Spyker、Force India、Racing Point，2021 年由 Lawrence Stroll 改名為 Aston Martin。",
+        "車隊斥資興建新工廠與風洞，簽下兩屆世界冠軍 Fernando Alonso，並在 2025 年挖角傳奇設計師 Adrian Newey。2026 年起改用 Honda 動力單元，野心勃勃。"
+      ],
+      "highlights": [
+        "前身為 Jordan / Force India",
+        "2026 年起與 Honda 合作",
+        "Adrian Newey 加盟"
+      ]
+    },
+    "alpine": {
+      "nickname": "Alpine",
+      "tagline": "來自英國恩斯通、歷經多次改名的冠軍車隊。",
+      "paragraphs": [
+        "Alpine 的工廠位於英國恩斯通，這支車隊從 1981 年的 Toleman 開始，歷經 Benetton、Renault、Lotus，2021 年改名為 Alpine。",
+        "它曾是兩個時代的冠軍：Michael Schumacher 在 1994、1995 年替 Benetton 奪冠；Fernando Alonso 在 2005、2006 年替 Renault 奪冠。2026 年起車隊改用 Mercedes 動力單元。"
+      ],
+      "highlights": [
+        "Benetton 時代 Schumacher 兩冠",
+        "Renault 時代 Alonso 兩冠"
+      ]
+    },
+    "williams": {
+      "nickname": "Williams",
+      "tagline": "家族車隊的傳奇，九座車隊冠軍。",
+      "paragraphs": [
+        "Frank Williams 與工程師 Patrick Head 在 1977 年創立 Williams。1980 至 1990 年代是車隊的黃金時期，共拿下 9 座車隊冠軍，培養出 Alan Jones、Nelson Piquet、Nigel Mansell、Damon Hill 等冠軍車手。",
+        "2010 年代車隊逐漸衰退，2020 年 Williams 家族將車隊賣給投資公司。在領隊 James Vowles 帶領下，車隊正努力重返前段班。"
+      ],
+      "highlights": [
+        "9 座車隊冠軍",
+        "7 位世界冠軍車手曾替車隊奪冠"
+      ]
+    },
+    "rb": {
+      "nickname": "Racing Bulls",
+      "tagline": "Red Bull 的二隊，也是新星的搖籃。",
+      "paragraphs": [
+        "這支車隊的前身是義大利的 Minardi（1985 年起參賽）。2006 年被 Red Bull 買下改名為 Toro Rosso，2020 年改為 AlphaTauri，2024 年起改名為 RB / Racing Bulls。",
+        "它的任務是培養 Red Bull 的年輕車手：Vettel、Verstappen 都從這裡出道。Vettel 在 2008 年、Gasly 在 2020 年都在蒙札替這支小車隊拿下不可思議的勝利。"
+      ],
+      "highlights": [
+        "Vettel、Verstappen 的出道車隊",
+        "兩度在蒙札奪冠（2008、2020）"
+      ]
+    },
+    "haas": {
+      "nickname": "Haas",
+      "tagline": "唯一的美國車隊（直到 Cadillac 加入）。",
+      "paragraphs": [
+        "美國工具機大亨 Gene Haas 創立的車隊，2016 年加入 F1，首場比賽就由 Romain Grosjean 拿下第 6 名。",
+        "Haas 採用精簡的營運模式，向 Ferrari 採購大量零件。2024 年起由日籍工程師小松禮雄擔任領隊，並與 Toyota 展開技術合作。"
+      ],
+      "highlights": [
+        "2016 年首戰即拿到積分",
+        "2022 年 Magnussen 在巴西站拿下竿位"
+      ]
+    },
+    "audi": {
+      "nickname": "Audi（前身 Sauber）",
+      "tagline": "瑞士老牌車隊 Sauber 蛻變為德國車廠原廠隊。",
+      "paragraphs": [
+        "Peter Sauber 創立的 Sauber 從 1993 年開始參加 F1，以發掘新秀聞名：Kimi Räikkönen、Felipe Massa、Charles Leclerc 都在這裡出道。2008 年以 BMW Sauber 之名，由 Robert Kubica 在加拿大站奪冠。",
+        "車隊曾以 Alfa Romeo、Kick Sauber 等名稱參賽。Audi 收購車隊後，2026 年正式以 Audi 原廠車隊身分出賽，並使用 Audi 自製的動力單元。"
+      ],
+      "highlights": [
+        "Räikkönen、Leclerc 等人的出道車隊",
+        "2008 年 BMW Sauber 加拿大站奪冠",
+        "2026 年成為 Audi 原廠車隊"
+      ]
+    },
+    "cadillac": {
+      "nickname": "Cadillac",
+      "tagline": "F1 的第 11 支車隊，美國通用汽車的原廠隊。",
+      "paragraphs": [
+        "Cadillac 車隊由美國通用汽車（GM）支持，2026 年加入 F1，成為多年來第一支新成立的車隊，讓 F1 回到 11 隊、22 位車手。",
+        "車隊初期使用 Ferrari 動力單元，未來計畫改用 GM 自製引擎。首年車手是經驗豐富的 Sergio Pérez 與 Valtteri Bottas。"
+      ],
+      "highlights": [
+        "2026 年首季參賽",
+        "車手：Pérez、Bottas"
+      ]
+    }
+  }
+}

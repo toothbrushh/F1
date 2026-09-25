@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F1 賽季成績</title>
+  <meta name="description" content="F1 賽季積分、分站排位賽與正賽成績、賽程表，自動更新最新數據。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏁</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ===== 頁首：標題、賽季選單、更新狀態 ===== -->
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="./"><span class="brand-mark">F1</span> 賽季成績</a>
+      <div class="header-tools">
+        <label class="season-picker">
+          <span>賽季</span>
+          <select id="season-select" aria-label="選擇賽季"></select>
+        </label>
+        <button id="refresh-btn" class="btn" type="button" title="清除快取並重新抓取最新資料">↻ 更新</button>
+      </div>
+    </div>
+    <div class="wrap">
+      <p id="data-status" class="data-status" aria-live="polite">載入中…</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- ===== 賽季步驟圖（由 timeline.js 產生） ===== -->
+    <section class="timeline-section" aria-label="賽季進度">
+      <div class="timeline-head">
+        <h2 id="timeline-title">賽季進度</h2>
+        <div class="legend">
+          <span><i class="lg lg-done"></i>已完賽</span>
+          <span><i class="lg lg-next"></i>下一站</span>
+          <span><i class="lg lg-todo"></i>待賽</span>
+        </div>
+      </div>
+      <div id="timeline" class="timeline" tabindex="0"></div>
+    </section>
+
+    <!-- ===== 分頁按鈕 ===== -->
+    <!-- 每個按鈕其實就是一個 #hash 連結；切換分頁 = 改變網址 hash，由 main.js 的路由接手 -->
+    <nav class="tabs" aria-label="主要分頁">
+      <a href="#summary" data-view="summary">總覽</a>
+      <a href="#drivers" data-view="drivers">車手積分</a>
+      <a href="#teams" data-view="teams">車隊積分</a>
+      <a href="#round" data-view="round">分站成績</a>
+      <a href="#schedule" data-view="schedule">賽程表</a>
+    </nav>
+
+    <!-- ===== 內容區：main.js 依目前分頁把 HTML 放進來 ===== -->
+    <section id="view" class="view" aria-live="polite">
+      <div class="loading"><div class="spinner"></div><p>正在從 F1 資料庫抓取資料…</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap">
+    <p>資料來源：<a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica F1 API</a>。
+      時間皆以你的裝置時區顯示（<span id="tz"></span>）。本站為粉絲專案，與 Formula 1 官方無關。</p>
+  </footer>
+
+  <!-- type="module"：讓瀏覽器支援 import / export，把程式拆成多個檔案 -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
