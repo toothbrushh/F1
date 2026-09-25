@@ -19,6 +19,13 @@ document.querySelectorAll('[data-back]').forEach((a) => {
   a.textContent = `← 回到 ${season} 賽季`;
 });
 
+// 只有「已經結束」的賽季拿第一才算冠軍（今年的第一名只是暫時領先）
+const isChampion = (h) => h.position === '1' && h.season < new Date().getFullYear();
+
+function truncatedNote(p) {
+  return p.historyTruncated ? '<p class="muted small">只列出最近 20 個賽季。</p>' : '';
+}
+
 function statCard(label, value, note = '') {
   return `<div class="stat"><b>${value ?? '—'}</b><span>${label}</span>${note ? `<small>${note}</small>` : ''}</div>`;
 }
@@ -66,7 +73,7 @@ async function renderDriver() {
   const age = d.dateOfBirth ? Math.floor((Date.now() - new Date(d.dateOfBirth)) / (365.25 * 86400000)) : null;
   document.title = `${driverName(d)} · F1 車手`;
 
-  const firstSeason = p.history[0]?.season;
+  const firstSeason = p.firstSeason;
   $root.innerHTML = `
     <section class="hero" style="--c:${color}">
       <div class="hero-no">${esc(d.permanentNumber || '')}</div>
@@ -84,7 +91,7 @@ async function renderDriver() {
       ${statCard('頒獎台', p.stats.podiums)}
       ${statCard('竿位', p.stats.poles, '1994 年起有排位資料')}
       ${statCard('出賽', p.stats.starts)}
-      ${statCard('生涯積分', Number(p.stats.points.toFixed(1)))}
+      ${statCard('參賽季數', p.stats.seasons)}
     </section>
 
     ${storyBlock(story, d.url, driverName(d))}
@@ -96,12 +103,13 @@ async function renderDriver() {
 
     <article class="card">
       <h2>歷年成績${firstSeason ? `（${firstSeason} 年出道）` : ''}</h2>
+      ${truncatedNote(p)}
       <div class="table-wrap"><table class="data">
         <thead><tr><th>賽季</th><th>車隊</th><th class="num">年度名次</th><th class="num">勝場</th><th class="num">積分</th></tr></thead>
-        <tbody>${[...p.history].reverse().map((h) => `<tr class="${h.position === '1' ? 'champion' : ''}">
+        <tbody>${[...p.history].reverse().map((h) => `<tr class="${isChampion(h) ? 'champion' : ''}">
           <td><a class="name-link" href="./?season=${h.season}#drivers">${h.season}</a></td>
           <td>${(h.Constructors || []).map((c) => teamLink(c, h.season)).join('、')}</td>
-          <td class="num pos">${h.position === '1' ? '🏆 ' : ''}${esc(h.positionText || h.position || '—')}</td>
+          <td class="num pos">${isChampion(h) ? '🏆 ' : ''}${esc(h.positionText || h.position || '—')}</td>
           <td class="num">${esc(h.wins)}</td>
           <td class="num"><b>${esc(h.points)}</b></td>
         </tr>`).join('')}</tbody>
@@ -139,6 +147,7 @@ async function renderTeam() {
       ${statCard('分站冠軍', p.stats.wins)}
       ${statCard('竿位', p.stats.poles, '1994 年起有排位資料')}
       ${statCard('參賽站數', p.stats.races)}
+      ${statCard('參賽季數', p.stats.seasons, p.firstSeason ? `${p.firstSeason} 年起` : '')}
     </section>
 
     ${storyBlock(story, t.url, t.name)}
@@ -155,11 +164,12 @@ async function renderTeam() {
 
     <article class="card">
       <h2>歷年車隊積分</h2>
+      ${truncatedNote(p)}
       ${p.history.length ? `<div class="table-wrap"><table class="data">
         <thead><tr><th>賽季</th><th class="num">年度名次</th><th class="num">勝場</th><th class="num">積分</th></tr></thead>
-        <tbody>${[...p.history].reverse().map((h) => `<tr class="${h.position === '1' ? 'champion' : ''}">
+        <tbody>${[...p.history].reverse().map((h) => `<tr class="${isChampion(h) ? 'champion' : ''}">
           <td><a class="name-link" href="./?season=${h.season}#teams">${h.season}</a></td>
-          <td class="num pos">${h.position === '1' ? '🏆 ' : ''}${esc(h.positionText || h.position || '—')}</td>
+          <td class="num pos">${isChampion(h) ? '🏆 ' : ''}${esc(h.positionText || h.position || '—')}</td>
           <td class="num">${esc(h.wins)}</td>
           <td class="num"><b>${esc(h.points)}</b></td>
         </tr>`).join('')}</tbody></table></div>` : '<p class="muted">沒有車隊積分紀錄（車隊冠軍從 1958 年開始）。</p>'}

@@ -53,7 +53,7 @@ F1/
 │   ├── chart.js          積分走勢圖（手寫 SVG）
 │   └── profile.js        車手 / 車隊介紹頁
 ├── data/stories.json     車手與車隊的中文故事（可以自己編輯！）
-├── scripts/snapshot.mjs  由 GitHub Actions 執行，抓一份資料快照
+├── scripts/snapshot.mjs  由 GitHub Actions 執行，產生資料快照與歷屆冠軍名單
 └── .github/workflows/pages.yml   自動部署設定
 ```
 

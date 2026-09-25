@@ -276,40 +276,84 @@ export async function loadSeason(season) {
 // ============================================================
 // 5. 車手 / 車隊介紹頁用的資料
 // 用 Promise.allSettled：就算其中一項失敗，其他資料還是能顯示。
+//
+// 注意：Jolpica 不允許「不指定賽季」查積分榜（會回 HTTP 400），
+// 所以歷年成績要先查出參加過哪些賽季，再一季一季查。
+// 為了不要一次發太多請求，只抓最近 HISTORY_LIMIT 季。
 // ============================================================
+const HISTORY_LIMIT = 20;
 const total = (json) => Number(json?.MRData?.total || 0);
 const settledValue = (r) => (r.status === 'fulfilled' ? r.value : null);
+
+/** 歷屆冠軍名單（由 GitHub Actions 產生的 data/champions.json） */
+let championsPromise = null;
+export function loadChampions() {
+  if (!championsPromise) {
+    championsPromise = fetch('data/champions.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null);
+  }
+  return championsPromise;
+}
+
+/** 先查參加過的賽季，再逐季查年度積分（只取最近 HISTORY_LIMIT 季） */
+async function loadHistory(kind, id) {
+  const p = `/${kind}/${encodeURIComponent(id)}`;
+  const seasonsJson = await get(`${p}/seasons/?limit=${PAGE_SIZE}`, DAY);
+  const seasons = seasonsJson.MRData.SeasonTable.Seasons.map((s) => Number(s.season));
+  const recent = seasons.slice(-HISTORY_LIMIT);
+  const table = kind === 'drivers' ? 'driverstandings' : 'constructorstandings';
+  const listKey = kind === 'drivers' ? 'DriverStandings' : 'ConstructorStandings';
+  const rows = await Promise.all(recent.map(async (y) => {
+    try {
+      const json = await get(`/${y}${p}/${table}/`, ttlForSeason(y));
+      const row = json.MRData.StandingsTable.StandingsLists[0]?.[listKey]?.[0];
+      return row ? { season: y, ...row } : null;
+    } catch {
+      return null;
+    }
+  }));
+  return { seasons, history: rows.filter(Boolean), truncated: seasons.length > recent.length };
+}
+
+function countTitles(champions, kind, id, history) {
+  const map = champions?.[kind];
+  if (map) return Object.values(map).filter((x) => x === id).length;
+  // 沒有冠軍名單時，退而用抓到的歷年成績計算（可能不完整）
+  const currentYear = new Date().getFullYear();
+  return history.filter((h) => h.position === '1' && h.season < currentYear).length;
+}
 
 export async function loadDriverProfile(id, season) {
   const ttl = DAY;
   const p = `/drivers/${encodeURIComponent(id)}`;
   const results = await Promise.allSettled([
     get(`${p}/`, ttl),
-    get(`${p}/driverstandings/?limit=${PAGE_SIZE}`, ttl),
+    loadHistory('drivers', id),
     get(`${p}/results/?limit=1`, ttl),
     get(`${p}/results/1/?limit=1`, ttl),
     get(`${p}/results/2/?limit=1`, ttl),
     get(`${p}/results/3/?limit=1`, ttl),
     get(`${p}/qualifying/1/?limit=1`, ttl),
     get(`/${season}${p}/results/?limit=${PAGE_SIZE}`, ttlForSeason(season)),
+    loadChampions(),
   ]);
-  const [info, standings, starts, p1, p2, p3, poles, seasonRes] = results.map(settledValue);
+  const [info, hist, starts, p1, p2, p3, poles, seasonRes, champions] = results.map(settledValue);
   if (!info) throw results[0].reason;
 
-  const history = (standings?.MRData.StandingsTable.StandingsLists || []).map((l) => ({
-    season: Number(l.season),
-    ...l.DriverStandings[0],
-  }));
+  const history = hist?.history || [];
   return {
     driver: info.MRData.DriverTable.Drivers[0],
     history,
+    historyTruncated: hist?.truncated,
+    firstSeason: hist?.seasons[0],
     stats: {
-      titles: history.filter((h) => h.position === '1').length,
-      starts: total(starts),
-      wins: total(p1),
+      titles: countTitles(champions, 'drivers', id, history),
+      seasons: hist?.seasons.length ?? null,
+      starts: starts ? total(starts) : null,
+      wins: p1 ? total(p1) : null,
       podiums: p1 && p2 && p3 ? total(p1) + total(p2) + total(p3) : null,
       poles: poles ? total(poles) : null,
-      points: history.reduce((s, h) => s + Number(h.points || 0), 0),
     },
     seasonRaces: seasonRes?.MRData.RaceTable.Races || [],
   };
@@ -320,27 +364,28 @@ export async function loadTeamProfile(id, season) {
   const p = `/constructors/${encodeURIComponent(id)}`;
   const results = await Promise.allSettled([
     get(`${p}/`, ttl),
-    get(`${p}/constructorstandings/?limit=${PAGE_SIZE}`, ttl),
+    loadHistory('constructors', id),
     get(`${p}/races/?limit=1`, ttl),
     get(`${p}/results/1/?limit=1`, ttl),
     get(`${p}/qualifying/1/?limit=1`, ttl),
     get(`/${season}${p}/drivers/`, ttlForSeason(season)),
     get(`/${season}${p}/results/?limit=${PAGE_SIZE}`, ttlForSeason(season)),
+    loadChampions(),
   ]);
-  const [info, standings, races, wins, poles, drivers, seasonRes] = results.map(settledValue);
+  const [info, hist, races, wins, poles, drivers, seasonRes, champions] = results.map(settledValue);
   if (!info) throw results[0].reason;
 
-  const history = (standings?.MRData.StandingsTable.StandingsLists || []).map((l) => ({
-    season: Number(l.season),
-    ...l.ConstructorStandings[0],
-  }));
+  const history = hist?.history || [];
   return {
     team: info.MRData.ConstructorTable.Constructors[0],
     history,
+    historyTruncated: hist?.truncated,
+    firstSeason: hist?.seasons[0],
     stats: {
-      titles: history.filter((h) => h.position === '1').length,
-      races: total(races),
-      wins: total(wins),
+      titles: countTitles(champions, 'constructors', id, history),
+      seasons: hist?.seasons.length ?? null,
+      races: races ? total(races) : null,
+      wins: wins ? total(wins) : null,
       poles: poles ? total(poles) : null,
     },
     drivers: drivers?.MRData.DriverTable.Drivers || [],
