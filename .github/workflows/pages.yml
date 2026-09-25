@@ -1,0 +1,54 @@
+# ============================================================
+# 部署到 GitHub Pages
+# 何時執行：
+#   - push 到 main → 重新部署
+#   - 每 6 小時自動跑一次 → 更新備份快照（data/snapshot.json）
+#   - 在 GitHub 的 Actions 頁面手動按 "Run workflow"
+# ============================================================
+name: Deploy to GitHub Pages
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # 抓一份最新資料當備份。就算失敗（例如 API 暫時掛掉）也照樣部署網站。
+      - name: Fetch data snapshot
+        continue-on-error: true
+        run: node scripts/snapshot.mjs
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    # 只有 main 分支才真的上線；其他分支只跑 build 當作檢查
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
