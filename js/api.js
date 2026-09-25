@@ -368,11 +368,14 @@ export async function loadTeamProfile(id, season) {
     get(`${p}/races/?limit=1`, ttl),
     get(`${p}/results/1/?limit=1`, ttl),
     get(`${p}/qualifying/1/?limit=1`, ttl),
-    get(`/${season}${p}/drivers/`, ttlForSeason(season)),
     get(`/${season}${p}/results/?limit=${PAGE_SIZE}`, ttlForSeason(season)),
     loadChampions(),
   ]);
-  const [info, hist, races, wins, poles, drivers, seasonRes, champions] = results.map(settledValue);
+  const [info, hist, races, wins, poles, seasonRes, champions] = results.map(settledValue);
+  const seasonRaces = seasonRes?.MRData.RaceTable.Races || [];
+  // 本季車手：直接從本季成績裡找出替這隊出賽過的人（省一次 API 請求）
+  const drivers = [...new Map(seasonRaces.flatMap((r) => r.Results || [])
+    .map((r) => [r.Driver.driverId, r.Driver])).values()];
   if (!info) throw results[0].reason;
 
   const history = hist?.history || [];
@@ -388,8 +391,8 @@ export async function loadTeamProfile(id, season) {
       wins: wins ? total(wins) : null,
       poles: poles ? total(poles) : null,
     },
-    drivers: drivers?.MRData.DriverTable.Drivers || [],
-    seasonRaces: seasonRes?.MRData.RaceTable.Races || [],
+    drivers,
+    seasonRaces,
   };
 }
 

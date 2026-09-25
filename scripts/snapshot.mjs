@@ -33,7 +33,8 @@ configure({ onResponse: null });
 const champions = { generatedAt: new Date().toISOString(), drivers: {}, constructors: {} };
 const years = [];
 for (let y = 1950; y < season; y++) years.push(y);
-await Promise.all(years.map(async (y) => {
+const failed = [];
+async function fetchChampion(y) {
   try {
     const d = await get(`/${y}/driverstandings/?limit=1`);
     const id = d.MRData.StandingsTable.StandingsLists[0]?.DriverStandings[0]?.Driver.driverId;
@@ -44,9 +45,18 @@ await Promise.all(years.map(async (y) => {
       if (cid) champions.constructors[y] = cid;
     }
   } catch (err) {
+    failed.push(y);
     console.log(`${y} 年冠軍查詢失敗：${err.message}`);
   }
-}));
+}
+await Promise.all(years.map(fetchChampion));
+// 被限速而失敗的年份：休息一下，再一年一年慢慢重試
+const retry = failed.splice(0);
+for (const y of retry) {
+  await new Promise((r) => setTimeout(r, 3000));
+  await fetchChampion(y);
+}
+if (failed.length) console.log(`仍然失敗的年份：${failed.join(', ')}`);
 const nDrivers = Object.keys(champions.drivers).length;
 console.log(`冠軍名單：車手 ${nDrivers} 年、車隊 ${Object.keys(champions.constructors).length} 年；` +
   `最近：${champions.drivers[season - 1]} / ${champions.constructors[season - 1]}`);
