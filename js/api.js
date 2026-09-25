@@ -34,11 +34,11 @@ export function configure(options) {
 
 // ============================================================
 // 1. 請求佇列：限制同時發出的請求數
-// Jolpica 有速率限制（每秒約 4 次），一口氣發 20 個請求會被擋（HTTP 429）。
-// 所以我們排隊：同時最多 3 個，且每個請求之間至少間隔 250ms。
+// Jolpica 有速率限制（每秒約 4 次、每小時約 500 次），一口氣發 20 個請求會被擋（HTTP 429）。
+// 所以我們排隊：同時最多 2 個，且每個請求之間至少間隔 350ms。
 // ============================================================
-const MAX_CONCURRENT = 3;
-const MIN_GAP_MS = 250;
+const MAX_CONCURRENT = 2;
+const MIN_GAP_MS = 350;
 let active = 0;
 let lastStart = 0;
 const waiting = [];
@@ -74,9 +74,10 @@ async function fetchJson(path, attempt = 1) {
   const timer = setTimeout(() => controller.abort(), 20000);
   try {
     const res = await config.fetchImpl(API_BASE + path, { signal: controller.signal });
-    if (res.status === 429 && attempt < 3) {
-      // 被限速了：等一下再試
-      await sleep(1500 * attempt);
+    if (res.status === 429 && attempt < 5) {
+      // 被限速了：照伺服器說的秒數（Retry-After）等，沒說就越等越久
+      const retryAfter = Number(res.headers.get('Retry-After'));
+      await sleep(retryAfter > 0 ? retryAfter * 1000 : 2000 * attempt);
       return fetchJson(path, attempt + 1);
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}：${path}`);

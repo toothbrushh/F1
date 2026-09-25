@@ -8,7 +8,7 @@
 // 本機執行：node scripts/snapshot.mjs [賽季]
 // ============================================================
 import { writeFile, mkdir } from 'node:fs/promises';
-import { configure, loadSeason, loadDriverProfile, loadTeamProfile } from '../js/api.js';
+import { configure, get, loadSeason, loadDriverProfile, loadTeamProfile } from '../js/api.js';
 
 const season = Number(process.argv[2]) || new Date().getFullYear();
 const responses = {};
@@ -29,6 +29,10 @@ configure({ onResponse: null });
 // 健康檢查：順便測試車手 / 車隊介紹頁用到的 API（結果不寫進快照）
 if (leader) {
   try {
+    // 先直接看車手歷年積分端點的原始回應
+    const hs = await get(`/drivers/${leader.Driver.driverId}/driverstandings/?limit=100`);
+    console.log(`歷年積分端點：total=${hs.MRData.total}、StandingsLists=${hs.MRData.StandingsTable?.StandingsLists?.length}`,
+      JSON.stringify(hs.MRData).slice(0, 300));
     const dp = await loadDriverProfile(leader.Driver.driverId, season);
     console.log(`車手頁檢查 ${leader.Driver.driverId}：冠軍 ${dp.stats.titles}、分站冠軍 ${dp.stats.wins}、頒獎台 ${dp.stats.podiums}、竿位 ${dp.stats.poles}、出賽 ${dp.stats.starts}、歷年 ${dp.history.length} 季、本季 ${dp.seasonRaces.length} 站`);
     const teamId = data.constructorStandings[0].Constructor.constructorId;
