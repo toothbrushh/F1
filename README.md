@@ -51,6 +51,7 @@ F1/
 │   ├── main.js           主頁控制：路由 + 五個分頁的畫面
 │   ├── timeline.js       賽季步驟圖
 │   ├── chart.js          積分走勢圖（手寫 SVG）
+│   ├── photos.js         車手 / 車隊照片（從 Wikipedia 取得）
 │   └── profile.js        車手 / 車隊介紹頁
 ├── data/stories.json     車手與車隊的中文故事（可以自己編輯！）
 ├── scripts/snapshot.mjs  由 GitHub Actions 執行，產生資料快照與歷屆冠軍名單

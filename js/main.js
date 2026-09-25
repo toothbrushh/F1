@@ -12,6 +12,7 @@
 import { loadSeason, clearCache } from './api.js';
 import { renderTimeline, raceStates, nextRace } from './timeline.js';
 import { renderPointsChart } from './chart.js';
+import { avatar, hydratePhotos } from './photos.js';
 import {
   esc, toDate, formatDate, formatDateTime, formatTime, countdown, userTimeZone, lapToMs, formatGap,
   statusZh, isFinished, nationalityFlag, countryFlag, driverLink, teamLink, teamColor, driverName,
@@ -54,6 +55,7 @@ function render() {
   $view.innerHTML = '';
   const activeRound = fn(route);
   renderTimeline(document.getElementById('timeline'), state.data, activeRound);
+  hydratePhotos($view);
   updateCountdowns();
 }
 
@@ -74,7 +76,8 @@ function viewSummary() {
     cards.push(`
       <article class="card stat-card" style="--c:${teamColor(p1.Constructors?.at(-1)?.constructorId)}">
         <h3>車手積分領先</h3>
-        <p class="big">${nationalityFlag(p1.Driver.nationality)} ${driverLink(p1.Driver, d.season)}</p>
+        <div class="leader">${avatar(p1.Driver.url, driverName(p1.Driver), 'md')}
+          <p class="big">${nationalityFlag(p1.Driver.nationality)} ${driverLink(p1.Driver, d.season)}</p></div>
         <p class="stat-line"><b>${p1.points}</b> 分 · ${p1.wins} 勝${p2 ? ` · 領先 P2 ${fmtPts(p1.points - p2.points)} 分` : ''}</p>
       </article>`);
   }
@@ -82,7 +85,8 @@ function viewSummary() {
     cards.push(`
       <article class="card stat-card" style="--c:${teamColor(t1.Constructor.constructorId)}">
         <h3>車隊積分領先</h3>
-        <p class="big">${teamLink(t1.Constructor, d.season)}</p>
+        <div class="leader">${avatar(t1.Constructor.url, t1.Constructor.name, 'md', 'square')}
+          <p class="big">${teamLink(t1.Constructor, d.season)}</p></div>
         <p class="stat-line"><b>${t1.points}</b> 分 · ${t1.wins} 勝${t2 ? ` · 領先 P2 ${fmtPts(t1.points - t2.points)} 分` : ''}</p>
       </article>`);
   }
@@ -91,8 +95,8 @@ function viewSummary() {
       <article class="card">
         <h3>上一站 · R${lastDone.round} ${countryFlag(lastDone.circuit?.Location?.country)} ${esc(lastDone.name)}</h3>
         <ol class="podium">${lastDone.results.slice(0, 3).map((r, i) => `
-          <li><span class="medal m${i + 1}">${i + 1}</span>${driverLink(r.Driver, d.season)}
-            <small>${esc(r.Constructor.name)}</small></li>`).join('')}
+          <li><span class="medal m${i + 1}">${i + 1}</span>${avatar(r.Driver.url, driverName(r.Driver))}
+            <span class="podium-name">${driverLink(r.Driver, d.season)}<small>${esc(r.Constructor.name)}</small></span></li>`).join('')}
         </ol>
         <a class="more" href="#round/${lastDone.round}/race">完整成績 →</a>
       </article>`);
@@ -145,7 +149,7 @@ function driverTable(rows, compact = false) {
       const team = s.Constructors?.at(-1);
       return `<tr>
         <td class="num pos">${esc(s.positionText || s.position)}</td>
-        <td><span class="car-no">${esc(s.Driver.permanentNumber || '')}</span>${nationalityFlag(s.Driver.nationality)} ${driverLink(s.Driver, state.data.season)}</td>
+        <td><span class="car-no">${esc(s.Driver.permanentNumber || '')}</span>${avatar(s.Driver.url, driverName(s.Driver))}${nationalityFlag(s.Driver.nationality)} ${driverLink(s.Driver, state.data.season)}</td>
         <td class="${compact ? 'hide-sm' : ''}">${team ? teamLink(team, state.data.season) : ''}</td>
         ${compact ? '' : `<td class="num">${esc(s.wins)}</td>`}
         <td class="num pts"><b>${esc(s.points)}</b>
@@ -167,7 +171,7 @@ function teamTable(rows, compact = false) {
       <th class="num">積分</th>${compact ? '' : '<th class="num">差距</th>'}</tr></thead>
     <tbody>${rows.map((s) => `<tr>
         <td class="num pos">${esc(s.positionText || s.position)}</td>
-        <td>${nationalityFlag(s.Constructor.nationality)} ${teamLink(s.Constructor, state.data.season)}</td>
+        <td>${avatar(s.Constructor.url, s.Constructor.name, 'sm', 'square')}${nationalityFlag(s.Constructor.nationality)} ${teamLink(s.Constructor, state.data.season)}</td>
         ${compact ? '' : `<td class="small">${driversOf(s.Constructor.constructorId)}</td><td class="num">${esc(s.wins)}</td>`}
         <td class="num pts"><b>${esc(s.points)}</b>
           ${compact ? '' : `<span class="bar"><i style="width:${(Number(s.points) / leader) * 100}%;--c:${teamColor(s.Constructor.constructorId)}"></i></span>`}</td>
