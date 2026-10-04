@@ -4,7 +4,9 @@
 // 資料來源：Jolpica F1 API（舊 Ergast API 的接班人，免費、免金鑰）
 //   https://github.com/jolpica/jolpica-f1
 //
-// 三層備援：
+// 資料來源的優先順序：
+//   0. 過去賽季的存檔 data/history/{年份}.json
+//      （過去的成績不會再變，由 GitHub Actions 事先整理好，跟網站一起部署，讀一個檔案就好）
 //   1. localStorage 快取（還沒過期就直接用，不打 API）
 //   2. 即時呼叫 API
 //   3. API 失敗時，改讀 data/snapshot.json
@@ -26,7 +28,11 @@ const DAY = 24 * HOUR;
 const config = {
   fetchImpl: (...args) => fetch(...args),
   onResponse: null, // (path, json) => void，快照腳本用來記錄每個回應
+  onError: null, // (path, err) => void，存檔腳本用來發現「有請求失敗、資料不完整」
   snapshotUrl: 'data/snapshot.json',
+  historyDir: 'data/history/',
+  maxConcurrent: 2, // 同時最多幾個請求
+  minGapMs: 350, // 每個請求之間至少間隔幾毫秒（GitHub Actions 的腳本會調得更慢）
 };
 export function configure(options) {
   Object.assign(config, options);
@@ -35,17 +41,15 @@ export function configure(options) {
 // ============================================================
 // 1. 請求佇列：限制同時發出的請求數
 // Jolpica 有速率限制（每秒約 4 次、每小時約 500 次），一口氣發 20 個請求會被擋（HTTP 429）。
-// 所以我們排隊：同時最多 2 個，且每個請求之間至少間隔 350ms。
+// 所以我們排隊：同時最多 config.maxConcurrent 個，且每個請求之間至少間隔 config.minGapMs。
 // ============================================================
-const MAX_CONCURRENT = 2;
-const MIN_GAP_MS = 350;
 let active = 0;
 let lastStart = 0;
 const waiting = [];
 
 function runQueue() {
-  if (active >= MAX_CONCURRENT || waiting.length === 0) return;
-  const wait = Math.max(0, lastStart + MIN_GAP_MS - Date.now());
+  if (active >= config.maxConcurrent || waiting.length === 0) return;
+  const wait = Math.max(0, lastStart + config.minGapMs - Date.now());
   if (wait > 0) {
     setTimeout(runQueue, wait);
     return;
@@ -137,9 +141,31 @@ function loadSnapshot() {
 }
 
 // 記錄這一輪載入資料時，實際用到了哪些來源（顯示在頁首讓使用者知道）
-const sourceLog = { live: 0, cache: 0, snapshot: 0, snapshotTime: null, oldest: null };
+const sourceLog = { archive: 0, live: 0, cache: 0, snapshot: 0, snapshotTime: null, oldest: null };
 function resetSourceLog() {
-  Object.assign(sourceLog, { live: 0, cache: 0, snapshot: 0, snapshotTime: null, oldest: null });
+  Object.assign(sourceLog, { archive: 0, live: 0, cache: 0, snapshot: 0, snapshotTime: null, oldest: null });
+}
+
+// ============================================================
+// 0. 過去賽季的存檔
+// 存檔裡記的是「API 路徑 → API 回應」，跟即時查詢拿到的格式一模一樣，
+// 所以只要把存檔放進 archive，get() 就會優先從這裡拿，其他程式完全不用改。
+// ============================================================
+const archive = new Map();
+const archiveLoaded = new Map(); // 年份 → Promise<boolean>（有沒有存檔）
+
+function loadArchive(season) {
+  if (!archiveLoaded.has(season)) {
+    archiveLoaded.set(season, fetch(`${config.historyDir}${season}.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((json) => {
+        if (!json?.responses) return false;
+        for (const [path, data] of Object.entries(json.responses)) archive.set(path, data);
+        return true;
+      })
+      .catch(() => false));
+  }
+  return archiveLoaded.get(season);
 }
 function noteTime(t) {
   if (!sourceLog.oldest || t < sourceLog.oldest) sourceLog.oldest = t;
@@ -151,6 +177,10 @@ function noteTime(t) {
  * @param {number} ttl   快取有效時間（毫秒）
  */
 export async function get(path, ttl = 10 * MIN) {
+  if (archive.has(path)) {
+    sourceLog.archive++;
+    return archive.get(path);
+  }
   const cached = cacheRead(path);
   if (cached && Date.now() - cached.t < ttl) {
     sourceLog.cache++;
@@ -165,6 +195,7 @@ export async function get(path, ttl = 10 * MIN) {
     noteTime(Date.now());
     return data;
   } catch (err) {
+    config.onError?.(path, err);
     // API 失敗：先用過期的快取，再不行就用快照
     if (cached) {
       sourceLog.cache++;
@@ -220,6 +251,8 @@ const SESSION_KEYS = ['FirstPractice', 'SecondPractice', 'ThirdPractice', 'Sprin
 export async function loadSeason(season) {
   resetSourceLog();
   const ttl = ttlForSeason(season);
+  // 過去的賽季：先試著讀存檔（沒有存檔就照常即時查詢）
+  if (Number(season) < new Date().getFullYear()) await loadArchive(season);
 
   // Promise.all：這幾個請求彼此獨立，可以同時進行（實際上會經過佇列排隊）
   const [schedule, driverSt, constructorSt, resultPages, qualiPages, sprintPages] = await Promise.all([
@@ -279,32 +312,72 @@ export async function loadSeason(season) {
 //
 // 注意：Jolpica 不允許「不指定賽季」查積分榜（會回 HTTP 400），
 // 所以歷年成績要先查出參加過哪些賽季，再一季一季查。
-// 為了不要一次發太多請求，只抓最近 HISTORY_LIMIT 季。
+// 已經存檔的賽季直接查 data/history/standings.json（每季的完整年度積分榜），
+// 沒存檔的賽季才即時查；為了不要一次發太多請求，即時查詢最多 HISTORY_LIMIT 季。
 // ============================================================
 const HISTORY_LIMIT = 20;
 const total = (json) => Number(json?.MRData?.total || 0);
 const settledValue = (r) => (r.status === 'fulfilled' ? r.value : null);
 
-/** 歷屆冠軍名單（由 GitHub Actions 產生的 data/champions.json） */
+const fetchJsonFile = (url) => fetch(url).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+
+/** 已存檔賽季的年度積分榜索引（data/history/standings.json） */
+let indexPromise = null;
+function loadStandingsIndex() {
+  if (!indexPromise) indexPromise = fetchJsonFile(`${config.historyDir}standings.json`);
+  return indexPromise;
+}
+
+const rowId = (kind, row) => (kind === 'drivers' ? row.Driver?.driverId : row.Constructor?.constructorId);
+
+/**
+ * 歷屆冠軍名單：
+ *   data/champions.json（GitHub Actions 逐年查的）＋ 存檔索引裡每季的第一名
+ */
 let championsPromise = null;
 export function loadChampions() {
   if (!championsPromise) {
-    championsPromise = fetch('data/champions.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .catch(() => null);
+    championsPromise = Promise.all([fetchJsonFile('data/champions.json'), loadStandingsIndex()])
+      .then(([champions, index]) => {
+        if (!champions && !index) return null;
+        const merged = { drivers: { ...champions?.drivers }, constructors: { ...champions?.constructors } };
+        for (const kind of ['drivers', 'constructors']) {
+          for (const [year, rows] of Object.entries(index?.[kind] || {})) {
+            const winner = rows.find((r) => r.position === '1');
+            if (winner && Number(year) < new Date().getFullYear()) merged[kind][year] = rowId(kind, winner);
+          }
+        }
+        return merged;
+      });
   }
   return championsPromise;
 }
 
-/** 先查參加過的賽季，再逐季查年度積分（只取最近 HISTORY_LIMIT 季） */
+/** 先查參加過的賽季；已存檔的賽季查索引，其餘逐季即時查（最多 HISTORY_LIMIT 季） */
 async function loadHistory(kind, id) {
   const p = `/${kind}/${encodeURIComponent(id)}`;
-  const seasonsJson = await get(`${p}/seasons/?limit=${PAGE_SIZE}`, DAY);
+  const [seasonsJson, index] = await Promise.all([
+    get(`${p}/seasons/?limit=${PAGE_SIZE}`, DAY),
+    loadStandingsIndex(),
+  ]);
   const seasons = seasonsJson.MRData.SeasonTable.Seasons.map((s) => Number(s.season));
-  const recent = seasons.slice(-HISTORY_LIMIT);
+
+  const fromIndex = [];
+  const missing = [];
+  for (const y of seasons) {
+    const rows = index?.[kind]?.[y];
+    if (!rows) {
+      missing.push(y);
+      continue;
+    }
+    const row = rows.find((r) => rowId(kind, r) === id);
+    if (row) fromIndex.push({ season: y, ...row });
+  }
+
+  const recent = missing.slice(-HISTORY_LIMIT);
   const table = kind === 'drivers' ? 'driverstandings' : 'constructorstandings';
   const listKey = kind === 'drivers' ? 'DriverStandings' : 'ConstructorStandings';
-  const rows = await Promise.all(recent.map(async (y) => {
+  const live = await Promise.all(recent.map(async (y) => {
     try {
       const json = await get(`/${y}${p}/${table}/`, ttlForSeason(y));
       const row = json.MRData.StandingsTable.StandingsLists[0]?.[listKey]?.[0];
@@ -313,7 +386,8 @@ async function loadHistory(kind, id) {
       return null;
     }
   }));
-  return { seasons, history: rows.filter(Boolean), truncated: seasons.length > recent.length };
+  const history = [...fromIndex, ...live.filter(Boolean)].sort((a, b) => a.season - b.season);
+  return { seasons, history, truncated: missing.length > recent.length };
 }
 
 function countTitles(champions, kind, id, history) {

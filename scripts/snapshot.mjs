@@ -7,11 +7,13 @@
 //
 // 本機執行：node scripts/snapshot.mjs [賽季]
 // ============================================================
-import { writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { configure, get, loadSeason, loadDriverProfile, loadTeamProfile } from '../js/api.js';
 
 const season = Number(process.argv[2]) || new Date().getFullYear();
 const responses = {};
+// 腳本一次要問很多次，放慢速度（一次一個、間隔 0.9 秒），避免一直被 API 限速
+configure({ maxConcurrent: 1, minGapMs: 900 });
 configure({ onResponse: (path, json) => { responses[path] = json; } });
 
 const data = await loadSeason(season);
@@ -31,8 +33,14 @@ configure({ onResponse: null });
 // Jolpica 不能一次查「某位車手的所有年度積分」，所以由這裡一年一年查好冠軍，
 // 網頁的介紹頁直接讀這份名單來計算「世界冠軍」次數。
 const champions = { generatedAt: new Date().toISOString(), drivers: {}, constructors: {} };
+// 已經存檔的賽季（data/history/standings.json）網頁會自己從存檔算冠軍，這裡只查還沒存檔的年份
+let archived = {};
+try {
+  archived = JSON.parse(await readFile(new URL('../data/history/standings.json', import.meta.url), 'utf8')).drivers || {};
+} catch { /* 還沒有存檔 */ }
 const years = [];
-for (let y = 1950; y < season; y++) years.push(y);
+for (let y = 1950; y < season; y++) if (!archived[y]) years.push(y);
+console.log(`冠軍名單：${Object.keys(archived).length} 季已存檔，需要查詢 ${years.length} 季`);
 const failed = [];
 async function fetchChampion(y) {
   try {
@@ -60,7 +68,7 @@ if (failed.length) console.log(`仍然失敗的年份：${failed.join(', ')}`);
 const nDrivers = Object.keys(champions.drivers).length;
 console.log(`冠軍名單：車手 ${nDrivers} 年、車隊 ${Object.keys(champions.constructors).length} 年；` +
   `最近：${champions.drivers[season - 1]} / ${champions.constructors[season - 1]}`);
-if (nDrivers > 0) {
+if (nDrivers > 0 || years.length === 0) {
   await writeFile(new URL('../data/champions.json', import.meta.url), JSON.stringify(champions));
   console.log('已寫入 data/champions.json');
 }
@@ -70,8 +78,6 @@ if (leader) {
   try {
     const dp = await loadDriverProfile(leader.Driver.driverId, season);
     console.log(`車手頁檢查 ${leader.Driver.driverId}：冠軍 ${dp.stats.titles}、分站冠軍 ${dp.stats.wins}、頒獎台 ${dp.stats.podiums}、竿位 ${dp.stats.poles}、出賽 ${dp.stats.starts}、參賽 ${dp.stats.seasons} 季、歷年表 ${dp.history.length} 列、本季 ${dp.seasonRaces.length} 站`);
-    const vet = await loadDriverProfile('hamilton', season);
-    console.log(`車手頁檢查 hamilton：冠軍 ${vet.stats.titles}（champions.json 在 Node 讀不到，所以只算最近 20 季）、分站冠軍 ${vet.stats.wins}、參賽 ${vet.stats.seasons} 季、歷年表 ${vet.history.length} 列`);
     const teamId = data.constructorStandings[0].Constructor.constructorId;
     const tp = await loadTeamProfile(teamId, season);
     console.log(`車隊頁檢查 ${teamId}：車隊冠軍 ${tp.stats.titles}、分站冠軍 ${tp.stats.wins}、竿位 ${tp.stats.poles}、參賽 ${tp.stats.races} 站、${tp.stats.seasons} 季、歷年表 ${tp.history.length} 列、車手 ${tp.drivers.map((d) => d.driverId).join('/')}、本季 ${tp.seasonRaces.length} 站`);

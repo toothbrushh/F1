@@ -2,7 +2,8 @@
 # 部署到 GitHub Pages
 # 何時執行：
 #   - push 到 main → 重新部署
-#   - 每 6 小時自動跑一次 → 更新備份快照（data/snapshot.json）
+#   - 每 6 小時自動跑一次 → 更新備份快照（data/snapshot.json），
+#     並補齊過去賽季的存檔（data/history/，會 commit 回 main）
 #   - 在 GitHub 的 Actions 頁面手動按 "Run workflow"
 # ============================================================
 name: Deploy to GitHub Pages
@@ -14,7 +15,7 @@ on:
     - cron: '17 */6 * * *'
 
 permissions:
-  contents: read
+  contents: write   # 讓 Actions 能把過去賽季的存檔 commit 回 repo
   pages: write
   id-token: write
 
@@ -32,10 +33,31 @@ jobs:
         with:
           node-version: 22
 
+      # 補齊過去賽季的存檔（每次最多用 200 次請求，避免超過 API 的每小時上限）
+      - name: Build historical seasons
+        continue-on-error: true
+        run: node scripts/history.mjs
+
       # 抓一份最新資料當備份。就算失敗（例如 API 暫時掛掉）也照樣部署網站。
       - name: Fetch data snapshot
         continue-on-error: true
         run: node scripts/snapshot.mjs
+
+      # 把新的存檔 commit 回 main，下次就不用再抓（只有 main 才 commit；其他分支只當檢查）
+      - name: Commit historical seasons
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/history
+          if git diff --cached --quiet; then
+            echo "存檔沒有變化"
+            exit 0
+          fi
+          git commit -m "Update historical season archive"
+          git pull --rebase origin main
+          git push origin HEAD:main
 
       - uses: actions/upload-pages-artifact@v3
         with:
