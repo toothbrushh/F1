@@ -33,6 +33,16 @@ jobs:
         with:
           node-version: 22
 
+      # 暫時的檢查：看 OpenF1 的回應（之後會移除）
+      - name: Probe OpenF1
+        continue-on-error: true
+        run: |
+          for q in "sessions?year=2025&session_name=Race" "sessions?year=2026&session_name=Race" "stints?session_key=latest" "sessions?session_key=latest"; do
+            echo "=== $q"
+            curl -sS -i -m 20 "https://api.openf1.org/v1/$q" | head -c 700
+            echo
+          done
+
       # 補齊過去賽季的存檔（每次最多用 200 次請求，避免超過 API 的每小時上限）
       - name: Build historical seasons
         continue-on-error: true
