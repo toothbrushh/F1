@@ -12,6 +12,8 @@ import { configure, get, loadSeason, loadDriverProfile, loadTeamProfile } from '
 
 const season = Number(process.argv[2]) || new Date().getFullYear();
 const responses = {};
+// 腳本一次要問很多次，放慢速度（一次一個、間隔 0.9 秒），避免一直被 API 限速
+configure({ maxConcurrent: 1, minGapMs: 900 });
 configure({ onResponse: (path, json) => { responses[path] = json; } });
 
 const data = await loadSeason(season);

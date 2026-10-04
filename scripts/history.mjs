@@ -34,10 +34,13 @@ async function readJson(name) {
 }
 
 // 物件的 key 依字母排序後再存，內容沒變時檔案就一模一樣，git 不會產生多餘的變更
+// 和 JSON.stringify 一樣：物件裡值是 undefined 的欄位直接略過（例如沒有名次的車手沒有 position），
+// 陣列裡的 undefined 寫成 null，確保輸出永遠是合法的 JSON
 function stableStringify(value) {
-  if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
+  if (Array.isArray(value)) return `[${value.map((v) => (v === undefined ? 'null' : stableStringify(v))).join(',')}]`;
   if (value && typeof value === 'object') {
-    return `{${Object.keys(value).sort().map((k) => `${JSON.stringify(k)}:${stableStringify(value[k])}`).join(',')}}`;
+    return `{${Object.keys(value).sort().filter((k) => value[k] !== undefined)
+      .map((k) => `${JSON.stringify(k)}:${stableStringify(value[k])}`).join(',')}}`;
   }
   return JSON.stringify(value);
 }
@@ -60,6 +63,8 @@ console.log(`尚未存檔 ${missing.length} 季、需要重新檢查 ${stale.len
 let requests = 0;
 let responses = {};
 let errors = [];
+// 腳本一次要問很多次，放慢速度（一次一個、間隔 0.9 秒），避免一直被 API 限速
+configure({ maxConcurrent: 1, minGapMs: 900 });
 configure({
   onResponse: (path, json) => { responses[path] = json; requests++; },
   onError: (path, err) => {
@@ -120,5 +125,7 @@ for (const y of Object.keys(manifest).map(Number).sort()) {
     }));
   }
 }
-await writeFile(new URL('standings.json', DIR), stableStringify(index));
+const indexJson = stableStringify(index);
+JSON.parse(indexJson); // 寫入前先確認是合法的 JSON，壞掉就讓這一步直接失敗
+await writeFile(new URL('standings.json', DIR), indexJson);
 console.log(`積分榜索引：車手 ${Object.keys(index.drivers).length} 季、車隊 ${Object.keys(index.constructors).length} 季`);

@@ -31,6 +31,8 @@ const config = {
   onError: null, // (path, err) => void，存檔腳本用來發現「有請求失敗、資料不完整」
   snapshotUrl: 'data/snapshot.json',
   historyDir: 'data/history/',
+  maxConcurrent: 2, // 同時最多幾個請求
+  minGapMs: 350, // 每個請求之間至少間隔幾毫秒（GitHub Actions 的腳本會調得更慢）
 };
 export function configure(options) {
   Object.assign(config, options);
@@ -39,17 +41,15 @@ export function configure(options) {
 // ============================================================
 // 1. 請求佇列：限制同時發出的請求數
 // Jolpica 有速率限制（每秒約 4 次、每小時約 500 次），一口氣發 20 個請求會被擋（HTTP 429）。
-// 所以我們排隊：同時最多 2 個，且每個請求之間至少間隔 350ms。
+// 所以我們排隊：同時最多 config.maxConcurrent 個，且每個請求之間至少間隔 config.minGapMs。
 // ============================================================
-const MAX_CONCURRENT = 2;
-const MIN_GAP_MS = 350;
 let active = 0;
 let lastStart = 0;
 const waiting = [];
 
 function runQueue() {
-  if (active >= MAX_CONCURRENT || waiting.length === 0) return;
-  const wait = Math.max(0, lastStart + MIN_GAP_MS - Date.now());
+  if (active >= config.maxConcurrent || waiting.length === 0) return;
+  const wait = Math.max(0, lastStart + config.minGapMs - Date.now());
   if (wait > 0) {
     setTimeout(runQueue, wait);
     return;
