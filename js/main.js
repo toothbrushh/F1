@@ -273,10 +273,12 @@ async function loadTyreChart(race) {
   } catch (err) {
     console.error(err);
     const el = target();
-    if (el) {
-      el.innerHTML = `<div class="empty"><p>輪胎資料載入失敗：${esc(err.message)}</p>
-        <p class="muted small">OpenF1 在比賽進行中可能暫停免費查詢，稍後再試試看。</p></div>`;
-    }
+    if (!el) return;
+    el.innerHTML = err.code === 'LIVE_SESSION'
+      ? `<div class="empty"><p>🏁 現在有 F1 賽事正在進行，OpenF1 在賽事期間暫停免費查詢。</p>
+        <p class="muted small">這一站的輪胎資料還沒存檔，等賽事結束後再回來看就可以了。</p></div>`
+      : `<div class="empty"><p>輪胎資料載入失敗：${esc(err.message)}</p>
+        <p class="muted small">稍後再試試看。</p></div>`;
   }
 }
 

@@ -56,7 +56,9 @@ F1/
 │   └── profile.js        車手 / 車隊介紹頁
 ├── data/stories.json     車手與車隊的中文故事（可以自己編輯！）
 ├── data/history/         過去賽季的存檔（由 GitHub Actions 自動產生，不要手動改）
+├── data/tyres/           比完的比賽的輪胎資料存檔（由 GitHub Actions 自動產生）
 ├── scripts/history.mjs   由 GitHub Actions 執行，補齊過去賽季的存檔
+├── scripts/tyres.mjs     由 GitHub Actions 執行，在 OpenF1 開放時把輪胎資料存檔
 ├── scripts/snapshot.mjs  由 GitHub Actions 執行，產生資料快照與歷屆冠軍名單
 └── .github/workflows/pages.yml   自動部署設定
 ```

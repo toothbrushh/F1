@@ -499,6 +499,12 @@ async function openf1Get(path, ttl) {
     const res = await config.fetchImpl(OPENF1_BASE + path);
     // OpenF1 查不到資料時會回 404，當成「沒有資料」
     if (res.status === 404) return [];
+    // F1 賽事進行中，OpenF1 會暫停所有免費查詢（連過去的比賽也查不到），回 401
+    if (res.status === 401) {
+      const err = new Error('F1 賽事進行中，OpenF1 暫停免費查詢');
+      err.code = 'LIVE_SESSION';
+      throw err;
+    }
     if (!res.ok) throw new Error(`HTTP ${res.status}：${path}`);
     const data = await res.json();
     cacheWrite(key, data);
@@ -510,21 +516,36 @@ async function openf1Get(path, ttl) {
 }
 
 /**
- * 取得某一站正賽（或衝刺賽）的輪胎 stint 資料
  * OpenF1 的賽事代號（session_key）跟 Jolpica 不一樣，所以用「比賽開始時間」來配對同一場比賽。
+ * 正賽：開始時間相差 1 天以內；衝刺賽在正賽前 1～2 天。（存檔腳本也用這個函式）
+ */
+export function matchSession(sessions, race, sessionName = 'Race') {
+  const start = new Date(`${race.date}T${race.time || '12:00:00Z'}`);
+  const maxGap = sessionName === 'Race' ? DAY : 3 * DAY;
+  return (Array.isArray(sessions) ? sessions : [])
+    .filter((s) => Math.abs(new Date(s.date_start) - start) < maxGap)
+    .sort((a, b) => Math.abs(new Date(a.date_start) - start) - Math.abs(new Date(b.date_start) - start))[0] || null;
+}
+
+/** 輪胎資料存檔（data/tyres/{年份}.json，由 GitHub Actions 在 OpenF1 開放時存好） */
+const tyreArchive = new Map();
+function loadTyreArchive(season) {
+  if (!tyreArchive.has(season)) tyreArchive.set(season, fetchJsonFile(`data/tyres/${season}.json`));
+  return tyreArchive.get(season);
+}
+
+/**
+ * 取得某一站正賽的輪胎 stint 資料：先找存檔，沒有才即時問 OpenF1
  * @returns {Promise<{ stints: Array, sessionKey: number } | null>} 找不到這場比賽時回傳 null
  */
 export async function loadTyreStints(season, race, sessionName = 'Race') {
-  const start = new Date(`${race.date}T${race.time || '12:00:00Z'}`);
-  const finishedLongAgo = Date.now() - start > 2 * DAY;
-  const ttl = finishedLongAgo ? 7 * DAY : 10 * MIN;
+  const archived = (await loadTyreArchive(season))?.races?.[race.round];
+  if (archived?.stints?.length) return archived;
 
+  const start = new Date(`${race.date}T${race.time || '12:00:00Z'}`);
+  const ttl = Date.now() - start > 2 * DAY ? 7 * DAY : 10 * MIN;
   const sessions = await openf1Get(`/sessions?year=${season}&session_name=${encodeURIComponent(sessionName)}`, ttl);
-  // 正賽：開始時間相差 1 天以內；衝刺賽在正賽前 1～2 天
-  const maxGap = sessionName === 'Race' ? DAY : 3 * DAY;
-  const session = (Array.isArray(sessions) ? sessions : [])
-    .filter((s) => Math.abs(new Date(s.date_start) - start) < maxGap)
-    .sort((a, b) => Math.abs(new Date(a.date_start) - start) - Math.abs(new Date(b.date_start) - start))[0];
+  const session = matchSession(sessions, race, sessionName);
   if (!session) return null;
 
   const stints = await openf1Get(`/stints?session_key=${session.session_key}`, ttl);
