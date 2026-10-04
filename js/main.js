@@ -9,7 +9,8 @@
 // 這種「網址就是狀態」的做法叫做 hash 路由：
 // 重新整理不會跑掉、可以分享網址、瀏覽器「上一頁」也能用。
 // ============================================================
-import { loadSeason, clearCache } from './api.js';
+import { loadSeason, clearCache, loadTyreStints, TYRE_DATA_FROM } from './api.js';
+import { renderTyreStrategy } from './tyres.js';
 import { renderTimeline, raceStates, nextRace } from './timeline.js';
 import { renderPointsChart } from './chart.js';
 import { avatar, hydratePhotos } from './photos.js';
@@ -207,6 +208,8 @@ function viewRound(route) {
   const tabs = [['qualifying', '排位賽']];
   if (race.hasSprint) tabs.push(['sprint', '衝刺賽']);
   tabs.push(['race', '正賽']);
+  // 輪胎資料（OpenF1）從 2023 年才有，而且比賽要比完才有意義
+  if (race.completed && d.season >= TYRE_DATA_FROM) tabs.push(['tyres', '輪胎策略']);
   let tab = route.tab;
   if (!tabs.some(([k]) => k === tab)) tab = race.completed ? 'race' : 'qualifying';
 
@@ -218,6 +221,7 @@ function viewRound(route) {
   let body;
   if (tab === 'qualifying') body = qualifyingTable(race.qualifying);
   else if (tab === 'sprint') body = resultTable(race.sprint, true);
+  else if (tab === 'tyres') body = `<div id="tyre-chart" data-round="${race.round}"><div class="loading"><div class="spinner"></div><p>正在載入輪胎資料…</p></div></div>`;
   else body = resultTable(race.results, false);
   if (!body) {
     body = `<div class="empty">
@@ -241,10 +245,39 @@ function viewRound(route) {
       ${body}
     </article>`;
 
+  if (tab === 'tyres') loadTyreChart(race);
+
   document.getElementById('round-select').addEventListener('change', (e) => {
     location.hash = `round/${e.target.value}/${tab}`;
   });
   return race.round;
+}
+
+/** 輪胎資料要另外向 OpenF1 抓，所以先顯示「載入中」，抓到後再畫圖 */
+async function loadTyreChart(race) {
+  const season = state.data.season;
+  // 抓資料要一點時間，期間使用者可能已經切到別頁；畫之前確認還在同一站的輪胎分頁
+  const target = () => {
+    const el = document.getElementById('tyre-chart');
+    return el && Number(el.dataset.round) === race.round ? el : null;
+  };
+  try {
+    const data = await loadTyreStints(season, race);
+    const el = target();
+    if (!el) return;
+    if (!data) {
+      el.innerHTML = '<p class="muted">在 OpenF1 找不到這場比賽的輪胎資料（剛比完的比賽可能要過一陣子才會有）。</p>';
+      return;
+    }
+    renderTyreStrategy(el, race.results, data.stints, season);
+  } catch (err) {
+    console.error(err);
+    const el = target();
+    if (el) {
+      el.innerHTML = `<div class="empty"><p>輪胎資料載入失敗：${esc(err.message)}</p>
+        <p class="muted small">OpenF1 在比賽進行中可能暫停免費查詢，稍後再試試看。</p></div>`;
+    }
+  }
 }
 
 // 非數字的名次代碼（API 用字母表示）

@@ -8,7 +8,7 @@
 // 本機執行：node scripts/snapshot.mjs [賽季]
 // ============================================================
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { configure, get, loadSeason, loadDriverProfile, loadTeamProfile } from '../js/api.js';
+import { configure, get, loadSeason, loadDriverProfile, loadTeamProfile, loadTyreStints } from '../js/api.js';
 
 const season = Number(process.argv[2]) || new Date().getFullYear();
 const responses = {};
@@ -83,6 +83,26 @@ if (leader) {
     console.log(`車隊頁檢查 ${teamId}：車隊冠軍 ${tp.stats.titles}、分站冠軍 ${tp.stats.wins}、竿位 ${tp.stats.poles}、參賽 ${tp.stats.races} 站、${tp.stats.seasons} 季、歷年表 ${tp.history.length} 列、車手 ${tp.drivers.map((d) => d.driverId).join('/')}、本季 ${tp.seasonRaces.length} 站`);
   } catch (err) {
     console.log('介紹頁 API 檢查失敗：', err.message);
+  }
+}
+
+// 健康檢查：輪胎策略（OpenF1）—— 用最近一站比完的比賽，確認能配對到賽事、車號對得上
+const lastDone = [...data.races].reverse().find((r) => r.completed);
+if (lastDone) {
+  try {
+    const tyres = await loadTyreStints(season, lastDone);
+    if (!tyres) {
+      console.log(`輪胎檢查 R${lastDone.round}：OpenF1 找不到這場比賽`);
+    } else {
+      const numbers = new Set(lastDone.results.map((r) => String(r.number)));
+      const matched = new Set(tyres.stints.map((s) => String(s.driver_number)).filter((n) => numbers.has(n)));
+      const compounds = [...new Set(tyres.stints.map((s) => s.compound))].join('/');
+      console.log(`輪胎檢查 R${lastDone.round}：session ${tyres.sessionKey}、${tyres.stints.length} 段 stint、` +
+        `配對到 ${matched.size}/${numbers.size} 位車手、配方 ${compounds}`);
+      console.log('  第一筆 stint：', JSON.stringify(tyres.stints[0]));
+    }
+  } catch (err) {
+    console.log('輪胎檢查失敗：', err.message);
   }
 }
 
