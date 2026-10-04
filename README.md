@@ -23,7 +23,7 @@
 
 > 如果 repo 是 private，免費帳號沒辦法用 GitHub Pages，需要先把 repo 改成 public。
 
-之後每次 push 到 `main`，網站都會自動重新部署。另外 GitHub Actions 每 6 小時也會自動抓一份最新資料當作備份。
+之後每次 push 到 `main`，網站都會自動重新部署。另外 GitHub Actions 每 6 小時也會自動抓一份最新資料當作備份，並把過去賽季的成績存檔到 `data/history/`（commit 回 `main`），讓過去的賽季不用每次重新查詢。
 
 ## 💻 在自己電腦上執行
 
@@ -54,6 +54,8 @@ F1/
 │   ├── photos.js         車手 / 車隊照片（從 Wikipedia 取得）
 │   └── profile.js        車手 / 車隊介紹頁
 ├── data/stories.json     車手與車隊的中文故事（可以自己編輯！）
+├── data/history/         過去賽季的存檔（由 GitHub Actions 自動產生，不要手動改）
+├── scripts/history.mjs   由 GitHub Actions 執行，補齊過去賽季的存檔
 ├── scripts/snapshot.mjs  由 GitHub Actions 執行，產生資料快照與歷屆冠軍名單
 └── .github/workflows/pages.yml   自動部署設定
 ```
@@ -83,7 +85,10 @@ F1/
 main.js 讀網址 ?season=2026
    │
    ▼
-api.js loadSeason(2026) ──► 快取有效？──是──► 用快取
+api.js loadSeason(2026) ──► 過去賽季有存檔？──是──► 讀 data/history/{年份}.json
+   │                          │否
+   │                          ▼
+   │                     快取有效？──是──► 用快取
    │                          │否
    │                          ▼
    │                     呼叫 Jolpica API ──失敗──► 讀 snapshot.json

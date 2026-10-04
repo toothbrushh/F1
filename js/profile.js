@@ -24,7 +24,7 @@ document.querySelectorAll('[data-back]').forEach((a) => {
 const isChampion = (h) => h.position === '1' && h.season < new Date().getFullYear();
 
 function truncatedNote(p) {
-  return p.historyTruncated ? '<p class="muted small">只列出最近 20 個賽季。</p>' : '';
+  return p.historyTruncated ? '<p class="muted small">部分較早的賽季還沒存檔，暫時沒有列出（存檔會自動補齊）。</p>' : '';
 }
 
 function statCard(label, value, note = '') {

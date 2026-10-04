@@ -389,7 +389,9 @@ function updateCountdowns() {
 // ============================================================
 function showStatus(meta) {
   const time = meta.oldest ? formatDateTime(new Date(meta.oldest)) : '';
-  if (meta.snapshot > 0) {
+  if (meta.archive > 0 && meta.live === 0 && meta.snapshot === 0) {
+    $status.textContent = '✓ 歷史賽季（已存檔的完整成績）';
+  } else if (meta.snapshot > 0) {
     $status.innerHTML = `<span class="warn">⚠ 即時 API 暫時無法連線，目前顯示備份資料（${esc(formatDateTime(new Date(meta.snapshotTime)))}）</span>`;
   } else if (meta.live > 0) {
     $status.textContent = `✓ 已更新至最新資料（${formatDateTime(new Date())}）`;
