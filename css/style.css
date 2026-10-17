@@ -164,6 +164,21 @@ select, .btn, .chip {
 .medal { width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; font-size: .75rem; font-weight: 800; color: #111; }
 .m1 { background: var(--gold); } .m2 { background: var(--silver); } .m3 { background: var(--bronze); }
 
+/* ---------- 接下來的賽程 ---------- */
+.upcoming-card { border-left: 4px solid var(--accent); }
+.upcoming-days { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 20px; }
+.upcoming-day h4 { margin: 6px 0; font-size: .85rem; color: var(--accent); }
+.upcoming-day ul { list-style: none; margin: 0; padding: 0; }
+.upcoming-day li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-top: 1px solid var(--border); }
+.upcoming-day li.is-race .up-name { font-weight: 800; }
+.upcoming-day li.is-live { background: rgba(225, 6, 0, .12); border-radius: 6px; padding-left: 6px; }
+.up-time { font-weight: 700; min-width: 3.2em; }
+.up-name { flex: 1; display: flex; flex-direction: column; line-height: 1.3; }
+.up-name small { color: var(--muted); font-size: .75rem; }
+.live-badge { color: var(--accent); font-weight: 800; font-size: .8rem; white-space: nowrap; animation: blink 1.4s infinite; }
+.upcoming-day .countdown { margin: 0; white-space: nowrap; font-size: .8rem; }
+@keyframes blink { 50% { opacity: .4; } }
+
 /* ---------- 表格 ---------- */
 /* 表格太寬時，只在表格內部左右滑動，整頁不會跑版 */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -373,6 +388,6 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .step-next .step-dot, .spinner { animation: none; }
+  .step-next .step-dot, .spinner, .live-badge { animation: none; }
   .timeline { scroll-behavior: auto; }
 }

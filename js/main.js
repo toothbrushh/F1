@@ -115,6 +115,7 @@ function viewSummary() {
   }
 
   $view.innerHTML = `
+    ${upcomingCard(d)}
     <div class="card-grid">${cards.join('') || '<p class="muted">這個賽季還沒有資料。</p>'}</div>
     <p class="progress-text">已完成 <b>${doneCount}</b> / ${d.races.length} 站${d.standingsRound ? `（積分統計至第 ${d.standingsRound} 站）` : ''}</p>
     <div class="two-col">
@@ -136,6 +137,77 @@ function viewSummary() {
 }
 
 const fmtPts = (n) => Number(n.toFixed(1));
+
+// ============================================================
+// 接下來的賽程：今天、明天、後天的所有賽段（練習、衝刺、排位、正賽）
+// 這三天都沒有比賽時，改列出下一個比賽週末的賽程
+// ============================================================
+// 每個賽段大約進行多久（用來判斷「進行中」）
+const SESSION_MINUTES = {
+  FirstPractice: 60, SecondPractice: 60, ThirdPractice: 60,
+  SprintQualifying: 45, SprintShootout: 45, Sprint: 60, Qualifying: 60, Race: 120,
+};
+const DAY_NAMES = ['今天', '明天', '後天'];
+
+/** 以「使用者當地的日期」計算相差幾天：0 = 今天、1 = 明天… */
+function dayOffset(date, now) {
+  const a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const b = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  return Math.round((b - a) / 86400000);
+}
+
+function upcomingCard(d) {
+  if (d.season !== CURRENT_YEAR) return '';
+  const now = new Date();
+  const all = d.races.flatMap((race) => race.sessions
+    .filter((s) => s.time) // 時間未定的賽段先不列
+    .map((s) => {
+      const start = toDate(s.date, s.time);
+      const end = new Date(start.getTime() + (SESSION_MINUTES[s.key] || 60) * 60000);
+      return { race, key: s.key, start, end };
+    }))
+    .filter((s) => s.end > now)
+    .sort((a, b) => a.start - b.start);
+  if (!all.length) return '';
+
+  let list = all.filter((s) => dayOffset(s.start, now) <= 2);
+  let title = '接下來三天的賽程';
+  if (!list.length) {
+    // 三天內沒有比賽 → 列出下一個比賽週末
+    const nextRace = all[0].race;
+    list = all.filter((s) => s.race === nextRace);
+    title = `下一個比賽週末 · ${countryFlag(nextRace.circuit?.Location?.country)} ${nextRace.name}`;
+  }
+  const firstUpcoming = list.find((s) => s.start > now);
+
+  // 依日期分組
+  const groups = new Map();
+  for (const s of list) {
+    const off = dayOffset(s.start, now);
+    const label = `${off >= 0 && off <= 2 ? `${DAY_NAMES[off]} · ` : ''}${formatDate(s.start)}`;
+    if (!groups.has(label)) groups.set(label, []);
+    groups.get(label).push(s);
+  }
+
+  return `<article class="card upcoming-card">
+    <div class="card-head"><h3>🗓 ${title}</h3><a class="more" href="#schedule/${list[0].race.round}">完整賽程 →</a></div>
+    <div class="upcoming-days">${[...groups.entries()].map(([label, items]) => `
+      <div class="upcoming-day">
+        <h4>${esc(label)}</h4>
+        <ul>${items.map((s) => {
+          const live = s.start <= now && now < s.end;
+          return `<li class="${live ? 'is-live' : ''} ${s.key === 'Race' ? 'is-race' : ''}">
+            <span class="mono up-time">${formatTime(s.start)}</span>
+            <span class="up-name">${SESSION_LABELS[s.key] || s.key}<small>${countryFlag(s.race.circuit?.Location?.country)} R${s.race.round} ${esc(s.race.circuit?.Location?.locality || '')}</small></span>
+            ${live ? '<span class="live-badge">● 進行中</span>'
+              : s === firstUpcoming ? `<span class="countdown small" data-countdown="${s.start.toISOString()}"></span>` : ''}
+          </li>`;
+        }).join('')}</ul>
+      </div>`).join('')}
+    </div>
+    <p class="muted small">時間為你的當地時間（${esc(userTimeZone())}）。</p>
+  </article>`;
+}
 
 // ============================================================
 // 畫面 2、3：車手積分 / 車隊積分
