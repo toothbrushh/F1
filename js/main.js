@@ -9,7 +9,7 @@
 // 這種「網址就是狀態」的做法叫做 hash 路由：
 // 重新整理不會跑掉、可以分享網址、瀏覽器「上一頁」也能用。
 // ============================================================
-import { loadSeason, clearCache, loadTyreStints, TYRE_DATA_FROM } from './api.js';
+import { loadSeason, clearCache, loadTyreStints, TYRE_DATA_FROM, scheduledRaceCount } from './api.js';
 import { renderTyreStrategy } from './tyres.js';
 import { renderTimeline, raceStates, nextRace } from './timeline.js';
 import { renderPointsChart } from './chart.js';
@@ -22,15 +22,18 @@ import {
 
 const FIRST_SEASON = 1950;
 const CURRENT_YEAR = new Date().getFullYear();
+// 明年、後年的賽程公布後也能看（下拉選單只會在賽程真的公布後才出現這兩年）
+// 注意：const 要先宣告才能用，所以放在 clampSeason() 被呼叫之前
+const LAST_SEASON = CURRENT_YEAR + 2;
 const params = new URLSearchParams(location.search);
 const season = clampSeason(Number(params.get('season')) || CURRENT_YEAR);
 
-const state = { data: null, scheduleFilter: 'all' };
+const state = { data: null, scheduleFilter: 'all', futureSeasons: [] }; // futureSeasons：[{ year, races }] 已公布賽程的未來賽季
 const $view = document.getElementById('view');
 const $status = document.getElementById('data-status');
 
 function clampSeason(y) {
-  return Math.min(CURRENT_YEAR, Math.max(FIRST_SEASON, y));
+  return Math.min(LAST_SEASON, Math.max(FIRST_SEASON, y));
 }
 
 // ============================================================
@@ -109,12 +112,14 @@ function viewSummary() {
         <h3>下一站 · R${next.round}</h3>
         <p class="big">${countryFlag(next.circuit?.Location?.country)} ${esc(next.name)}</p>
         <p class="countdown" data-countdown="${start?.toISOString() || ''}">${start ? countdown(start) : ''}</p>
-        <p class="muted">正賽：${formatDateTime(start)}${next.hasSprint ? ' · 衝刺賽週末' : ''}</p>
+        <p class="muted">正賽：${next.time ? formatDateTime(start) : `${formatDate(start)}（時間未定）`}${next.hasSprint ? ' · 衝刺賽週末' : ''}</p>
         <a class="more" href="#schedule/${next.round}">完整時間表 →</a>
       </article>`);
   }
 
   $view.innerHTML = `
+    ${seasonBanner(d)}
+    ${upcomingCard(d)}
     <div class="card-grid">${cards.join('') || '<p class="muted">這個賽季還沒有資料。</p>'}</div>
     <p class="progress-text">已完成 <b>${doneCount}</b> / ${d.races.length} 站${d.standingsRound ? `（積分統計至第 ${d.standingsRound} 站）` : ''}</p>
     <div class="two-col">
@@ -136,6 +141,101 @@ function viewSummary() {
 }
 
 const fmtPts = (n) => Number(n.toFixed(1));
+
+/**
+ * 賽季提示：
+ *   - 看未來賽季時：說明賽季還沒開始，列出已公布幾站、第一站是哪裡
+ *   - 看今年時：如果明年（或後年）的賽程已經公布，提供連結
+ */
+function seasonBanner(d) {
+  if (d.season > CURRENT_YEAR) {
+    const first = d.races[0];
+    if (!first) return '';
+    return `<article class="card season-banner">
+      <h3>🗓 ${d.season} 賽季還沒開始</h3>
+      <p>目前已公布 <b>${d.races.length}</b> 站賽程，揭幕戰是 ${countryFlag(first.circuit?.Location?.country)} <b>${esc(first.name)}</b>（${formatDate(toDate(first.date, first.time))}）。
+        積分與成績會在開賽後出現。賽程有時會調整，以最新公布為準。</p>
+      <a class="more" href="#schedule">查看完整賽程 →</a>
+    </article>`;
+  }
+  if (d.season === CURRENT_YEAR && state.futureSeasons.length) {
+    return `<article class="card season-banner">${state.futureSeasons.map(({ year, races }) => `
+      <p>📅 <b>${year} 賽季賽程已公布</b>（${races} 站）<a class="more" href="?season=${year}#schedule">查看 ${year} 賽程 →</a></p>`).join('')}
+    </article>`;
+  }
+  return '';
+}
+
+// ============================================================
+// 接下來的賽程：今天、明天、後天的所有賽段（練習、衝刺、排位、正賽）
+// 這三天都沒有比賽時，改列出下一個比賽週末的賽程
+// ============================================================
+// 每個賽段大約進行多久（用來判斷「進行中」）
+const SESSION_MINUTES = {
+  FirstPractice: 60, SecondPractice: 60, ThirdPractice: 60,
+  SprintQualifying: 45, SprintShootout: 45, Sprint: 60, Qualifying: 60, Race: 120,
+};
+const DAY_NAMES = ['今天', '明天', '後天'];
+
+/** 以「使用者當地的日期」計算相差幾天：0 = 今天、1 = 明天… */
+function dayOffset(date, now) {
+  const a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const b = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  return Math.round((b - a) / 86400000);
+}
+
+function upcomingCard(d) {
+  if (d.season !== CURRENT_YEAR) return '';
+  const now = new Date();
+  const all = d.races.flatMap((race) => race.sessions
+    .filter((s) => s.time) // 時間未定的賽段先不列
+    .map((s) => {
+      const start = toDate(s.date, s.time);
+      const end = new Date(start.getTime() + (SESSION_MINUTES[s.key] || 60) * 60000);
+      return { race, key: s.key, start, end };
+    }))
+    .filter((s) => s.end > now)
+    .sort((a, b) => a.start - b.start);
+  if (!all.length) return '';
+
+  let list = all.filter((s) => dayOffset(s.start, now) <= 2);
+  let title = '接下來三天的賽程';
+  if (!list.length) {
+    // 三天內沒有比賽 → 列出下一個比賽週末
+    const nextRace = all[0].race;
+    list = all.filter((s) => s.race === nextRace);
+    title = `下一個比賽週末 · ${countryFlag(nextRace.circuit?.Location?.country)} ${nextRace.name}`;
+  }
+  const firstUpcoming = list.find((s) => s.start > now);
+
+  // 依日期分組
+  const groups = new Map();
+  for (const s of list) {
+    const off = dayOffset(s.start, now);
+    const label = `${off >= 0 && off <= 2 ? `${DAY_NAMES[off]} · ` : ''}${formatDate(s.start)}`;
+    if (!groups.has(label)) groups.set(label, []);
+    groups.get(label).push(s);
+  }
+
+  return `<article class="card upcoming-card">
+    <div class="card-head"><h3>🗓 ${title}</h3><a class="more" href="#schedule/${list[0].race.round}">完整賽程 →</a></div>
+    <div class="upcoming-days">${[...groups.entries()].map(([label, items]) => `
+      <div class="upcoming-day">
+        <h4>${esc(label)}</h4>
+        <ul>${items.map((s) => {
+          const live = s.start <= now && now < s.end;
+          return `<li class="${live ? 'is-live' : ''} ${s.key === 'Race' ? 'is-race' : ''}">
+            <span class="mono up-time">${formatTime(s.start)}</span>
+            <span class="up-name">${SESSION_LABELS[s.key] || s.key}<small>${countryFlag(s.race.circuit?.Location?.country)} R${s.race.round} ${esc(s.race.circuit?.Location?.locality || '')}</small></span>
+            ${live ? '<span class="live-badge">● 進行中</span>'
+              : s === firstUpcoming ? `<span class="countdown small" data-countdown="${s.start.toISOString()}"></span>` : ''}
+          </li>`;
+        }).join('')}</ul>
+      </div>`).join('')}
+    </div>
+    <p class="muted small">時間為你的當地時間（${esc(userTimeZone())}）。</p>
+  </article>`;
+}
 
 // ============================================================
 // 畫面 2、3：車手積分 / 車隊積分
@@ -452,12 +552,26 @@ async function load() {
   render();
 }
 
+/** 檢查明年、後年的賽程公布了沒，公布了就加進賽季選單，並在今年的總覽顯示提示 */
+async function addFutureSeasons(select) {
+  for (let y = CURRENT_YEAR + 1; y <= LAST_SEASON; y++) {
+    const races = await scheduledRaceCount(y);
+    if (!races) break; // 明年都還沒公布，後年更不可能
+    state.futureSeasons.push({ year: y, races });
+    if (y !== season) select.add(new Option(`${y}（賽程）`, String(y)), 0);
+  }
+  // 總覽頁的提示要等檢查完才知道要不要顯示，所以重畫一次
+  if (state.futureSeasons.length && season === CURRENT_YEAR && parseRoute().view === 'summary') render();
+}
+
 function init() {
   // 賽季下拉選單：今年 → 1950
   const select = document.getElementById('season-select');
   for (let y = CURRENT_YEAR; y >= FIRST_SEASON; y--) {
     select.add(new Option(String(y), String(y), false, y === season));
   }
+  // 網址直接指定未來賽季（例如分享來的連結）時，先把它加進選單
+  if (season > CURRENT_YEAR) select.add(new Option(`${season}（賽程）`, String(season), false, true), 0);
   select.addEventListener('change', () => {
     // 換賽季 = 換網址參數，頁面重新載入；保留目前的分頁 hash（分站編號可能不存在，路由會自動處理）
     const view = parseRoute().view;
@@ -487,7 +601,8 @@ function init() {
   if (season === CURRENT_YEAR) setInterval(load, 10 * 60 * 1000);
 
   document.title = `${season} F1 賽季成績`;
-  load();
+  // 主要資料載入完再檢查未來賽季，避免兩邊的請求互相干擾
+  load().then(() => addFutureSeasons(select));
 }
 
 init();
