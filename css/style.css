@@ -164,6 +164,12 @@ select, .btn, .chip {
 .medal { width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; font-size: .75rem; font-weight: 800; color: #111; }
 .m1 { background: var(--gold); } .m2 { background: var(--silver); } .m3 { background: var(--bronze); }
 
+/* ---------- 賽季提示 ---------- */
+.season-banner { border-left: 4px solid var(--gold); }
+.season-banner h3 { color: var(--text); }
+.season-banner p { margin: 4px 0; }
+.season-banner .more { margin: 0 0 0 10px; }
+
 /* ---------- 接下來的賽程 ---------- */
 .upcoming-card { border-left: 4px solid var(--accent); }
 .upcoming-days { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 20px; }

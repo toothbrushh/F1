@@ -257,7 +257,7 @@ export async function loadSeason(season) {
   // Promise.all：這幾個請求彼此獨立，可以同時進行（實際上會經過佇列排隊）
   const [schedule, driverSt, constructorSt, resultPages, qualiPages, sprintPages] = await Promise.all([
     get(`/${season}/races/?limit=${PAGE_SIZE}`, ttl),
-    get(`/${season}/driverstandings/`, ttl),
+    get(`/${season}/driverstandings/`, ttl).catch(() => null), // 還沒開賽的賽季可能沒有積分榜
     get(`/${season}/constructorstandings/`, ttl).catch(() => null), // 1958 年以前沒有車隊積分
     getAllPages(`/${season}/results/`, ttl),
     getAllPages(`/${season}/qualifying/`, ttl).catch(() => []),
@@ -293,7 +293,7 @@ export async function loadSeason(season) {
     };
   });
 
-  const dList = driverSt.MRData.StandingsTable.StandingsLists[0];
+  const dList = driverSt?.MRData.StandingsTable.StandingsLists[0];
   const cList = constructorSt?.MRData.StandingsTable.StandingsLists[0];
 
   return {
@@ -304,6 +304,19 @@ export async function loadSeason(season) {
     standingsRound: Number(dList?.round || 0),
     meta: { ...sourceLog },
   };
+}
+
+/**
+ * 某個未來賽季的賽程公布了沒？回傳已公布的站數（0 = 還沒公布或查詢失敗）
+ * 只問 1 筆資料（limit=1），看 MRData.total 就知道總共幾站；結果快取 6 小時。
+ */
+export async function scheduledRaceCount(season) {
+  try {
+    const json = await get(`/${season}/races/?limit=1`, 6 * HOUR);
+    return Number(json.MRData.total) || 0;
+  } catch {
+    return 0;
+  }
 }
 
 // ============================================================
