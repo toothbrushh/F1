@@ -309,6 +309,42 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
 .tbar small { font-size: .65rem; color: var(--muted); margin-top: 4px; }
 .tbar:hover .tbar-fill { filter: brightness(1.25); }
 
+/* ---------- 輪胎策略 ---------- */
+.ty-head { margin-bottom: 10px; }
+.ty-head p { margin: 6px 0 0; }
+.ty-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .85rem; color: var(--muted); }
+.ty-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.ty-swatch {
+  display: inline-grid; place-items: center; width: 22px; height: 14px; border-radius: 4px;
+  background: var(--tc); color: var(--tt); font-size: .65rem; font-weight: 800; font-style: normal;
+}
+.ty-strat { color: var(--text); font-family: var(--mono); }
+.ty-chart { display: grid; gap: 4px; }
+/* 每一列：名次｜車手｜色條｜進站次數 */
+.ty-row { display: grid; grid-template-columns: 40px 170px 1fr 44px; align-items: center; gap: 8px; min-height: 26px; }
+.ty-pos { font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+.ty-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ty-code { display: none; font-weight: 700; }
+.ty-track { position: relative; height: 22px; background: var(--surface-2); border-radius: 5px; }
+.ty-none { position: absolute; left: 8px; top: 2px; }
+.ty-seg {
+  position: absolute; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; gap: 3px;
+  background: var(--tc); color: var(--tt); border-radius: 5px; font-size: .72rem; overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .35); /* 相鄰兩段之間留一條細縫，分得出換胎點 */
+  cursor: default;
+}
+.ty-seg small { font-size: .65rem; opacity: .8; }
+/* 舊胎（起跑時已經用過）用斜紋表示 */
+.ty-seg.used, .ty-swatch.used {
+  background-image: repeating-linear-gradient(135deg, rgba(0, 0, 0, .28) 0 3px, transparent 3px 7px);
+  background-color: var(--tc);
+}
+.ty-seg:hover, .ty-seg:focus-visible { filter: brightness(1.15); outline: 2px solid #fff; outline-offset: -2px; z-index: 1; }
+.ty-stops { font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.ty-axis-row { min-height: 18px; }
+.ty-axis { position: relative; height: 16px; font-size: .7rem; color: var(--muted); }
+.ty-axis span { position: absolute; transform: translateX(-50%); }
+
 /* ---------- 載入中 ---------- */
 .loading { text-align: center; padding: 60px 0; color: var(--muted); }
 .spinner {
@@ -331,6 +367,9 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
   .data td, .data th { padding: 7px 6px; }
   .bar { display: none; }
   .hide-sm { display: none; }
+  .ty-row { grid-template-columns: 30px 42px 1fr 34px; gap: 5px; }
+  .ty-full { display: none; }
+  .ty-code { display: inline; }
 }
 
 @media (prefers-reduced-motion: reduce) {
