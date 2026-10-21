@@ -376,9 +376,22 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
 
 .site-footer { color: var(--muted); font-size: .8rem; padding-top: 16px; padding-bottom: 32px; border-top: 1px solid var(--border); margin-top: 24px; }
 
+/* ---------- Podcast 宣傳 ---------- */
+.podcast-promo {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin: 12px 0 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 4px solid var(--accent); border-radius: var(--radius);
+}
+.podcast-icon { font-size: 1.6rem; line-height: 1; }
+.podcast-text { display: flex; flex-direction: column; gap: 2px; flex: 1 1 260px; min-width: 0; }
+.podcast-btn { border-color: var(--accent); white-space: nowrap; }
+.podcast-btn:hover { background: var(--accent); border-color: var(--accent); }
+
 /* ---------- 手機 ---------- */
 @media (max-width: 600px) {
   body { font-size: 14px; }
+  .podcast-btn { width: 100%; }
   .card { padding: 12px; }
   .two-col { grid-template-columns: 1fr; }
   .hero { flex-direction: column; align-items: flex-start; gap: 12px; }
