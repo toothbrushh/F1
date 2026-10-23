@@ -93,7 +93,7 @@ async function renderDriver() {
       ${statCard('頒獎台', p.stats.podiums)}
       ${statCard('竿位', p.stats.poles, '1994 年起有排位資料')}
       ${statCard('出賽', p.stats.starts)}
-      ${statCard('參賽季數', p.stats.seasons)}
+      ${statCard('參賽季數', p.stats.seasons, '含練習賽')}
     </section>
 
     ${storyBlock(story, d.url, driverName(d))}
