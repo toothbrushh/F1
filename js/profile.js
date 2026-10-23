@@ -149,7 +149,7 @@ async function renderTeam() {
       ${statCard('分站冠軍', p.stats.wins)}
       ${statCard('竿位', p.stats.poles, '1994 年起有排位資料')}
       ${statCard('參賽站數', p.stats.races)}
-      ${statCard('參賽季數', p.stats.seasons, p.firstSeason ? `${p.firstSeason} 年起` : '')}
+      ${statCard('參賽季數', p.stats.seasons, p.firstSeason ? `${p.firstSeason} 年首次參賽` : '')}
     </section>
 
     ${storyBlock(story, t.url, t.name)}
