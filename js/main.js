@@ -323,6 +323,9 @@ function viewRound(route) {
   else if (tab === 'sprint') body = resultTable(race.sprint, true);
   else if (tab === 'tyres') body = `<div id="tyre-chart" data-round="${race.round}"><div class="loading"><div class="spinner"></div><p>正在載入輪胎資料…</p></div></div>`;
   else body = resultTable(race.results, false);
+  if (body && tab === 'race' && race.provisional) {
+    body = `<p class="muted small">⏳ 暫定成績（資料來源：<a href="https://openf1.org" target="_blank" rel="noopener">OpenF1</a>）。正式成績與積分榜更新後會自動換成正式資料。</p>${body}`;
+  }
   if (!body) {
     body = `<div class="empty">
       <p>${start > new Date() ? '這一站還沒開始比賽。' : '成績尚未公布，請稍後再回來看看。'}</p>

@@ -33,6 +33,8 @@ const config = {
   historyDir: 'data/history/',
   maxConcurrent: 2, // 同時最多幾個請求
   minGapMs: 350, // 每個請求之間至少間隔幾毫秒（GitHub Actions 的腳本會調得更慢）
+  // Jolpica 還沒更新剛比完的正賽時，先用 OpenF1 補上暫定成績（只在瀏覽器開；快照 / 存檔腳本不需要）
+  provisionalResults: typeof window !== 'undefined',
 };
 export function configure(options) {
   Object.assign(config, options);
@@ -292,6 +294,8 @@ export async function loadSeason(season) {
       completed: raceResults.length > 0,
     };
   });
+
+  if (config.provisionalResults) await fillProvisionalResults(season, races);
 
   const dList = driverSt?.MRData.StandingsTable.StandingsLists[0];
   const cList = constructorSt?.MRData.StandingsTable.StandingsLists[0];
@@ -563,4 +567,111 @@ export async function loadTyreStints(season, race, sessionName = 'Race') {
 
   const stints = await openf1Get(`/stints?session_key=${session.session_key}`, ttl);
   return { stints: Array.isArray(stints) ? stints : [], sessionKey: session.session_key };
+}
+
+// ============================================================
+// 7. 暫定正賽成績（OpenF1）
+// Jolpica 是社群維護的，正賽成績常常要等幾個小時、甚至隔天才會更新。
+// 這段期間先向 OpenF1 要「剛比完那一站」的成績，轉成跟 Jolpica 一樣的格式，
+// 並標記 race.provisional = true。等 Jolpica 有資料了，就自動換回正式成績。
+// 車手 / 車隊資料直接借用同一站 Jolpica 的排位賽成績（用車號對應）。
+// ============================================================
+const PROVISIONAL_AFTER = 2 * HOUR; // 正賽開始 2 小時後（大概比完了）才去問
+const PROVISIONAL_UNTIL = 7 * DAY; // 超過一週還沒有正式成績，就不再補
+
+async function fillProvisionalResults(season, races) {
+  const now = Date.now();
+  const todo = races.filter((r) => {
+    if (r.completed || !r.qualifying.length) return false;
+    const age = now - new Date(`${r.date}T${r.time || '12:00:00Z'}`);
+    return age > PROVISIONAL_AFTER && age < PROVISIONAL_UNTIL;
+  });
+  for (const race of todo) {
+    try {
+      const results = await loadProvisionalResults(season, race);
+      if (results?.length) {
+        race.results = results;
+        race.completed = true;
+        race.provisional = true;
+      }
+    } catch (err) {
+      console.warn('暫定成績載入失敗', err); // 失敗就維持原樣（顯示「成績尚未公布」）
+    }
+  }
+}
+
+/** 秒數 → "1:32:45.123" 或 "12.345" */
+function fmtSeconds(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = (sec % 60).toFixed(3).padStart(6, '0');
+  if (h) return `${h}:${String(m).padStart(2, '0')}:${s}`;
+  if (m) return `${m}:${s}`;
+  return String(Number(s).toFixed(3));
+}
+
+const first = (v) => (Array.isArray(v) ? v[v.length - 1] : v); // 有些欄位在排位賽是陣列
+
+async function loadProvisionalResults(season, race) {
+  const ttl = 10 * MIN;
+  const sessions = await openf1Get(`/sessions?year=${season}&session_name=Race`, ttl);
+  const session = matchSession(sessions, race);
+  if (!session) return null;
+  const key = session.session_key;
+  const rows = await openf1Get(`/session_result?session_key=${key}`, ttl);
+  if (!Array.isArray(rows) || !rows.length) return null;
+  const grid = await openf1Get(`/starting_grid?session_key=${key}`, ttl).catch(() => []);
+
+  // 車號 → Jolpica 的車手 / 車隊資料
+  const byNumber = new Map(race.qualifying.map((q) => [String(q.number), q]));
+  let drivers = null;
+  if (rows.some((r) => !byNumber.has(String(r.driver_number)))) {
+    drivers = await openf1Get(`/drivers?session_key=${key}`, ttl).catch(() => []);
+  }
+  const gridPos = new Map((Array.isArray(grid) ? grid : []).map((g) => [String(g.driver_number), g.position]));
+
+  const sorted = [...rows].sort((a, b) =>
+    (a.position ?? 999) - (b.position ?? 999) || (b.number_of_laps ?? 0) - (a.number_of_laps ?? 0));
+
+  return sorted.map((r, i) => {
+    const num = String(r.driver_number);
+    const q = byNumber.get(num);
+    let Driver = q?.Driver;
+    let Constructor = q?.Constructor;
+    if (!Driver) {
+      const d = drivers?.find((x) => String(x.driver_number) === num) || {};
+      Driver = {
+        driverId: String(d.last_name || num).toLowerCase().normalize('NFD').replace(/[^a-z]/g, ''),
+        givenName: d.first_name || '', familyName: d.last_name || `#${num}`,
+        code: d.name_acronym, permanentNumber: num,
+      };
+      Constructor = { constructorId: String(d.team_name || '').toLowerCase().replace(/\s+/g, '_'), name: d.team_name || '' };
+    }
+
+    const gap = first(r.gap_to_leader);
+    const duration = first(r.duration);
+    const lapsDown = typeof gap === 'string' ? Number(/\d+/.exec(gap)?.[0]) : 0;
+    let positionText = String(r.position ?? i + 1);
+    let status = 'Finished';
+    let Time;
+    if (r.dsq) { positionText = 'D'; status = 'Disqualified'; }
+    else if (r.dns) { positionText = 'W'; status = 'Did not start'; }
+    else if (r.dnf) { positionText = 'R'; status = 'Retired'; }
+    else if (lapsDown) status = `+${lapsDown} Lap${lapsDown > 1 ? 's' : ''}`;
+    else if (i === 0 && duration) Time = { time: fmtSeconds(duration) };
+    else if (typeof gap === 'number') Time = { time: `+${fmtSeconds(gap)}` };
+
+    return {
+      number: num,
+      position: String(i + 1),
+      positionText,
+      points: String(r.points ?? 0),
+      Driver,
+      Constructor,
+      grid: String(gridPos.get(num) ?? q?.position ?? ''),
+      laps: String(r.number_of_laps ?? ''),
+      status,
+      ...(Time ? { Time } : {}),
+    };
+  });
 }
