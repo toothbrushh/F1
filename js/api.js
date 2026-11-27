@@ -26,7 +26,11 @@ const DAY = 24 * HOUR;
 
 // ---------- 可被外部設定的部分（給 Node 的快照腳本用） ----------
 const config = {
-  fetchImpl: (...args) => fetch(...args),
+  // 在 Node（GitHub Actions 的腳本）執行時帶一個一般的 User-Agent：
+  // Jolpica 會用 HTTP 403 擋掉 Node 預設的 User-Agent（"node"）。瀏覽器裡維持原樣。
+  fetchImpl: typeof window === 'undefined'
+    ? (url, opts = {}) => fetch(url, { ...opts, headers: { 'User-Agent': 'f1-season-site (data script)', ...opts.headers } })
+    : (...args) => fetch(...args),
   onResponse: null, // (path, json) => void，快照腳本用來記錄每個回應
   onError: null, // (path, err) => void，存檔腳本用來發現「有請求失敗、資料不完整」
   snapshotUrl: 'data/snapshot.json',
