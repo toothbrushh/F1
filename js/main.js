@@ -16,9 +16,10 @@ import { renderPointsChart } from './chart.js';
 import { avatar, hydratePhotos } from './photos.js';
 import {
   esc, toDate, formatDate, formatDateTime, formatTime, countdown, userTimeZone, lapToMs, formatGap,
-  statusZh, isFinished, nationalityFlag, countryFlag, driverLink, teamLink, teamColor, driverName,
-  SESSION_LABELS,
+  statusText, isFinished, nationalityFlag, countryFlag, driverLink, teamLink, teamColor, driverName,
+  sessionLabel,
 } from './utils.js';
+import { t, applyStatic } from './i18n.js';
 
 const FIRST_SEASON = 1950;
 const CURRENT_YEAR = new Date().getFullYear();
@@ -79,61 +80,61 @@ function viewSummary() {
   if (p1) {
     cards.push(`
       <article class="card stat-card" style="--c:${teamColor(p1.Constructors?.at(-1)?.constructorId)}">
-        <h3>車手積分領先</h3>
+        <h3>${t('summary.driverLeader')}</h3>
         <div class="leader">${avatar(p1.Driver.url, driverName(p1.Driver), 'md')}
           <p class="big">${nationalityFlag(p1.Driver.nationality)} ${driverLink(p1.Driver, d.season)}</p></div>
-        <p class="stat-line"><b>${p1.points}</b> 分 · ${p1.wins} 勝${p2 ? ` · 領先 P2 ${fmtPts(p1.points - p2.points)} 分` : ''}</p>
+        <p class="stat-line">${t('summary.statLine', { points: esc(p1.points), wins: esc(p1.wins) })}${p2 ? t('summary.lead', { gap: fmtPts(p1.points - p2.points) }) : ''}</p>
       </article>`);
   }
   if (t1) {
     cards.push(`
       <article class="card stat-card" style="--c:${teamColor(t1.Constructor.constructorId)}">
-        <h3>車隊積分領先</h3>
+        <h3>${t('summary.teamLeader')}</h3>
         <div class="leader">${avatar(t1.Constructor.url, t1.Constructor.name, 'md', 'square')}
           <p class="big">${teamLink(t1.Constructor, d.season)}</p></div>
-        <p class="stat-line"><b>${t1.points}</b> 分 · ${t1.wins} 勝${t2 ? ` · 領先 P2 ${fmtPts(t1.points - t2.points)} 分` : ''}</p>
+        <p class="stat-line">${t('summary.statLine', { points: esc(t1.points), wins: esc(t1.wins) })}${t2 ? t('summary.lead', { gap: fmtPts(t1.points - t2.points) }) : ''}</p>
       </article>`);
   }
   if (lastDone) {
     cards.push(`
       <article class="card">
-        <h3>上一站 · R${lastDone.round} ${countryFlag(lastDone.circuit?.Location?.country)} ${esc(lastDone.name)}</h3>
+        <h3>${t('summary.lastRace', { round: lastDone.round })} ${countryFlag(lastDone.circuit?.Location?.country)} ${esc(lastDone.name)}</h3>
         <ol class="podium">${lastDone.results.slice(0, 3).map((r, i) => `
           <li><span class="medal m${i + 1}">${i + 1}</span>${avatar(r.Driver.url, driverName(r.Driver))}
             <span class="podium-name">${driverLink(r.Driver, d.season)}<small>${esc(r.Constructor.name)}</small></span></li>`).join('')}
         </ol>
-        <a class="more" href="#round/${lastDone.round}/race">完整成績 →</a>
+        <a class="more" href="#round/${lastDone.round}/race">${t('summary.fullResults')}</a>
       </article>`);
   }
   if (next) {
     const start = toDate(next.date, next.time);
     cards.push(`
       <article class="card next-card">
-        <h3>下一站 · R${next.round}</h3>
+        <h3>${t('summary.nextRace', { round: next.round })}</h3>
         <p class="big">${countryFlag(next.circuit?.Location?.country)} ${esc(next.name)}</p>
         <p class="countdown" data-countdown="${start?.toISOString() || ''}">${start ? countdown(start) : ''}</p>
-        <p class="muted">正賽：${next.time ? formatDateTime(start) : `${formatDate(start)}（時間未定）`}${next.hasSprint ? ' · 衝刺賽週末' : ''}</p>
-        <a class="more" href="#schedule/${next.round}">完整時間表 →</a>
+        <p class="muted">${t('summary.raceAt', { when: next.time ? formatDateTime(start) : t('summary.timeTbc', { date: formatDate(start) }) })}${next.hasSprint ? t('summary.sprintWeekend') : ''}</p>
+        <a class="more" href="#schedule/${next.round}">${t('summary.fullSchedule')}</a>
       </article>`);
   }
 
   $view.innerHTML = `
     ${seasonBanner(d)}
     ${upcomingCard(d)}
-    <div class="card-grid">${cards.join('') || '<p class="muted">這個賽季還沒有資料。</p>'}</div>
-    <p class="progress-text">已完成 <b>${doneCount}</b> / ${d.races.length} 站${d.standingsRound ? `（積分統計至第 ${d.standingsRound} 站）` : ''}</p>
+    <div class="card-grid">${cards.join('') || `<p class="muted">${t('summary.noData')}</p>`}</div>
+    <p class="progress-text">${t('summary.progress', { done: doneCount, total: d.races.length })}${d.standingsRound ? t('summary.standingsRound', { round: d.standingsRound }) : ''}</p>
     <div class="two-col">
       <article class="card">
-        <div class="card-head"><h3>車手積分 Top 5</h3><a class="more" href="#drivers">全部 →</a></div>
+        <div class="card-head"><h3>${t('summary.driversTop5')}</h3><a class="more" href="#drivers">${t('summary.all')}</a></div>
         ${driverTable(d.driverStandings.slice(0, 5), true)}
       </article>
       <article class="card">
-        <div class="card-head"><h3>車隊積分 Top 5</h3><a class="more" href="#teams">全部 →</a></div>
+        <div class="card-head"><h3>${t('summary.teamsTop5')}</h3><a class="more" href="#teams">${t('summary.all')}</a></div>
         ${teamTable(d.constructorStandings.slice(0, 5), true)}
       </article>
     </div>
     <article class="card">
-      <div class="card-head"><h3>積分走勢（前 8 名車手）</h3></div>
+      <div class="card-head"><h3>${t('summary.chartTitle')}</h3></div>
       <div id="points-chart"></div>
     </article>`;
   renderPointsChart(document.getElementById('points-chart'), d);
@@ -152,15 +153,18 @@ function seasonBanner(d) {
     const first = d.races[0];
     if (!first) return '';
     return `<article class="card season-banner">
-      <h3>🗓 ${d.season} 賽季還沒開始</h3>
-      <p>目前已公布 <b>${d.races.length}</b> 站賽程，揭幕戰是 ${countryFlag(first.circuit?.Location?.country)} <b>${esc(first.name)}</b>（${formatDate(toDate(first.date, first.time))}）。
-        積分與成績會在開賽後出現。賽程有時會調整，以最新公布為準。</p>
-      <a class="more" href="#schedule">查看完整賽程 →</a>
+      <h3>${t('banner.notStarted', { season: d.season })}</h3>
+      <p>${t('banner.notStartedBody', {
+        count: d.races.length,
+        opener: `${countryFlag(first.circuit?.Location?.country)} <b>${esc(first.name)}</b>`,
+        date: formatDate(toDate(first.date, first.time)),
+      })}</p>
+      <a class="more" href="#schedule">${t('banner.viewSchedule')}</a>
     </article>`;
   }
   if (d.season === CURRENT_YEAR && state.futureSeasons.length) {
     return `<article class="card season-banner">${state.futureSeasons.map(({ year, races }) => `
-      <p>📅 <b>${year} 賽季賽程已公布</b>（${races} 站）<a class="more" href="?season=${year}#schedule">查看 ${year} 賽程 →</a></p>`).join('')}
+      <p>${t('banner.future', { year, count: races })}<a class="more" href="?season=${year}#schedule">${t('banner.futureLink', { year })}</a></p>`).join('')}
     </article>`;
   }
   return '';
@@ -175,7 +179,7 @@ const SESSION_MINUTES = {
   FirstPractice: 60, SecondPractice: 60, ThirdPractice: 60,
   SprintQualifying: 45, SprintShootout: 45, Sprint: 60, Qualifying: 60, Race: 120,
 };
-const DAY_NAMES = ['今天', '明天', '後天'];
+const DAY_NAMES = t('upcoming.days');
 
 /** 以「使用者當地的日期」計算相差幾天：0 = 今天、1 = 明天… */
 function dayOffset(date, now) {
@@ -199,12 +203,12 @@ function upcomingCard(d) {
   if (!all.length) return '';
 
   let list = all.filter((s) => dayOffset(s.start, now) <= 2);
-  let title = '接下來三天的賽程';
+  let title = esc(t('upcoming.title'));
   if (!list.length) {
     // 三天內沒有比賽 → 列出下一個比賽週末
     const nextRace = all[0].race;
     list = all.filter((s) => s.race === nextRace);
-    title = `下一個比賽週末 · ${countryFlag(nextRace.circuit?.Location?.country)} ${nextRace.name}`;
+    title = t('upcoming.nextWeekend', { race: `${countryFlag(nextRace.circuit?.Location?.country)} ${esc(nextRace.name)}` });
   }
   const firstUpcoming = list.find((s) => s.start > now);
 
@@ -218,7 +222,7 @@ function upcomingCard(d) {
   }
 
   return `<article class="card upcoming-card">
-    <div class="card-head"><h3>🗓 ${title}</h3><a class="more" href="#schedule/${list[0].race.round}">完整賽程 →</a></div>
+    <div class="card-head"><h3>🗓 ${title}</h3><a class="more" href="#schedule/${list[0].race.round}">${t('upcoming.fullSchedule')}</a></div>
     <div class="upcoming-days">${[...groups.entries()].map(([label, items]) => `
       <div class="upcoming-day">
         <h4>${esc(label)}</h4>
@@ -226,14 +230,14 @@ function upcomingCard(d) {
           const live = s.start <= now && now < s.end;
           return `<li class="${live ? 'is-live' : ''} ${s.key === 'Race' ? 'is-race' : ''}">
             <span class="mono up-time">${formatTime(s.start)}</span>
-            <span class="up-name">${SESSION_LABELS[s.key] || s.key}<small>${countryFlag(s.race.circuit?.Location?.country)} R${s.race.round} ${esc(s.race.circuit?.Location?.locality || '')}</small></span>
-            ${live ? '<span class="live-badge">● 進行中</span>'
+            <span class="up-name">${esc(sessionLabel(s.key))}<small>${countryFlag(s.race.circuit?.Location?.country)} R${s.race.round} ${esc(s.race.circuit?.Location?.locality || '')}</small></span>
+            ${live ? `<span class="live-badge">${t('upcoming.live')}</span>`
               : s === firstUpcoming ? `<span class="countdown small" data-countdown="${s.start.toISOString()}"></span>` : ''}
           </li>`;
         }).join('')}</ul>
       </div>`).join('')}
     </div>
-    <p class="muted small">時間為你的當地時間（${esc(userTimeZone())}）。</p>
+    <p class="muted small">${t('upcoming.tzNote', { tz: esc(userTimeZone()) })}</p>
   </article>`;
 }
 
@@ -241,11 +245,11 @@ function upcomingCard(d) {
 // 畫面 2、3：車手積分 / 車隊積分
 // ============================================================
 function driverTable(rows, compact = false) {
-  if (!rows.length) return '<p class="muted">尚無積分資料。</p>';
+  if (!rows.length) return `<p class="muted">${t('table.noStandings')}</p>`;
   const leader = Number(rows[0].points) || 1;
   return `<div class="table-wrap"><table class="data">
-    <thead><tr><th class="num">名次</th><th>車手</th><th class="${compact ? 'hide-sm' : ''}">車隊</th>${compact ? '' : '<th class="num">勝場</th>'}
-      <th class="num">積分</th>${compact ? '' : '<th class="num">差距</th>'}</tr></thead>
+    <thead><tr><th class="num">${t('table.pos')}</th><th>${t('table.driver')}</th><th class="${compact ? 'hide-sm' : ''}">${t('table.team')}</th>${compact ? '' : `<th class="num">${t('table.wins')}</th>`}
+      <th class="num">${t('table.points')}</th>${compact ? '' : `<th class="num">${t('table.gap')}</th>`}</tr></thead>
     <tbody>${rows.map((s) => {
       const team = s.Constructors?.at(-1);
       return `<tr>
@@ -261,15 +265,15 @@ function driverTable(rows, compact = false) {
 }
 
 function teamTable(rows, compact = false) {
-  if (!rows.length) return '<p class="muted">這個賽季沒有車隊積分（車隊冠軍從 1958 年才開始）。</p>';
+  if (!rows.length) return `<p class="muted">${t('table.noTeamStandings')}</p>`;
   const leader = Number(rows[0].points) || 1;
   // 從車手積分表反查每隊有哪些車手
   const driversOf = (id) => state.data.driverStandings
     .filter((s) => s.Constructors?.some((c) => c.constructorId === id))
-    .map((s) => driverLink(s.Driver, state.data.season)).join('、');
+    .map((s) => driverLink(s.Driver, state.data.season)).join(t('table.listSep'));
   return `<div class="table-wrap"><table class="data">
-    <thead><tr><th class="num">名次</th><th>車隊</th>${compact ? '' : '<th>車手</th><th class="num">勝場</th>'}
-      <th class="num">積分</th>${compact ? '' : '<th class="num">差距</th>'}</tr></thead>
+    <thead><tr><th class="num">${t('table.pos')}</th><th>${t('table.team')}</th>${compact ? '' : `<th>${t('table.drivers')}</th><th class="num">${t('table.wins')}</th>`}
+      <th class="num">${t('table.points')}</th>${compact ? '' : `<th class="num">${t('table.gap')}</th>`}</tr></thead>
     <tbody>${rows.map((s) => `<tr>
         <td class="num pos">${esc(s.positionText || s.position)}</td>
         <td>${avatar(s.Constructor.url, s.Constructor.name, 'sm', 'square')}${nationalityFlag(s.Constructor.nationality)} ${teamLink(s.Constructor, state.data.season)}</td>
@@ -281,14 +285,14 @@ function teamTable(rows, compact = false) {
 }
 
 function viewDrivers() {
-  $view.innerHTML = `<article class="card"><div class="card-head"><h3>${state.data.season} 車手積分榜</h3>
-    <span class="muted small">點名字看車手故事</span></div>${driverTable(state.data.driverStandings)}</article>`;
+  $view.innerHTML = `<article class="card"><div class="card-head"><h3>${t('drivers.title', { season: state.data.season })}</h3>
+    <span class="muted small">${t('drivers.hint')}</span></div>${driverTable(state.data.driverStandings)}</article>`;
   return null;
 }
 
 function viewTeams() {
-  $view.innerHTML = `<article class="card"><div class="card-head"><h3>${state.data.season} 車隊積分榜</h3>
-    <span class="muted small">點車隊看車隊歷史</span></div>${teamTable(state.data.constructorStandings)}</article>`;
+  $view.innerHTML = `<article class="card"><div class="card-head"><h3>${t('teams.title', { season: state.data.season })}</h3>
+    <span class="muted small">${t('teams.hint')}</span></div>${teamTable(state.data.constructorStandings)}</article>`;
   return null;
 }
 
@@ -298,18 +302,18 @@ function viewTeams() {
 function viewRound(route) {
   const d = state.data;
   if (!d.races.length) {
-    $view.innerHTML = '<p class="muted">這個賽季還沒有賽程。</p>';
+    $view.innerHTML = `<p class="muted">${t('round.noSchedule')}</p>`;
     return null;
   }
   // 沒指定站 → 最近一站有成績的；都沒有 → 第一站
   const lastDone = [...d.races].reverse().find((r) => r.completed || r.qualifying.length);
   const race = d.races.find((r) => r.round === route.round) || lastDone || d.races[0];
 
-  const tabs = [['qualifying', '排位賽']];
-  if (race.hasSprint) tabs.push(['sprint', '衝刺賽']);
-  tabs.push(['race', '正賽']);
+  const tabs = [['qualifying', t('round.qualifying')]];
+  if (race.hasSprint) tabs.push(['sprint', t('round.sprint')]);
+  tabs.push(['race', t('round.race')]);
   // 輪胎資料（OpenF1）從 2023 年才有，而且比賽要比完才有意義
-  if (race.completed && d.season >= TYRE_DATA_FROM) tabs.push(['tyres', '輪胎策略']);
+  if (race.completed && d.season >= TYRE_DATA_FROM) tabs.push(['tyres', t('round.tyres')]);
   let tab = route.tab;
   if (!tabs.some(([k]) => k === tab)) tab = race.completed ? 'race' : 'qualifying';
 
@@ -321,27 +325,27 @@ function viewRound(route) {
   let body;
   if (tab === 'qualifying') body = qualifyingTable(race.qualifying);
   else if (tab === 'sprint') body = resultTable(race.sprint, true);
-  else if (tab === 'tyres') body = `<div id="tyre-chart" data-round="${race.round}"><div class="loading"><div class="spinner"></div><p>正在載入輪胎資料…</p></div></div>`;
+  else if (tab === 'tyres') body = `<div id="tyre-chart" data-round="${race.round}"><div class="loading"><div class="spinner"></div><p>${t('round.loadingTyres')}</p></div></div>`;
   else body = resultTable(race.results, false);
   if (body && tab === 'race' && race.provisional) {
-    body = `<p class="muted small">⏳ 暫定成績（資料來源：<a href="https://openf1.org" target="_blank" rel="noopener">OpenF1</a>）。正式成績與積分榜更新後會自動換成正式資料。</p>${body}`;
+    body = `<p class="muted small">${t('round.provisional')}</p>${body}`;
   }
   if (!body) {
     body = `<div class="empty">
-      <p>${start > new Date() ? '這一站還沒開始比賽。' : '成績尚未公布，請稍後再回來看看。'}</p>
-      <a class="btn" href="#schedule/${race.round}">查看這一站的時間表 →</a></div>`;
+      <p>${start > new Date() ? t('round.notStarted') : t('round.notPublished')}</p>
+      <a class="btn" href="#schedule/${race.round}">${t('round.viewSchedule')}</a></div>`;
   }
 
   $view.innerHTML = `
     <article class="card">
       <div class="round-nav">
-        ${prev ? `<a class="btn" href="#round/${prev.round}/${tab}" aria-label="上一站">‹</a>` : '<span class="btn disabled">‹</span>'}
-        <select id="round-select" aria-label="選擇分站">${d.races.map((r) => `
+        ${prev ? `<a class="btn" href="#round/${prev.round}/${tab}" aria-label="${t('round.prev')}">‹</a>` : '<span class="btn disabled">‹</span>'}
+        <select id="round-select" aria-label="${t('round.select')}">${d.races.map((r) => `
           <option value="${r.round}" ${r === race ? 'selected' : ''}>R${r.round} · ${countryFlag(r.circuit?.Location?.country)} ${esc(r.name)}</option>`).join('')}
         </select>
-        ${next ? `<a class="btn" href="#round/${next.round}/${tab}" aria-label="下一站">›</a>` : '<span class="btn disabled">›</span>'}
+        ${next ? `<a class="btn" href="#round/${next.round}/${tab}" aria-label="${t('round.next')}">›</a>` : '<span class="btn disabled">›</span>'}
       </div>
-      <p class="muted round-meta">${esc(race.circuit?.circuitName || '')} · ${esc(race.circuit?.Location?.locality || '')}, ${esc(race.circuit?.Location?.country || '')} · 正賽 ${formatDateTime(start)}</p>
+      <p class="muted round-meta">${esc(race.circuit?.circuitName || '')} · ${esc(race.circuit?.Location?.locality || '')}, ${esc(race.circuit?.Location?.country || '')} · ${t('round.raceAt', { when: formatDateTime(start) })}</p>
       <div class="subtabs" role="tablist">${tabs.map(([k, label]) => `
         <a role="tab" href="#round/${race.round}/${k}" class="${k === tab ? 'active' : ''}" aria-selected="${k === tab}">${label}</a>`).join('')}
       </div>
@@ -369,7 +373,7 @@ async function loadTyreChart(race) {
     const el = target();
     if (!el) return;
     if (!data) {
-      el.innerHTML = '<p class="muted">在 OpenF1 找不到這場比賽的輪胎資料（剛比完的比賽可能要過一陣子才會有）。</p>';
+      el.innerHTML = `<p class="muted">${t('round.noTyres')}</p>`;
       return;
     }
     renderTyreStrategy(el, race.results, data.stints, season);
@@ -378,10 +382,10 @@ async function loadTyreChart(race) {
     const el = target();
     if (!el) return;
     el.innerHTML = err.code === 'LIVE_SESSION'
-      ? `<div class="empty"><p>🏁 現在有 F1 賽事正在進行，OpenF1 在賽事期間暫停免費查詢。</p>
-        <p class="muted small">這一站的輪胎資料還沒存檔，等賽事結束後再回來看就可以了。</p></div>`
-      : `<div class="empty"><p>輪胎資料載入失敗：${esc(err.message)}</p>
-        <p class="muted small">稍後再試試看。</p></div>`;
+      ? `<div class="empty"><p>${t('round.liveSession')}</p>
+        <p class="muted small">${t('round.liveSessionNote')}</p></div>`
+      : `<div class="empty"><p>${t('round.tyresFailed', { msg: esc(err.message) })}</p>
+        <p class="muted small">${t('round.tryLater')}</p></div>`;
   }
 }
 
@@ -392,11 +396,14 @@ function resultTable(rows, isSprint) {
   if (!rows.length) return '';
   const fastest = rows.find((r) => r.FastestLap?.rank === '1');
   return `
-    ${fastest ? `<p class="fastest-note">⏱ 最快圈：${driverLink(fastest.Driver, state.data.season)}
-      <b>${esc(fastest.FastestLap.Time?.time)}</b>（第 ${esc(fastest.FastestLap.lap)} 圈）</p>` : ''}
+    ${fastest ? `<p class="fastest-note">${t('round.fastest', {
+      driver: driverLink(fastest.Driver, state.data.season),
+      time: esc(fastest.FastestLap.Time?.time),
+      lap: esc(fastest.FastestLap.lap),
+    })}</p>` : ''}
     <div class="table-wrap"><table class="data results">
-    <thead><tr><th class="num">名次</th><th>車手</th><th>車隊</th><th class="num">發車</th><th class="num">升降</th>
-      <th class="num">圈數</th><th>時間 / 差距</th>${isSprint ? '' : '<th>最快圈</th>'}<th class="num">得分</th></tr></thead>
+    <thead><tr><th class="num">${t('table.pos')}</th><th>${t('table.driver')}</th><th>${t('table.team')}</th><th class="num">${t('round.grid')}</th><th class="num">${t('round.change')}</th>
+      <th class="num">${t('round.laps')}</th><th>${t('round.timeGap')}</th>${isSprint ? '' : `<th>${t('round.fastestLap')}</th>`}<th class="num">${t('round.scored')}</th></tr></thead>
     <tbody>${rows.map((r) => {
       const grid = Number(r.grid);
       const pos = Number(r.position);
@@ -409,13 +416,13 @@ function resultTable(rows, isSprint) {
       const finished = isFinished(r.status);
       const timeCell = r.Time?.time
         ? esc(r.Time.time)
-        : `<span class="${finished ? 'muted' : 'dnf'}">${esc(statusZh(r.status))}</span>`;
+        : `<span class="${finished ? 'muted' : 'dnf'}">${esc(statusText(r.status))}</span>`;
       const fl = r.FastestLap;
       return `<tr class="${pos <= 3 && classified ? `top${pos}` : ''}">
-        <td class="num pos">${classified ? esc(r.positionText) : `<span class="dnf" title="${esc(statusZh(r.status))}">${POS_CODE[r.positionText] || esc(r.positionText)}</span>`}</td>
+        <td class="num pos">${classified ? esc(r.positionText) : `<span class="dnf" title="${esc(statusText(r.status))}">${POS_CODE[r.positionText] || esc(r.positionText)}</span>`}</td>
         <td><span class="car-no">${esc(r.number)}</span>${driverLink(r.Driver, state.data.season)}</td>
         <td>${teamLink(r.Constructor, state.data.season)}</td>
-        <td class="num">${grid === 0 ? '<span class="muted small">維修區</span>' : grid}</td>
+        <td class="num">${grid === 0 ? `<span class="muted small">${t('round.pitLane')}</span>` : grid}</td>
         <td class="num">${change}</td>
         <td class="num">${esc(r.laps)}</td>
         <td class="mono">${timeCell}</td>
@@ -439,17 +446,17 @@ function qualifyingTable(rows) {
     const ms = lapToMs(r[q]);
     return `<td class="mono ${ms && ms === best[q] ? 'purple' : ''}">${esc(r[q] || '')}</td>`;
   };
-  return `<p class="muted small">Q1 淘汰最慢的車手、Q2 再淘汰一批，前 10 名進入 Q3 爭奪竿位。紫色 = 該節最快。</p>
+  return `<p class="muted small">${t('round.qualiNote')}</p>
     <div class="table-wrap"><table class="data">
-    <thead><tr><th class="num">名次</th><th>車手</th><th>車隊</th><th>Q1</th><th>Q2</th><th>Q3</th><th class="num">與竿位差距</th></tr></thead>
+    <thead><tr><th class="num">${t('table.pos')}</th><th>${t('table.driver')}</th><th>${t('table.team')}</th><th>Q1</th><th>Q2</th><th>Q3</th><th class="num">${t('round.gapToPole')}</th></tr></thead>
     <tbody>${rows.map((r) => {
-      const t = bestOf(r);
+      const best = bestOf(r);
       return `<tr class="${Number(r.position) <= 3 ? `top${r.position}` : ''}">
         <td class="num pos">${esc(r.position)}</td>
         <td><span class="car-no">${esc(r.number)}</span>${driverLink(r.Driver, state.data.season)}</td>
         <td>${teamLink(r.Constructor, state.data.season)}</td>
         ${cell(r, 'Q1')}${cell(r, 'Q2')}${cell(r, 'Q3')}
-        <td class="num mono muted">${t && pole ? formatGap(t - pole) : ''}</td>
+        <td class="num mono muted">${best && pole ? formatGap(best - pole) : ''}</td>
       </tr>`;
     }).join('')}</tbody></table></div>`;
 }
@@ -461,8 +468,8 @@ function viewSchedule(route) {
   const d = state.data;
   const states = raceStates(d.races);
   const now = new Date();
-  const labels = { done: '已完賽', pending: '成績待更新', next: '下一站', todo: '待賽' };
-  const filters = [['all', '全部'], ['todo', '待賽'], ['done', '已完賽']];
+  const labels = { done: t('timeline.done'), pending: t('timeline.pending'), next: t('timeline.next'), todo: t('timeline.todo') };
+  const filters = [['all', t('schedule.all')], ['todo', t('timeline.todo')], ['done', t('timeline.done')]];
   const visible = d.races.filter((r, i) => {
     if (state.scheduleFilter === 'done') return states[i] === 'done' || states[i] === 'pending';
     if (state.scheduleFilter === 'todo') return states[i] === 'next' || states[i] === 'todo';
@@ -474,7 +481,7 @@ function viewSchedule(route) {
       <div class="chips">${filters.map(([k, label]) => `
         <button type="button" class="chip ${state.scheduleFilter === k ? 'active' : ''}" data-filter="${k}">${label}</button>`).join('')}
       </div>
-      <span class="muted small">時區：${esc(userTimeZone())}</span>
+      <span class="muted small">${t('schedule.tz', { tz: esc(userTimeZone()) })}</span>
     </div>
     <div class="schedule-list">${visible.map((race) => {
       const st = states[d.races.indexOf(race)];
@@ -489,18 +496,18 @@ function viewSchedule(route) {
           <span class="state-badge">${labels[st]}</span>
         </header>
         <table class="sessions">${race.sessions.map((s) => {
-          const t = toDate(s.date, s.time);
-          const past = t && t < now;
+          const time = toDate(s.date, s.time);
+          const past = time && time < now;
           return `<tr class="${past ? 'past' : ''} ${s.key === 'Race' ? 'is-race' : ''}">
-            <td>${SESSION_LABELS[s.key] || s.key}</td>
-            <td>${formatDate(t)}</td>
-            <td class="mono">${s.time ? formatTime(t) : '時間未定'}</td>
+            <td>${esc(sessionLabel(s.key))}</td>
+            <td>${formatDate(time)}</td>
+            <td class="mono">${s.time ? formatTime(time) : t('schedule.timeTbc')}</td>
           </tr>`;
         }).join('')}</table>
-        ${st === 'done' ? `<a class="more" href="#round/${race.round}/race">🏆 ${esc(driverName(race.results[0].Driver))} 奪冠 · 查看成績 →</a>` : ''}
+        ${st === 'done' ? `<a class="more" href="#round/${race.round}/race">${t('schedule.winner', { driver: esc(driverName(race.results[0].Driver)) })}</a>` : ''}
         ${st === 'next' ? `<p class="countdown small" data-countdown="${toDate(race.date, race.time)?.toISOString() || ''}"></p>` : ''}
       </article>`;
-    }).join('') || '<p class="muted">沒有符合的分站。</p>'}</div>`;
+    }).join('') || `<p class="muted">${t('schedule.none')}</p>`}</div>`;
 
   $view.querySelectorAll('[data-filter]').forEach((btn) => btn.addEventListener('click', () => {
     state.scheduleFilter = btn.dataset.filter;
@@ -518,7 +525,7 @@ function viewSchedule(route) {
 // ============================================================
 function updateCountdowns() {
   document.querySelectorAll('[data-countdown]').forEach((el) => {
-    if (el.dataset.countdown) el.textContent = `⏱ 倒數 ${countdown(new Date(el.dataset.countdown))}`;
+    if (el.dataset.countdown) el.textContent = t('countdown.prefix', { time: countdown(new Date(el.dataset.countdown)) });
   });
 }
 
@@ -528,13 +535,13 @@ function updateCountdowns() {
 function showStatus(meta) {
   const time = meta.oldest ? formatDateTime(new Date(meta.oldest)) : '';
   if (meta.archive > 0 && meta.live === 0 && meta.snapshot === 0) {
-    $status.textContent = '✓ 歷史賽季（已存檔的完整成績）';
+    $status.textContent = t('status.archive');
   } else if (meta.snapshot > 0) {
-    $status.innerHTML = `<span class="warn">⚠ 即時 API 暫時無法連線，目前顯示備份資料（${esc(formatDateTime(new Date(meta.snapshotTime)))}）</span>`;
+    $status.innerHTML = `<span class="warn">${t('status.snapshot', { time: esc(formatDateTime(new Date(meta.snapshotTime))) })}</span>`;
   } else if (meta.live > 0) {
-    $status.textContent = `✓ 已更新至最新資料（${formatDateTime(new Date())}）`;
+    $status.textContent = t('status.live', { time: formatDateTime(new Date()) });
   } else {
-    $status.textContent = `資料時間：${time}（快取，每 10 分鐘自動更新）`;
+    $status.textContent = t('status.cached', { time });
   }
 }
 
@@ -543,10 +550,10 @@ async function load() {
     state.data = await loadSeason(season);
   } catch (err) {
     console.error(err);
-    $status.innerHTML = '<span class="warn">⚠ 無法取得資料</span>';
-    $view.innerHTML = `<div class="empty card"><p>抓取資料失敗：${esc(err.message)}</p>
-      <p class="muted small">可能是網路問題或 API 暫時忙碌，稍等幾秒再試一次。</p>
-      <button class="btn" type="button" id="retry">重試</button></div>`;
+    $status.innerHTML = `<span class="warn">${t('status.failed')}</span>`;
+    $view.innerHTML = `<div class="empty card"><p>${t('error.fetch', { msg: esc(err.message) })}</p>
+      <p class="muted small">${t('error.fetchHint')}</p>
+      <button class="btn" type="button" id="retry">${t('common.retry')}</button></div>`;
     document.getElementById('retry').addEventListener('click', () => location.reload());
     return;
   }
@@ -561,20 +568,24 @@ async function addFutureSeasons(select) {
     const races = await scheduledRaceCount(y);
     if (!races) break; // 明年都還沒公布，後年更不可能
     state.futureSeasons.push({ year: y, races });
-    if (y !== season) select.add(new Option(`${y}（賽程）`, String(y)), 0);
+    if (y !== season) select.add(new Option(t('schedule.futureOption', { year: y }), String(y)), 0);
   }
   // 總覽頁的提示要等檢查完才知道要不要顯示，所以重畫一次
   if (state.futureSeasons.length && season === CURRENT_YEAR && parseRoute().view === 'summary') render();
 }
 
 function init() {
+  // 先把 HTML 裡固定的文字換成目前語言（頁尾的 #tz 也是在這裡產生的）
+  applyStatic();
+  const desc = document.querySelector('meta[name="description"]');
+  if (desc) desc.content = t('site.description');
   // 賽季下拉選單：今年 → 1950
   const select = document.getElementById('season-select');
   for (let y = CURRENT_YEAR; y >= FIRST_SEASON; y--) {
     select.add(new Option(String(y), String(y), false, y === season));
   }
   // 網址直接指定未來賽季（例如分享來的連結）時，先把它加進選單
-  if (season > CURRENT_YEAR) select.add(new Option(`${season}（賽程）`, String(season), false, true), 0);
+  if (season > CURRENT_YEAR) select.add(new Option(t('schedule.futureOption', { year: season }), String(season), false, true), 0);
   select.addEventListener('change', () => {
     // 換賽季 = 換網址參數，頁面重新載入；保留目前的分頁 hash（分站編號可能不存在，路由會自動處理）
     const view = parseRoute().view;
@@ -584,7 +595,7 @@ function init() {
   document.getElementById('tz').textContent = userTimeZone();
   document.getElementById('refresh-btn').addEventListener('click', async () => {
     clearCache(`/${season}/`);
-    $status.textContent = '重新抓取中…';
+    $status.textContent = t('status.refreshing');
     await load();
   });
 
@@ -603,7 +614,7 @@ function init() {
   // 當季資料：頁面開著的時候每 10 分鐘自動更新一次
   if (season === CURRENT_YEAR) setInterval(load, 10 * 60 * 1000);
 
-  document.title = `${season} F1 賽季成績`;
+  document.title = t('site.titleSeason', { season });
   // 主要資料載入完再檢查未來賽季，避免兩邊的請求互相干擾
   load().then(() => addFutureSeasons(select));
 }

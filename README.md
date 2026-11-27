@@ -10,6 +10,7 @@
 - **賽季步驟圖**：一眼看出哪些站已經比完、下一站在哪裡。點一下就能跳到該站成績或時間表
 - **車手 / 車隊介紹頁**：中文故事、生涯統計、歷年成績
 - **賽季下拉選單**：可以切換到 1950 年以後的任何賽季；明年、後年的賽程一公布就會自動出現在選單裡，今年的總覽頁也會提示
+- **中文 / English 雙語**：右上角按鈕切換語言，會記住選擇；第一次來會依瀏覽器語言自動判斷。也可以直接分享 `?lang=en` 或 `?lang=zh` 的網址
 
 ---
 
@@ -48,6 +49,7 @@ F1/
 ├── js/
 │   ├── api.js            資料層：呼叫 API、快取、備援
 │   ├── utils.js          小工具：時間格式、國旗、車隊顏色、跳脫 HTML
+│   ├── i18n.js           多語言：所有畫面文字的中英翻譯、語言切換
 │   ├── main.js           主頁控制：路由 + 五個分頁的畫面
 │   ├── timeline.js       賽季步驟圖
 │   ├── chart.js          積分走勢圖（手寫 SVG）
@@ -55,6 +57,7 @@ F1/
 │   ├── tyres.js          輪胎策略圖（資料來自 OpenF1）
 │   └── profile.js        車手 / 車隊介紹頁
 ├── data/stories.json     車手與車隊的中文故事（可以自己編輯！）
+├── data/stories.en.json  同樣的故事的英文版
 ├── data/history/         過去賽季的存檔（由 GitHub Actions 自動產生，不要手動改）
 ├── data/tyres/           比完的比賽的輪胎資料存檔（由 GitHub Actions 自動產生）
 ├── scripts/history.mjs   由 GitHub Actions 執行，補齊過去賽季的存檔
@@ -104,7 +107,8 @@ main.js render() 依照 #hash 畫出對應的分頁
 
 ## ✏️ 自己動手改改看
 
-- **新增 / 修改車手故事**：編輯 `data/stories.json`。key 是網址裡的 `id`，例如 `driver.html?id=hamilton` 對應 `"hamilton"`。
+- **新增 / 修改車手故事**：編輯 `data/stories.json`（中文）與 `data/stories.en.json`（英文）。key 是網址裡的 `id`，例如 `driver.html?id=hamilton` 對應 `"hamilton"`。
+- **修改畫面文字 / 加新語言**：所有介面文字都在 `js/i18n.js` 的 `DICT`。HTML 裡固定的文字用 `data-i18n="key"` 標記。想加日文之類的新語言，就在 `SUPPORTED` 加代號、在 `DICT` 加一份翻譯，再新增 `data/stories.{代號}.json`。
 - **換主題色**：改 `css/style.css` 最上面的 `--accent`。
 - **調整車隊顏色**：`js/utils.js` 的 `TEAM_COLORS`。
 - **走勢圖顯示更多車手**：`js/chart.js` 的 `cumulativePoints(data, topN = 8)`。

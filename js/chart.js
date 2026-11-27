@@ -4,6 +4,7 @@
 // 所以「積分越高 → y 越小」，要用 scale 函式把資料值換算成像素。
 // ============================================================
 import { esc, teamColor, driverName } from './utils.js';
+import { t } from './i18n.js';
 
 /**
  * 算出每位車手「每一站結束後的累積積分」（正賽 + 衝刺賽）
@@ -29,7 +30,7 @@ export function cumulativePoints(data, topN = 8) {
 export function renderPointsChart(container, data) {
   const { rounds, names, series } = cumulativePoints(data);
   if (rounds.length < 2) {
-    container.innerHTML = '<p class="muted">至少要比完兩站才會顯示走勢圖。</p>';
+    container.innerHTML = `<p class="muted">${t('chart.needTwo')}</p>`;
     return;
   }
 
@@ -89,7 +90,7 @@ export function renderPointsChart(container, data) {
         stroke-width="2" ${s.dashed ? 'stroke-dasharray="5 3"' : ''}/></svg>${esc(driverName(s.driver))}</span>`).join('')}
     </div>
     <div class="chart-box">
-      <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="前 ${series.length} 名車手累積積分走勢">
+      <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t('chart.aria', { n: series.length }))}">
         ${grid}${xLabels}${lines}${endLabels}
         <line class="crosshair" y1="${pad.top}" y2="${H - pad.bottom}" visibility="hidden"/>
         <g class="hover-dots"></g>

@@ -8,15 +8,17 @@
 // 寬度用 % 表示，螢幕多寬都會自動縮放。
 // ============================================================
 import { esc, driverLink } from './utils.js';
+import { t } from './i18n.js';
 
+// label 的翻譯在 i18n.js 的 tyre.*
 export const COMPOUNDS = {
-  SOFT: { label: '軟胎', short: 'S', color: '#e8002d', text: '#fff' },
-  MEDIUM: { label: '中性胎', short: 'M', color: '#ffd12e', text: '#111' },
-  HARD: { label: '硬胎', short: 'H', color: '#f0f0ec', text: '#111' },
-  INTERMEDIATE: { label: '半雨胎', short: 'I', color: '#43b02a', text: '#fff' },
-  WET: { label: '全雨胎', short: 'W', color: '#0067ad', text: '#fff' },
+  SOFT: { label: t('tyre.SOFT'), short: 'S', color: '#e8002d', text: '#fff' },
+  MEDIUM: { label: t('tyre.MEDIUM'), short: 'M', color: '#ffd12e', text: '#111' },
+  HARD: { label: t('tyre.HARD'), short: 'H', color: '#f0f0ec', text: '#111' },
+  INTERMEDIATE: { label: t('tyre.INTERMEDIATE'), short: 'I', color: '#43b02a', text: '#fff' },
+  WET: { label: t('tyre.WET'), short: 'W', color: '#0067ad', text: '#fff' },
 };
-const UNKNOWN = { label: '未知', short: '?', color: '#6b6b78', text: '#fff' };
+const UNKNOWN = { label: t('tyre.UNKNOWN'), short: '?', color: '#6b6b78', text: '#fff' };
 const compound = (name) => COMPOUNDS[name] || UNKNOWN;
 
 /** 把 OpenF1 的 stint 依車號分組，並依 stint 順序排好 */
@@ -58,7 +60,7 @@ export function renderTyreStrategy(el, results, stints, season) {
     ...stints.map((s) => Number(s.lap_end) || 0),
   );
   if (!totalLaps || !rows.some((x) => x.stints.length)) {
-    el.innerHTML = '<p class="muted">這場比賽沒有輪胎資料。</p>';
+    el.innerHTML = `<p class="muted">${t('tyre.none')}</p>`;
     return;
   }
 
@@ -80,7 +82,7 @@ export function renderTyreStrategy(el, results, stints, season) {
       const left = ((from - 1) / totalLaps) * 100;
       const width = (laps / totalLaps) * 100;
       const age = Number(s.tyre_age_at_start) || 0;
-      const tip = `第 ${from}–${to} 圈 · ${c.label} · ${laps} 圈${age > 0 ? `（舊胎，起跑時已用 ${age} 圈）` : '（新胎）'}`;
+      const tip = t('tyre.tip', { from, to, compound: c.label, laps }) + (age > 0 ? t('tyre.used', { age }) : t('tyre.new'));
       return `<span class="ty-seg${age > 0 ? ' used' : ''}" style="left:${left}%;width:${width}%;--tc:${c.color};--tt:${c.text}"
         tabindex="0" title="${esc(tip)}" aria-label="${esc(tip)}">
         ${width > 5 ? `<b>${c.short}</b>` : ''}${width > 11 ? `<small>${laps}</small>` : ''}</span>`;
@@ -89,8 +91,8 @@ export function renderTyreStrategy(el, results, stints, season) {
     return `<div class="ty-row">
       <span class="ty-pos">${classified ? `P${esc(r.positionText)}` : '<span class="dnf">DNF</span>'}</span>
       <span class="ty-name"><span class="ty-full">${driverLink(r.Driver, season)}</span><span class="ty-code">${esc(r.Driver.code || r.Driver.familyName)}</span></span>
-      <div class="ty-track">${segs || '<span class="muted small ty-none">沒有資料</span>'}</div>
-      <span class="ty-stops">${list.length ? `${stops} 停` : ''}</span>
+      <div class="ty-track">${segs || `<span class="muted small ty-none">${t('tyre.noData')}</span>`}</div>
+      <span class="ty-stops">${list.length ? t('tyre.stops', { n: stops }) : ''}</span>
     </div>`;
   }).join('');
 
@@ -102,13 +104,13 @@ export function renderTyreStrategy(el, results, stints, season) {
 
   el.innerHTML = `
     <div class="ty-head">
-      <div class="ty-legend">${legend}<span class="ty-legend-item"><i class="ty-swatch used" style="--tc:#9b9bab"></i>斜紋 = 舊胎</span></div>
-      ${strategies.length ? `<p class="muted small">最常見的策略：${strategies.map(([k, n]) => `<b class="ty-strat">${esc(k)}</b>（${n} 人）`).join('、')}</p>` : ''}
+      <div class="ty-legend">${legend}<span class="ty-legend-item"><i class="ty-swatch used" style="--tc:#9b9bab"></i>${t('tyre.usedLegend')}</span></div>
+      ${strategies.length ? `<p class="muted small">${t('tyre.common')}${strategies.map(([k, n]) => `<b class="ty-strat">${esc(k)}</b>${t('tyre.commonItem', { n })}`).join(t('table.listSep'))}</p>` : ''}
     </div>
-    <div class="ty-chart" role="img" aria-label="${esc(`各車手輪胎策略，共 ${totalLaps} 圈`)}">
+    <div class="ty-chart" role="img" aria-label="${esc(t('tyre.aria', { laps: totalLaps }))}">
       ${rowHtml}
-      <div class="ty-row ty-axis-row"><span></span><span class="muted small">圈數</span><div class="ty-axis">${axis}</div><span></span></div>
+      <div class="ty-row ty-axis-row"><span></span><span class="muted small">${t('tyre.laps')}</span><div class="ty-axis">${axis}</div><span></span></div>
     </div>
-    <p class="muted small">滑鼠移到色條上（手機用長按）可以看每一段的圈數。資料來源：<a href="https://openf1.org" target="_blank" rel="noopener">OpenF1</a>。</p>`;
+    <p class="muted small">${t('tyre.note')}</p>`;
 }
 

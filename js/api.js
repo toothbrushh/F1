@@ -489,9 +489,11 @@ export async function loadTeamProfile(id, season) {
 
 /** 車手/車隊故事（自己寫的中文內容） */
 let storiesPromise = null;
-export function loadStories() {
+// 中文故事在 data/stories.json，其他語言在 data/stories.{lang}.json（例如 stories.en.json）
+export function loadStories(lang = 'zh') {
   if (!storiesPromise) {
-    storiesPromise = fetch('data/stories.json')
+    const file = lang === 'zh' ? 'data/stories.json' : `data/stories.${lang}.json`;
+    storiesPromise = fetch(file)
       .then((r) => (r.ok ? r.json() : { drivers: {}, teams: {} }))
       .catch(() => ({ drivers: {}, teams: {} }));
   }

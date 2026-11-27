@@ -1,0 +1,512 @@
+{
+  "_note": "English driver and team stories. Keys are the API driverId / constructorId (see ?id= in the URL). aliases map other ids to the same story. Keep this file in step with stories.json (the Chinese version).",
+  "aliases": {
+    "verstappen": "max_verstappen",
+    "arvid_lindblad": "lindblad",
+    "sauber": "audi",
+    "kick_sauber": "audi",
+    "alfa": "audi",
+    "bmw_sauber": "audi",
+    "racing_bulls": "rb",
+    "alphatauri": "rb",
+    "toro_rosso": "rb",
+    "minardi": "rb",
+    "renault": "alpine",
+    "lotus_f1": "alpine",
+    "benetton": "alpine",
+    "racing_point": "aston_martin",
+    "force_india": "aston_martin",
+    "jordan": "aston_martin",
+    "brawn": "mercedes"
+  },
+  "drivers": {
+    "max_verstappen": {
+      "nickname": "Mad Max",
+      "tagline": "Debuted at 17, won at 18 — the prodigy who rewrote countless “youngest ever” records.",
+      "paragraphs": [
+        "Max Verstappen was born in 1997. His father Jos Verstappen is a former F1 driver and his mother Sophie Kumpen was a top karting driver. He practically grew up at race tracks and was trained very strictly by his father from a young age.",
+        "In 2015 he raced for Toro Rosso aged 17, becoming the youngest driver in F1 history. Promoted to Red Bull mid-way through 2016, he won his very first race for them in Spain at just 18 — still the youngest Grand Prix winner ever.",
+        "In 2021 he fought Lewis Hamilton all season and won his first world title with a last-lap pass in Abu Dhabi, one of the most controversial and dramatic finishes in F1 history. He then dominated 2022–2024, including a record 19 wins in 2023."
+      ],
+      "highlights": [
+        "4-time World Champion (2021–2024)",
+        "Youngest F1 starter (17) and race winner (18)",
+        "Records of 19 wins in a season and 10 wins in a row (2023)"
+      ]
+    },
+    "hamilton": {
+      "nickname": "Sir Lewis",
+      "tagline": "7-time World Champion and all-time record holder for wins and pole positions.",
+      "paragraphs": [
+        "Lewis Hamilton was born in 1985 in Stevenage, England. His father worked several jobs at once to support his karting dream. At 13 he was signed to McLaren’s young driver programme by team boss Ron Dennis, and he became F1’s first Black driver.",
+        "He missed the title by a single point in his 2007 rookie season, then clinched his first championship in 2008 with a pass at the final corner in Brazil. He moved to Mercedes in 2013 and, as the turbo-hybrid era arrived, won six more titles in 2014, 2015 and 2017–2020, equalling Michael Schumacher’s record of seven.",
+        "Off track he campaigns for diversity and equality in motorsport, and he was knighted in 2021. In 2025 he joined Ferrari, opening the most closely watched chapter of his career."
+      ],
+      "highlights": [
+        "7-time World Champion (2008, 2014, 2015, 2017, 2018, 2019, 2020)",
+        "Most Grand Prix wins and pole positions in history",
+        "Racing for Ferrari since 2025"
+      ]
+    },
+    "leclerc": {
+      "nickname": "Il Predestinato (The Chosen One)",
+      "tagline": "Ferrari’s Monegasque leader, one of the fastest over a single lap.",
+      "paragraphs": [
+        "Charles Leclerc was born in Monaco in 1997. The late driver Jules Bianchi was his godfather and mentor. He won GP3 in 2016 and F2 in 2017, both in his rookie seasons, and was tipped as the next superstar.",
+        "After his first F1 season with Sauber in 2018, Ferrari promoted him the following year. In 2019 he took his first win in Belgium and, a week later, won at Ferrari’s home race at Monza, sending all of Italy wild.",
+        "For years he had terrible luck at his home race in Monaco, until he finally won on his own doorstep in 2024, fulfilling a dream."
+      ],
+      "highlights": [
+        "Won for Ferrari at Monza in 2019",
+        "Won his home race in Monaco in 2024",
+        "Among the leading pole-sitters of current drivers"
+      ]
+    },
+    "russell": {
+      "nickname": "Mr. Saturday",
+      "tagline": "A qualifying specialist who worked his way from Williams to leading Mercedes.",
+      "paragraphs": [
+        "George Russell was born in England in 1998 and won GP3 in 2017 and F2 in 2018. From 2019 he spent three years at Williams, then the slowest team, regularly dragging the car into Q2 — earning the nickname “Mr. Saturday”.",
+        "When Hamilton caught COVID in 2020, Russell stood in at Mercedes and led for a long time at Sakhir, showing what he could do. He became a full Mercedes driver in 2022 and took his first win in Brazil that same year."
+      ],
+      "highlights": [
+        "2018 F2 Champion",
+        "First win at the 2022 São Paulo Grand Prix",
+        "Mercedes team leader after Hamilton’s departure"
+      ]
+    },
+    "antonelli": {
+      "nickname": "Kimi",
+      "tagline": "The Italian prodigy Mercedes hand-picked to replace Hamilton.",
+      "paragraphs": [
+        "Andrea Kimi Antonelli was born in Bologna, Italy, in 2006 and joined the Mercedes junior programme as a child. He won title after title in the junior categories and skipped F3 to go straight to F2.",
+        "In 2025, aged 18, he took over Hamilton’s seat at Mercedes — one of the most hyped rookies in years — and scored his first podium in Canada."
+      ],
+      "highlights": [
+        "Full-time Mercedes driver at 18",
+        "Skipped F3, going straight from F2 to F1"
+      ]
+    },
+    "norris": {
+      "nickname": "Lando",
+      "tagline": "McLaren’s homegrown star, from internet personality to World Champion.",
+      "paragraphs": [
+        "Lando Norris was born in Bristol, England, in 1999 and debuted with McLaren in 2019, where he has raced ever since. His humour and streaming made him hugely popular with younger fans.",
+        "As McLaren returned to form, he took a long-awaited first win in Miami in 2024. In 2025 he fought team-mate Piastri and Verstappen for the title and won his first World Championship at the Abu Dhabi finale."
+      ],
+      "highlights": [
+        "2025 World Champion",
+        "First win at the 2024 Miami Grand Prix",
+        "Has spent his entire F1 career at McLaren"
+      ]
+    },
+    "piastri": {
+      "nickname": "Oscar",
+      "tagline": "The Australian speedster who is far too calm for a rookie.",
+      "paragraphs": [
+        "Oscar Piastri was born in Melbourne, Australia, in 2001. He won F3 in 2020 and F2 in 2021, both as a rookie — a very rare double in the junior categories.",
+        "In 2022 Alpine announced him as a race driver, but he denied it and chose McLaren; the Contract Recognition Board ruled in McLaren’s favour. After debuting in 2023 he improved rapidly, won in Hungary in 2024 and became one of McLaren’s two leaders."
+      ],
+      "highlights": [
+        "Back-to-back rookie titles in F3 and F2",
+        "First win at the 2024 Hungarian Grand Prix"
+      ]
+    },
+    "alonso": {
+      "nickname": "El Nano",
+      "tagline": "The legend with the most starts in F1 history, still elite past 40.",
+      "paragraphs": [
+        "Fernando Alonso was born in Oviedo, Spain, in 1981 and debuted with Minardi in 2001. He won back-to-back world titles with Renault in 2005 and 2006, ending the Michael Schumacher era, and was at the time the youngest World Champion ever.",
+        "He went on to race for McLaren and Ferrari, finishing runner-up three times but never winning a third title. He also tried other series, winning the Le Mans 24 Hours twice and taking on the Indy 500 and the Dakar Rally.",
+        "He joined Aston Martin in 2023 and has stood on the podium many times in his forties. He has started more races than anyone in F1 history."
+      ],
+      "highlights": [
+        "2-time World Champion (2005, 2006)",
+        "Two-time Le Mans 24 Hours winner",
+        "Most starts in F1 history"
+      ]
+    },
+    "stroll": {
+      "nickname": "Lance",
+      "tagline": "Canadian driver whose father owns the Aston Martin team.",
+      "paragraphs": [
+        "Lance Stroll was born in Montreal, Canada, in 1998, the son of billionaire Lawrence Stroll. He won the European F3 title in 2016, debuted with Williams in 2017 and took a podium in Azerbaijan aged 18.",
+        "In 2020 he took pole position in a wet Turkish Grand Prix. Since his father bought the team and renamed it Aston Martin, he has always been one of its race drivers."
+      ],
+      "highlights": [
+        "Podium at the 2017 Azerbaijan Grand Prix",
+        "Pole position at the 2020 Turkish Grand Prix"
+      ]
+    },
+    "gasly": {
+      "nickname": "Pierre",
+      "tagline": "The Frenchman who bounced back from demotion to work a miracle at Monza.",
+      "paragraphs": [
+        "Pierre Gasly was born in Rouen, France, in 1996 and was the 2016 GP2 champion. Promoted to Red Bull in 2019, he struggled and was sent back to the junior team Toro Rosso mid-season.",
+        "He didn’t let it break him: in 2020 he took an incredible win for AlphaTauri at Monza, one of the few victories by a midfield team in that era. He has raced for the French team Alpine since 2023."
+      ],
+      "highlights": [
+        "Won the 2020 Italian Grand Prix",
+        "2016 GP2 Champion"
+      ]
+    },
+    "colapinto": {
+      "nickname": "Franco",
+      "tagline": "The young man who made all of Argentina fall in love with F1 again.",
+      "paragraphs": [
+        "Franco Colapinto was born in Argentina in 2003. Called up by Williams mid-way through 2024, he became the first Argentine F1 driver since 2001 and scored points in only his second race.",
+        "He is enormously popular in Argentina. In 2025 he moved to Alpine to continue his F1 career."
+      ],
+      "highlights": [
+        "First Argentine F1 driver since 2001",
+        "First points at the 2024 Azerbaijan Grand Prix"
+      ]
+    },
+    "albon": {
+      "nickname": "Alex",
+      "tagline": "A Londoner racing for Thailand, and the backbone of Williams.",
+      "paragraphs": [
+        "Alexander Albon was born in London in 1996 to a British father and a Thai mother, and races under the Thai flag. He debuted with Toro Rosso in 2019, was promoted to Red Bull after half a season, and took two podiums in 2020.",
+        "He lost his seat in 2021 and became a reserve driver, then restarted with Williams in 2022, where he has become the team’s core, often taking a midfield car into the points."
+      ],
+      "highlights": [
+        "Podiums at Mugello and Bahrain in 2020",
+        "Williams’ main points scorer in recent years"
+      ]
+    },
+    "sainz": {
+      "nickname": "Smooth Operator",
+      "tagline": "Son of a rally legend who earns respect wherever he goes.",
+      "paragraphs": [
+        "Carlos Sainz was born in Madrid in 1994. His father, Carlos Sainz Sr., is a two-time World Rally Champion. He debuted with Toro Rosso in 2015 and later raced for Renault and McLaren.",
+        "He joined Ferrari in 2021 and took his first win at the 2022 British Grand Prix. At the 2024 Australian Grand Prix he won just two weeks after having his appendix removed — a story for the ages. He joined Williams in 2025."
+      ],
+      "highlights": [
+        "First win at the 2022 British Grand Prix",
+        "Won in Australia 2024 straight after surgery"
+      ]
+    },
+    "hadjar": {
+      "nickname": "Le Petit Prost",
+      "tagline": "An emotional and astonishingly fast young French star.",
+      "paragraphs": [
+        "Isack Hadjar was born in Paris in 2004, of French and Algerian heritage, and is nicknamed “Le Petit Prost” for his driving style and looks. He was runner-up in F2 in 2024.",
+        "He debuted with Racing Bulls in 2025 and crashed on the formation lap of his first race in Australia — a heartbreaking moment — but he quickly found his feet and took his first podium in the Netherlands. In 2026 he was promoted to Red Bull."
+      ],
+      "highlights": [
+        "First podium at the 2025 Dutch Grand Prix",
+        "Promoted to Red Bull in 2026"
+      ]
+    },
+    "lawson": {
+      "nickname": "Liam",
+      "tagline": "The New Zealander who keeps proving himself inside the Red Bull system.",
+      "paragraphs": [
+        "Liam Lawson was born in New Zealand in 2002. He impressed as a stand-in when Ricciardo was injured in 2023, and secured a race seat at the end of 2024.",
+        "Promoted to the senior Red Bull team at the start of 2025, he was swapped back to the junior team after only two races. He didn’t give up, and keeps letting his results speak at Racing Bulls."
+      ],
+      "highlights": [
+        "Debuted as a stand-in in 2023 and scored points",
+        "Briefly promoted to Red Bull in 2025"
+      ]
+    },
+    "lindblad": {
+      "nickname": "Arvid",
+      "tagline": "A British rookie raised in the Red Bull junior programme.",
+      "paragraphs": [
+        "Arvid Lindblad was born in 2007, of British and Swedish heritage, and is a key prospect in the Red Bull junior programme. He showed strong one-lap pace in the junior series and raced in F2 in 2025.",
+        "In 2026 he earned a full-time seat at Racing Bulls, joining F1’s new generation of rookies."
+      ],
+      "highlights": [
+        "F1 debut in 2026"
+      ]
+    },
+    "ocon": {
+      "nickname": "Esteban",
+      "tagline": "A Grand Prix winner who fought his way to F1 from humble beginnings.",
+      "paragraphs": [
+        "Esteban Ocon was born in France in 1996. His family sold their house and lived in a caravan to support his racing. He debuted with Manor in 2016 and then raced for Force India.",
+        "He took his first win for Alpine in a chaotic 2021 Hungarian Grand Prix. He joined Haas in 2025."
+      ],
+      "highlights": [
+        "Won the 2021 Hungarian Grand Prix",
+        "2014 European F3 Champion (beating Verstappen)"
+      ]
+    },
+    "bearman": {
+      "nickname": "Ollie",
+      "tagline": "The British star who scored points as an 18-year-old Ferrari stand-in.",
+      "paragraphs": [
+        "Oliver Bearman was born in England in 2005 and is a Ferrari junior. At the 2024 Saudi Arabian Grand Prix, Sainz was ruled out with appendicitis; Bearman was told only after practice that he would race, finished 7th and scored points, making his name overnight.",
+        "He became a full-time Haas driver in 2025."
+      ],
+      "highlights": [
+        "Debuted for Ferrari at 18 and scored points",
+        "Full-time race driver since 2025"
+      ]
+    },
+    "hulkenberg": {
+      "nickname": "Hulk",
+      "tagline": "After more than a decade and over 200 races, he finally reached the podium.",
+      "paragraphs": [
+        "Nico Hülkenberg was born in Germany in 1987, won GP2 in 2009 and took pole in Brazil in his 2010 rookie season. In 2015 he also won the Le Mans 24 Hours with Porsche.",
+        "Long seen as one of the best midfield drivers, he held the record for the most starts without a podium. At the 2025 British Grand Prix he charged from the back to 3rd for Sauber, finally breaking the curse to applause from the whole paddock."
+      ],
+      "highlights": [
+        "Rookie pole at the 2010 Brazilian Grand Prix",
+        "2015 Le Mans 24 Hours winner",
+        "First podium at the 2025 British Grand Prix"
+      ]
+    },
+    "bortoleto": {
+      "nickname": "Gabriel",
+      "tagline": "Brazil’s new hope, champion in F3 and F2 back to back.",
+      "paragraphs": [
+        "Gabriel Bortoleto was born in São Paulo, Brazil, in 2004 and is managed by Fernando Alonso’s management company. He won F3 in 2023 and F2 in 2024, both as a rookie.",
+        "He debuted with Sauber in 2025 — Brazil’s first full-time F1 driver in years — and moves with the team into the Audi era."
+      ],
+      "highlights": [
+        "Back-to-back rookie titles in F3 and F2",
+        "Brazil’s first full-time F1 driver in years"
+      ]
+    },
+    "perez": {
+      "nickname": "Checo",
+      "tagline": "Mexican hero and master of tyre management.",
+      "paragraphs": [
+        "Sergio Pérez was born in Guadalajara, Mexico, in 1990 and debuted with Sauber in 2011, becoming known for outstanding tyre management. At Sakhir in 2020 he dropped to last on the opening lap, then fought back to take his first win.",
+        "He joined Red Bull in 2021 and, in the Abu Dhabi decider, held off Hamilton to help Verstappen win the title — earning the nickname “Minister of Defence”. He was championship runner-up in 2023. After a year away, he returned to F1 in 2026 with the new Cadillac team."
+      ],
+      "highlights": [
+        "Won from last place at Sakhir 2020",
+        "2023 championship runner-up",
+        "Joined Cadillac in 2026"
+      ]
+    },
+    "bottas": {
+      "nickname": "Valtteri",
+      "tagline": "The tough Finn who was a key piece of the Mercedes dynasty.",
+      "paragraphs": [
+        "Valtteri Bottas was born in Finland in 1989 and debuted with Williams in 2013. In 2017 he replaced retired World Champion Nico Rosberg at Mercedes, winning 10 Grands Prix in five years and helping the team to successive constructors’ titles.",
+        "He later raced for Alfa Romeo / Sauber, returned to Mercedes as reserve driver in 2025, and joined Cadillac alongside Pérez in 2026."
+      ],
+      "highlights": [
+        "10 Grand Prix wins",
+        "Championship runner-up twice (2019, 2020)"
+      ]
+    },
+    "senna": {
+      "nickname": "Magic",
+      "tagline": "To countless fans, the greatest driver of all time.",
+      "paragraphs": [
+        "Ayrton Senna was born in São Paulo, Brazil, in 1960 and was famed for his astonishing qualifying speed and skill in the wet. He won the World Championship three times with McLaren, in 1988, 1990 and 1991, and won in Monaco six times.",
+        "His feud with team-mate Alain Prost is the most famous rivalry in F1 history. He was killed in an accident during the 1994 race at Imola, Italy, which shocked the world and led to major safety improvements in F1."
+      ],
+      "highlights": [
+        "3-time World Champion (1988, 1990, 1991)",
+        "6 Monaco Grand Prix wins"
+      ]
+    },
+    "michael_schumacher": {
+      "nickname": "Schumi",
+      "tagline": "The 7-time World Champion who built Ferrari’s dynasty.",
+      "paragraphs": [
+        "Michael Schumacher was born in Germany in 1969 and won the title with Benetton in 1994 and 1995. In 1996 he joined a struggling Ferrari, rebuilt it alongside the team, and won five championships in a row from 2000 to 2004.",
+        "His records of 7 world titles and 91 Grand Prix wins stood for years. After retiring, he suffered a serious skiing accident in 2013, and fans around the world still keep him in their thoughts."
+      ],
+      "highlights": [
+        "7-time World Champion",
+        "Five straight titles with Ferrari (2000–2004)"
+      ]
+    },
+    "prost": {
+      "nickname": "The Professor",
+      "tagline": "A 4-time World Champion who won with intelligence and calculation.",
+      "paragraphs": [
+        "Alain Prost was born in France in 1955 and was called “The Professor” for his calm, calculating racing style. He won the World Championship in 1985, 1986, 1989 and 1993.",
+        "His rivalry with Senna as McLaren team-mates, and their clashes at Suzuka in 1989 and 1990, are among the most famous chapters in F1."
+      ],
+      "highlights": [
+        "4-time World Champion",
+        "Legendary rivalry with Senna"
+      ]
+    },
+    "lauda": {
+      "nickname": "Niki",
+      "tagline": "The iron man who rose from the flames.",
+      "paragraphs": [
+        "Niki Lauda was born in Austria in 1949 and won the title with Ferrari in 1975. In 1976 he suffered a horrific fiery crash at the Nürburgring that nearly killed him, yet he was back racing just six weeks later.",
+        "He won the title again in 1977 and a third with McLaren in 1984. After retiring he founded airlines, and in later life was non-executive chairman of the Mercedes team. He died in 2019. The film Rush tells his story."
+      ],
+      "highlights": [
+        "3-time World Champion (1975, 1977, 1984)",
+        "Returned six weeks after his 1976 crash"
+      ]
+    },
+    "vettel": {
+      "nickname": "Seb",
+      "tagline": "The four-in-a-row champion of the Red Bull dynasty.",
+      "paragraphs": [
+        "Sebastian Vettel was born in Germany in 1987. In 2008 he stunned the sport by winning in the rain at Monza for the small Toro Rosso team.",
+        "He won four consecutive world titles with Red Bull from 2010 to 2013. He later raced for Ferrari and Aston Martin, retired in 2022, and now campaigns on environmental and social issues."
+      ],
+      "highlights": [
+        "4-time World Champion (2010–2013)",
+        "Won at Monza with Toro Rosso in 2008"
+      ]
+    },
+    "tsunoda": {
+      "nickname": "Yuki",
+      "tagline": "An outspoken and seriously fast Japanese driver.",
+      "paragraphs": [
+        "Yuki Tsunoda was born in Kanagawa, Japan, in 2000 and was developed jointly by Honda and Red Bull. After an impressive F2 season in 2020, he moved up to F1 the following year.",
+        "He debuted with AlphaTauri in 2021 and scored points in his first race in Bahrain. His blunt radio messages have made him a fan favourite. Just before his home race in Japan in 2025, he was promoted to Red Bull."
+      ],
+      "highlights": [
+        "Scored points on his 2021 debut",
+        "Promoted to Red Bull in 2025"
+      ]
+    }
+  },
+  "teams": {
+    "red_bull": {
+      "nickname": "Red Bull Racing",
+      "tagline": "The championship machine built by an energy-drink brand.",
+      "paragraphs": [
+        "Red Bull bought the Jaguar team at the end of 2004 and began racing as Red Bull Racing in 2005. With legendary designer Adrian Newey at the drawing board, the team quickly rose from the midfield.",
+        "From 2010 to 2013 Sebastian Vettel led the team to four straight drivers’ and constructors’ doubles. In the Max Verstappen era it won four more drivers’ titles from 2021 to 2024, winning almost every race in 2023.",
+        "With new rules in 2026, Red Bull started using its own power unit developed with Ford — a brand-new challenge."
+      ],
+      "highlights": [
+        "Vettel’s four in a row (2010–2013)",
+        "Verstappen’s four in a row (2021–2024)",
+        "In-house Red Bull Ford power unit from 2026"
+      ]
+    },
+    "ferrari": {
+      "nickname": "Scuderia Ferrari (The Prancing Horse)",
+      "tagline": "F1’s oldest and most successful team, and its most famous brand.",
+      "paragraphs": [
+        "Founded by Enzo Ferrari, Scuderia Ferrari is the only team to have competed in every season since the first World Championship in 1950, and it has the most constructors’ titles and Grand Prix wins.",
+        "Niki Lauda won titles for the team in the 1970s, and Michael Schumacher built a five-title dynasty from 2000 to 2004. Kimi Räikkönen won the team’s most recent drivers’ title in 2007.",
+        "Ferrari’s fans, the Tifosi, paint every circuit red — above all at the team’s home race at Monza."
+      ],
+      "highlights": [
+        "The only team to race every season since 1950",
+        "Most constructors’ titles in history",
+        "Five in a row in the Schumacher era (2000–2004)"
+      ]
+    },
+    "mercedes": {
+      "nickname": "Silver Arrows",
+      "tagline": "The German manufacturer behind the longest dynasty in F1 history.",
+      "paragraphs": [
+        "Mercedes first raced in 1954–1955, when Juan Manuel Fangio won the title. In 2010 it bought Brawn GP, fresh from winning both championships, and returned as a works team.",
+        "When the turbo-hybrid era began in 2014, Mercedes’ engine was far ahead of the rest, and the team won eight straight constructors’ titles (2014–2021), with Lewis Hamilton and Nico Rosberg taking most of the drivers’ titles in that period. Team principal Toto Wolff was the driving force behind the dynasty."
+      ],
+      "highlights": [
+        "8 straight constructors’ titles (2014–2021), an F1 record",
+        "Where Hamilton won 6 of his world titles"
+      ]
+    },
+    "mclaren": {
+      "nickname": "Papaya",
+      "tagline": "The historic British team that climbed from rock bottom back to the top.",
+      "paragraphs": [
+        "New Zealand driver Bruce McLaren founded the team in 1963, and it started racing in F1 in 1966. In 1988 Senna and Prost won 15 of the 16 races, one of the most dominant seasons ever.",
+        "In the 2010s the team hit rock bottom, even finishing near the foot of the constructors’ table. After a rebuild, McLaren won its first constructors’ title in 26 years in 2024, defended it in 2025, and Lando Norris won the drivers’ title too."
+      ],
+      "highlights": [
+        "15 wins from 16 races in 1988",
+        "Back-to-back constructors’ titles in 2024 and 2025",
+        "Senna, Prost, Häkkinen, Hamilton and Norris all won titles here"
+      ]
+    },
+    "aston_martin": {
+      "nickname": "Aston Martin",
+      "tagline": "The British luxury sports-car brand aiming to build a championship team.",
+      "paragraphs": [
+        "The team traces its roots to Jordan in 1991, then became Midland, Spyker, Force India and Racing Point, before Lawrence Stroll renamed it Aston Martin in 2021.",
+        "The team has invested in a new factory and wind tunnel, signed two-time World Champion Fernando Alonso, and in 2025 hired legendary designer Adrian Newey. From 2026 it uses Honda power units — the ambition is clear."
+      ],
+      "highlights": [
+        "Formerly Jordan / Force India",
+        "Partnered with Honda from 2026",
+        "Adrian Newey on board"
+      ]
+    },
+    "alpine": {
+      "nickname": "Alpine",
+      "tagline": "A championship-winning team from Enstone, England, with many names.",
+      "paragraphs": [
+        "Alpine’s factory is in Enstone, England. The team started as Toleman in 1981, then became Benetton, Renault and Lotus, before being renamed Alpine in 2021.",
+        "It has been champion in two eras: Michael Schumacher won with Benetton in 1994 and 1995, and Fernando Alonso with Renault in 2005 and 2006. From 2026 the team uses Mercedes power units."
+      ],
+      "highlights": [
+        "Two Schumacher titles in the Benetton era",
+        "Two Alonso titles in the Renault era"
+      ]
+    },
+    "williams": {
+      "nickname": "Williams",
+      "tagline": "A legendary family team with nine constructors’ titles.",
+      "paragraphs": [
+        "Frank Williams and engineer Patrick Head founded Williams in 1977. The 1980s and 1990s were its golden age, bringing 9 constructors’ titles and champions such as Alan Jones, Nelson Piquet, Nigel Mansell and Damon Hill.",
+        "The team declined in the 2010s, and in 2020 the Williams family sold it to an investment firm. Under team principal James Vowles, it is working its way back towards the front."
+      ],
+      "highlights": [
+        "9 constructors’ titles",
+        "7 different World Champions won titles with the team"
+      ]
+    },
+    "rb": {
+      "nickname": "Racing Bulls",
+      "tagline": "Red Bull’s second team and a cradle of new stars.",
+      "paragraphs": [
+        "The team began as Italy’s Minardi (racing from 1985). Red Bull bought it in 2006 and renamed it Toro Rosso; it became AlphaTauri in 2020 and RB / Racing Bulls from 2024.",
+        "Its mission is to develop Red Bull’s young drivers: Vettel and Verstappen both debuted here. Vettel in 2008 and Gasly in 2020 both won at Monza for this small team against all odds."
+      ],
+      "highlights": [
+        "Where Vettel and Verstappen made their debuts",
+        "Two wins at Monza (2008, 2020)"
+      ]
+    },
+    "haas": {
+      "nickname": "Haas",
+      "tagline": "The only American team (until Cadillac arrived).",
+      "paragraphs": [
+        "Founded by American machine-tool magnate Gene Haas, the team joined F1 in 2016, and Romain Grosjean finished 6th in its very first race.",
+        "Haas runs a lean operation, buying many parts from Ferrari. Since 2024 it has been led by Japanese engineer Ayao Komatsu and has a technical partnership with Toyota."
+      ],
+      "highlights": [
+        "Points on its 2016 debut",
+        "Magnussen’s pole in Brazil in 2022"
+      ]
+    },
+    "audi": {
+      "nickname": "Audi (formerly Sauber)",
+      "tagline": "Swiss veterans Sauber transformed into a German works team.",
+      "paragraphs": [
+        "Founded by Peter Sauber, the team has raced in F1 since 1993 and is known for discovering talent: Kimi Räikkönen, Felipe Massa and Charles Leclerc all debuted here. As BMW Sauber, it won the 2008 Canadian Grand Prix with Robert Kubica.",
+        "The team has also raced as Alfa Romeo and Kick Sauber. After Audi bought it, it began racing as the Audi works team in 2026 with Audi’s own power unit."
+      ],
+      "highlights": [
+        "Where Räikkönen, Leclerc and others debuted",
+        "BMW Sauber won in Canada in 2008",
+        "Audi works team from 2026"
+      ]
+    },
+    "cadillac": {
+      "nickname": "Cadillac",
+      "tagline": "F1’s 11th team, the works outfit of America’s General Motors.",
+      "paragraphs": [
+        "Backed by General Motors (GM), Cadillac joined F1 in 2026 as the first new team in years, taking the grid back to 11 teams and 22 drivers.",
+        "The team starts with Ferrari power units and plans to switch to a GM-built engine in the future. Its first-year drivers are the experienced Sergio Pérez and Valtteri Bottas."
+      ],
+      "highlights": [
+        "First season in 2026",
+        "Drivers: Pérez and Bottas"
+      ]
+    }
+  }
+}
