@@ -4,6 +4,7 @@
 // 格式化時間、跳脫 HTML、國旗、車隊顏色…
 // 純函式（同樣輸入 → 同樣輸出、沒有副作用）最容易測試與重用。
 // ============================================================
+import { t, lang, locale } from './i18n.js';
 
 /**
  * 跳脫 HTML 特殊字元。
@@ -27,12 +28,13 @@ export function toDate(date, time) {
 
 // Intl.DateTimeFormat 會自動用「使用者電腦的時區」顯示，
 // 所以住在台灣的人看到台灣時間，朋友在美國就看到美國時間。
-const fmtDate = new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric', weekday: 'short' });
-const fmtDateTime = new Intl.DateTimeFormat('zh-TW', {
+// 語言（月、星期的寫法）則依照目前選的語言（locale 來自 i18n.js）。
+const fmtDate = new Intl.DateTimeFormat(locale, { month: 'numeric', day: 'numeric', weekday: 'short' });
+const fmtDateTime = new Intl.DateTimeFormat(locale, {
   month: 'numeric', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false,
 });
-const fmtTime = new Intl.DateTimeFormat('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false });
-const fmtFull = new Intl.DateTimeFormat('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+const fmtTime = new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hour12: false });
+const fmtFull = new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' });
 
 export const formatDate = (d) => (d ? fmtDate.format(d) : '—');
 export const formatDateTime = (d) => (d ? fmtDateTime.format(d) : '—');
@@ -43,13 +45,13 @@ export const userTimeZone = () => Intl.DateTimeFormat().resolvedOptions().timeZo
 /** 倒數計時文字，例如「3 天 4 小時」 */
 export function countdown(target, now = new Date()) {
   let ms = target - now;
-  if (ms <= 0) return '進行中 / 即將開始';
+  if (ms <= 0) return t('countdown.now');
   const d = Math.floor(ms / 86400000); ms -= d * 86400000;
   const h = Math.floor(ms / 3600000); ms -= h * 3600000;
   const m = Math.floor(ms / 60000);
-  if (d > 0) return `${d} 天 ${h} 小時`;
-  if (h > 0) return `${h} 小時 ${m} 分`;
-  return `${m} 分鐘`;
+  if (d > 0) return t('countdown.dh', { d, h });
+  if (h > 0) return t('countdown.hm', { h, m });
+  return t('countdown.m', { m });
 }
 
 /** "1:23.456" 或 "59.123" → 毫秒；解析失敗回傳 null */
@@ -100,8 +102,10 @@ const STATUS_ZH = {
   Illness: '身體不適',
 };
 
-export function statusZh(status) {
+/** 比賽狀態文字：API 給的是英文，中文模式才翻譯 */
+export function statusText(status) {
   if (!status) return '';
+  if (lang !== 'zh') return status;
   const m = /^\+(\d+) Laps?$/.exec(status); // "+1 Lap" → "+1 圈"
   if (m) return `+${m[1]} 圈`;
   return STATUS_ZH[status] || status;
@@ -179,14 +183,8 @@ export function teamLink(constructor, season) {
     `<span class="team-dot" style="--c:${color}"></span>${esc(constructor.name)}</a>`;
 }
 
-// 賽段名稱
-export const SESSION_LABELS = {
-  FirstPractice: '一練 FP1',
-  SecondPractice: '二練 FP2',
-  ThirdPractice: '三練 FP3',
-  SprintQualifying: '衝刺排位',
-  SprintShootout: '衝刺排位',
-  Sprint: '衝刺賽',
-  Qualifying: '排位賽',
-  Race: '正賽',
+// 賽段名稱（翻譯在 i18n.js 的 session.*）
+export const sessionLabel = (key) => {
+  const label = t(`session.${key}`);
+  return label === `session.${key}` ? key : label;
 };

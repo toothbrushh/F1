@@ -5,6 +5,7 @@
 // 每個點都是 <a> 連結：已完賽 → 該站成績；未完賽 → 賽程表的那一站
 // ============================================================
 import { esc, countryFlag, formatDate, toDate, countdown } from './utils.js';
+import { t } from './i18n.js';
 
 /** 判斷每一站的狀態：done / pending（比完但成績還沒出）/ next / todo */
 export function raceStates(races, now = new Date()) {
@@ -33,10 +34,10 @@ export function renderTimeline(el, data, activeRound) {
   const doneCount = states.filter((s) => s === 'done').length;
 
   document.getElementById('timeline-title').textContent =
-    `${data.season} 賽季進度 · ${doneCount} / ${data.races.length} 站`;
+    t('timeline.title', { season: data.season, done: doneCount, total: data.races.length });
 
   if (data.races.length === 0) {
-    el.innerHTML = '<p class="muted">這個賽季還沒有公布賽程。</p>';
+    el.innerHTML = `<p class="muted">${t('timeline.empty')}</p>`;
     return;
   }
 
@@ -48,12 +49,12 @@ export function renderTimeline(el, data, activeRound) {
     let sub = formatDate(start);
     if (state === 'done' && winner) sub = `🏆 ${esc(winner.code || winner.familyName)}`;
     if (state === 'next') sub = `⏱ ${countdown(start)}`;
-    if (state === 'pending') sub = '成績待更新';
+    if (state === 'pending') sub = t('timeline.pending');
     const place = race.circuit?.Location?.locality || race.name.replace(' Grand Prix', '');
     return `
       <li class="step step-${state}${race.round === activeRound ? ' is-active' : ''}">
         <a href="${href}" title="${esc(race.name)}">
-          <span class="step-round">R${race.round}${race.hasSprint ? '<b class="sprint-tag" title="衝刺賽週末">S</b>' : ''}</span>
+          <span class="step-round">R${race.round}${race.hasSprint ? `<b class="sprint-tag" title="${t('timeline.sprint')}">S</b>` : ''}</span>
           <span class="step-dot" aria-hidden="true"></span>
           <span class="step-flag">${countryFlag(race.circuit?.Location?.country)}</span>
           <span class="step-name">${esc(place)}</span>
