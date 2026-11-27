@@ -8,10 +8,11 @@
 // 先把第 1 種馬上畫出來，第 2 種各自慢慢補上；其中一個失敗也不影響其他區塊。
 // ============================================================
 import {
-  loadSeason, loadCircuits, findCircuit, loadCircuitInfo, loadCircuitWinners, loadForecast,
+  loadSeason, loadCircuits, loadCircuitMaps, findCircuit, loadCircuitInfo, loadCircuitWinners, loadForecast,
   loadTyreStints, TYRE_DATA_FROM,
 } from './api.js';
 import { summarizeStrategies } from './tyres.js';
+import { trackMap } from './trackmap.js';
 import {
   esc, countryFlag, toDate, formatDate, formatTime, driverLink, teamLink, driverName, sessionLabel,
   userTimeZone,
@@ -54,7 +55,7 @@ function weatherIcon(code) {
 }
 
 // ---------- 主要內容 ----------
-function renderPage(circuit, info, race) {
+function renderPage(circuit, info, race, map) {
   const loc = circuit?.Location || {};
   const name = circuit?.circuitName || id;
   const c = info ? (info[lang] || info.zh) : null;
@@ -95,6 +96,17 @@ function renderPage(circuit, info, race) {
       ${facts.direction ? statCard(t('circuit.direction'), t(`circuit.dir.${facts.direction}`)) : ''}
       ${facts.type ? statCard(t('circuit.type'), t(`circuit.type.${facts.type}`)) : ''}
     </section>` : ''}
+
+    ${map ? `<article class="card">
+      <h2>🗺 ${t('circuit.mapTitle')}</h2>
+      <div class="track-map-wrap">${trackMap(map, facts.lengthKm)}</div>
+      <p class="tm-legend small">
+        <span><i class="tm-key tm-key-straight"></i>${t('circuit.mapLegendStraight')}</span>
+        <span><i class="tm-key tm-key-arrow">➤</i>${t('circuit.mapLegendArrow')}</span>
+        <span>🏁 ${t('circuit.mapStart')}</span>
+      </p>
+      <p class="muted small">${t('circuit.mapNote')}</p>
+    </article>` : ''}
 
     ${c ? `
     <div class="two-col">
@@ -252,13 +264,13 @@ async function fillForecast(race) {
 }
 
 async function main() {
-  const [circuits, seasonData] = await Promise.all([loadCircuits(), loadSeason(season).catch(() => null)]);
+  const [circuits, maps, seasonData] = await Promise.all([loadCircuits(), loadCircuitMaps(), loadSeason(season).catch(() => null)]);
   const race = seasonData?.races.find((r) => r.circuit?.circuitId === id) || null;
   // 這一季沒在這裡比賽 → 另外問 API 這條賽道的名稱與地點
   const circuit = race?.circuit || await loadCircuitInfo(id).catch(() => null);
   const found = findCircuit(circuits, id, circuit?.Location?.locality);
   if (!circuit && !found) throw new Error(`找不到賽道 / circuit not found: ${id}`);
-  renderPage(circuit, found?.info, race);
+  renderPage(circuit, found?.info, race, maps[id] || (found && maps[found.id]) || null);
   fillWinners();
   fillTyres(seasonData);
   fillForecast(race);

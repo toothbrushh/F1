@@ -440,3 +440,27 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
 .fc-day { flex: 1 1 90px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px; background: var(--surface-2); border-radius: 8px; text-align: center; }
 .fc-day small { color: var(--muted); font-size: .72rem; }
 .fc-icon { font-size: 1.6rem; }
+
+/* ---------- 賽道平面圖 ---------- */
+.track-map-wrap { display: flex; justify-content: center; }
+.track-map { width: 100%; max-width: 640px; max-height: 70vh; height: auto; }
+.tm-outline { fill: none; stroke: var(--surface-2); stroke-linejoin: round; }
+.tm-line { fill: none; stroke: var(--text); stroke-linejoin: round; stroke-linecap: round; }
+.tm-straight { fill: none; stroke: var(--accent); stroke-linecap: round; stroke-linejoin: round; }
+.tm-arrow { fill: var(--gold); }
+.tm-start-bg { stroke: #fff; }
+.tm-start { stroke: #111; }
+.tm-label { fill: var(--text); font-weight: 700; paint-order: stroke; stroke: var(--bg); stroke-linejoin: round; font-family: var(--font); }
+.tm-label-start { fill: #fff; }
+.tm-north path { fill: var(--muted); }
+.tm-north text { fill: var(--muted); font-weight: 700; font-family: var(--font); }
+.tm-start-dot { fill: var(--accent); }
+.tm-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: center; color: var(--muted); margin: 8px 0 0; }
+.tm-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.tm-key-straight { display: inline-block; width: 22px; height: 4px; border-radius: 2px; background: var(--accent); }
+.tm-key-arrow { font-style: normal; color: var(--gold); }
+.circuit-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.track-thumb { width: 96px; height: 64px; flex: 0 0 auto; }
+.track-thumb .tm-line { stroke: var(--muted); }
+.circuit-card:hover .track-thumb .tm-line { stroke: var(--text); }
+.tm-leader { stroke: var(--muted); stroke-dasharray: none; opacity: .8; }

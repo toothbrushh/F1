@@ -514,6 +514,18 @@ export function loadCircuits() {
   return circuitsPromise;
 }
 
+/** 賽道平面圖資料（data/circuit-maps.json，由 scripts/circuit-maps.mjs 產生） */
+let circuitMapsPromise;
+export function loadCircuitMaps() {
+  if (!circuitMapsPromise) {
+    circuitMapsPromise = fetch('data/circuit-maps.json')
+      .then((r) => (r.ok ? r.json() : { maps: {} }))
+      .then((json) => json.maps || {})
+      .catch(() => ({}));
+  }
+  return circuitMapsPromise;
+}
+
 /**
  * 找某條賽道的介紹：先用 circuitId，再用 aliases，最後用城市名稱（新賽道的代號還不確定時）
  * @returns {{ id: string, info: object } | null}

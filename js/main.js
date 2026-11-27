@@ -10,7 +10,7 @@
 // 重新整理不會跑掉、可以分享網址、瀏覽器「上一頁」也能用。
 // ============================================================
 import {
-  loadSeason, clearCache, loadTyreStints, TYRE_DATA_FROM, scheduledRaceCount, loadCircuits, findCircuit,
+  loadSeason, clearCache, loadTyreStints, TYRE_DATA_FROM, scheduledRaceCount, loadCircuits, loadCircuitMaps, findCircuit,
 } from './api.js';
 import { renderTyreStrategy } from './tyres.js';
 import { renderTimeline, raceStates, nextRace } from './timeline.js';
@@ -22,6 +22,7 @@ import {
   sessionLabel, circuitLink, circuitUrl,
 } from './utils.js';
 import { t, lang, applyStatic } from './i18n.js';
+import { trackThumb } from './trackmap.js';
 
 const FIRST_SEASON = 1950;
 const CURRENT_YEAR = new Date().getFullYear();
@@ -31,7 +32,7 @@ const LAST_SEASON = CURRENT_YEAR + 2;
 const params = new URLSearchParams(location.search);
 const season = clampSeason(Number(params.get('season')) || CURRENT_YEAR);
 
-const state = { data: null, scheduleFilter: 'all', futureSeasons: [], circuits: null }; // futureSeasons：[{ year, races }] 已公布賽程的未來賽季
+const state = { data: null, scheduleFilter: 'all', futureSeasons: [], circuits: null, circuitMaps: {} }; // futureSeasons：[{ year, races }] 已公布賽程的未來賽季
 const $view = document.getElementById('view');
 const $status = document.getElementById('data-status');
 
@@ -553,7 +554,8 @@ function viewCircuits() {
         f.type ? t(`circuit.type.${f.type}`) : '',
       ].filter(Boolean).join(' · ');
       return `<a class="card circuit-card" href="${circuitUrl(race.circuit?.circuitId, d.season)}">
-        <span class="round-badge">R${race.round}</span>
+        <div class="circuit-card-top"><span class="round-badge">R${race.round}</span>
+          ${trackThumb(state.circuitMaps[race.circuit?.circuitId] || (found && state.circuitMaps[found.id]))}</div>
         <h3>${countryFlag(loc.country)} ${esc(race.circuit?.circuitName || race.name)}</h3>
         <p class="muted small">${esc(loc.locality || '')}, ${esc(loc.country || '')} · ${formatDate(toDate(race.date, race.time))}</p>
         ${facts ? `<p class="small circuit-facts">${facts}</p>` : ''}
@@ -659,8 +661,9 @@ function init() {
 
   document.title = t('site.titleSeason', { season });
   // 賽道介紹是本站自己的檔案，跟 API 無關，可以同時載入；載入完如果正在看「賽道」分頁就重畫
-  loadCircuits().then((circuits) => {
+  Promise.all([loadCircuits(), loadCircuitMaps()]).then(([circuits, maps]) => {
     state.circuits = circuits;
+    state.circuitMaps = maps;
     if (parseRoute().view === 'circuits') render();
   });
   // 主要資料載入完再檢查未來賽季，避免兩邊的請求互相干擾
