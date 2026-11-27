@@ -9,7 +9,9 @@
 // 這種「網址就是狀態」的做法叫做 hash 路由：
 // 重新整理不會跑掉、可以分享網址、瀏覽器「上一頁」也能用。
 // ============================================================
-import { loadSeason, clearCache, loadTyreStints, TYRE_DATA_FROM, scheduledRaceCount } from './api.js';
+import {
+  loadSeason, clearCache, loadTyreStints, TYRE_DATA_FROM, scheduledRaceCount, loadCircuits, findCircuit,
+} from './api.js';
 import { renderTyreStrategy } from './tyres.js';
 import { renderTimeline, raceStates, nextRace } from './timeline.js';
 import { renderPointsChart } from './chart.js';
@@ -17,9 +19,9 @@ import { avatar, hydratePhotos } from './photos.js';
 import {
   esc, toDate, formatDate, formatDateTime, formatTime, countdown, userTimeZone, lapToMs, formatGap,
   statusText, isFinished, nationalityFlag, countryFlag, driverLink, teamLink, teamColor, driverName,
-  sessionLabel,
+  sessionLabel, circuitLink, circuitUrl,
 } from './utils.js';
-import { t, applyStatic } from './i18n.js';
+import { t, lang, applyStatic } from './i18n.js';
 
 const FIRST_SEASON = 1950;
 const CURRENT_YEAR = new Date().getFullYear();
@@ -29,7 +31,7 @@ const LAST_SEASON = CURRENT_YEAR + 2;
 const params = new URLSearchParams(location.search);
 const season = clampSeason(Number(params.get('season')) || CURRENT_YEAR);
 
-const state = { data: null, scheduleFilter: 'all', futureSeasons: [] }; // futureSeasons：[{ year, races }] 已公布賽程的未來賽季
+const state = { data: null, scheduleFilter: 'all', futureSeasons: [], circuits: null }; // futureSeasons：[{ year, races }] 已公布賽程的未來賽季
 const $view = document.getElementById('view');
 const $status = document.getElementById('data-status');
 
@@ -55,7 +57,9 @@ function render() {
     a.setAttribute('aria-current', a.dataset.view === route.view ? 'page' : 'false');
   });
 
-  const views = { summary: viewSummary, drivers: viewDrivers, teams: viewTeams, round: viewRound, schedule: viewSchedule };
+  const views = {
+    summary: viewSummary, drivers: viewDrivers, teams: viewTeams, round: viewRound, schedule: viewSchedule, circuits: viewCircuits,
+  };
   const fn = views[route.view] || viewSummary;
   $view.innerHTML = '';
   const activeRound = fn(route);
@@ -115,6 +119,7 @@ function viewSummary() {
         <p class="countdown" data-countdown="${start?.toISOString() || ''}">${start ? countdown(start) : ''}</p>
         <p class="muted">${t('summary.raceAt', { when: next.time ? formatDateTime(start) : t('summary.timeTbc', { date: formatDate(start) }) })}${next.hasSprint ? t('summary.sprintWeekend') : ''}</p>
         <a class="more" href="#schedule/${next.round}">${t('summary.fullSchedule')}</a>
+        ${next.circuit?.circuitId ? `<a class="more" href="${circuitUrl(next.circuit.circuitId, d.season)}">${t('circuit.link')}</a>` : ''}
       </article>`);
   }
 
@@ -345,7 +350,7 @@ function viewRound(route) {
         </select>
         ${next ? `<a class="btn" href="#round/${next.round}/${tab}" aria-label="${t('round.next')}">›</a>` : '<span class="btn disabled">›</span>'}
       </div>
-      <p class="muted round-meta">${esc(race.circuit?.circuitName || '')} · ${esc(race.circuit?.Location?.locality || '')}, ${esc(race.circuit?.Location?.country || '')} · ${t('round.raceAt', { when: formatDateTime(start) })}</p>
+      <p class="muted round-meta">🏟 ${circuitLink(race.circuit, d.season)} · ${esc(race.circuit?.Location?.locality || '')}, ${esc(race.circuit?.Location?.country || '')} · ${t('round.raceAt', { when: formatDateTime(start) })}</p>
       <div class="subtabs" role="tablist">${tabs.map(([k, label]) => `
         <a role="tab" href="#round/${race.round}/${k}" class="${k === tab ? 'active' : ''}" aria-selected="${k === tab}">${label}</a>`).join('')}
       </div>
@@ -491,7 +496,7 @@ function viewSchedule(route) {
           <span class="round-badge">R${race.round}</span>
           <div class="race-title">
             <h3>${countryFlag(loc.country)} ${esc(race.name)}</h3>
-            <p class="muted small">${esc(race.circuit?.circuitName || '')} · ${esc(loc.locality || '')}, ${esc(loc.country || '')}</p>
+            <p class="muted small">${circuitLink(race.circuit, d.season)} · ${esc(loc.locality || '')}, ${esc(loc.country || '')}</p>
           </div>
           <span class="state-badge">${labels[st]}</span>
         </header>
@@ -518,6 +523,44 @@ function viewSchedule(route) {
     document.getElementById(`race-${route.round}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   return route.round;
+}
+
+// ============================================================
+// 畫面 6：賽道 —— 這一季每一站的賽道卡片，點進去看賽道介紹頁
+// ============================================================
+function viewCircuits() {
+  const d = state.data;
+  if (!state.circuits) {
+    $view.innerHTML = `<div class="loading"><div class="spinner"></div><p>${t('circuits.loading')}</p></div>`;
+    return null;
+  }
+  if (!d.races.length) {
+    $view.innerHTML = `<p class="muted">${t('round.noSchedule')}</p>`;
+    return null;
+  }
+  $view.innerHTML = `
+    <div class="card-head"><h3>${t('circuits.title', { season: d.season })}</h3>
+      <span class="muted small">${t('circuits.hint')}</span></div>
+    <div class="circuit-grid">${d.races.map((race) => {
+      const loc = race.circuit?.Location || {};
+      const found = findCircuit(state.circuits, race.circuit?.circuitId, loc.locality);
+      const info = found?.info;
+      const c = info ? (info[lang] || info.zh) : null;
+      const f = info?.facts || {};
+      const facts = [
+        f.lengthKm ? t('circuit.km', { n: f.lengthKm }) : '',
+        f.turns ? t('circuit.turnsCount', { n: f.turns }) : '',
+        f.type ? t(`circuit.type.${f.type}`) : '',
+      ].filter(Boolean).join(' · ');
+      return `<a class="card circuit-card" href="${circuitUrl(race.circuit?.circuitId, d.season)}">
+        <span class="round-badge">R${race.round}</span>
+        <h3>${countryFlag(loc.country)} ${esc(race.circuit?.circuitName || race.name)}</h3>
+        <p class="muted small">${esc(loc.locality || '')}, ${esc(loc.country || '')} · ${formatDate(toDate(race.date, race.time))}</p>
+        ${facts ? `<p class="small circuit-facts">${facts}</p>` : ''}
+        <p class="small">${c ? esc(c.tagline) : `<span class="muted">${t('circuits.noInfo')}</span>`}</p>
+      </a>`;
+    }).join('')}</div>`;
+  return null;
 }
 
 // ============================================================
@@ -615,6 +658,11 @@ function init() {
   if (season === CURRENT_YEAR) setInterval(load, 10 * 60 * 1000);
 
   document.title = t('site.titleSeason', { season });
+  // 賽道介紹是本站自己的檔案，跟 API 無關，可以同時載入；載入完如果正在看「賽道」分頁就重畫
+  loadCircuits().then((circuits) => {
+    state.circuits = circuits;
+    if (parseRoute().view === 'circuits') render();
+  });
   // 主要資料載入完再檢查未來賽季，避免兩邊的請求互相干擾
   load().then(() => addFutureSeasons(select));
 }

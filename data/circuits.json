@@ -1,0 +1,1182 @@
+{
+  "_說明": "每條賽道的介紹（中英雙語）。key 是 API 的 circuitId；aliases 是其他可能的代號，match 是用城市名稱比對（新賽道代號還不確定時用）。facts 是數字資料；ratings 是本站的概略評估（1–5）：tyreStress 輪胎負擔、downforce 下壓力需求、overtaking 超車容易度。tyreRange：hard 偏硬胎、mid 中間、soft 偏軟胎。",
+  "circuits": {
+    "albert_park": {
+      "facts": { "lengthKm": 5.278, "turns": 14, "laps": 58, "firstGP": 1996, "direction": "cw", "type": "hybrid" },
+      "ratings": { "tyreStress": 3, "downforce": 3, "overtaking": 3 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "繞著湖畔公園的半街道賽道，常常是賽季揭幕戰。",
+        "country": "澳洲是熱愛運動的國家，F1 週末在墨爾本是全城的大事。澳洲大獎賽在 1985–1995 年辦在阿德雷德，1996 年起移到墨爾本。",
+        "history": [
+          "Albert Park 平常是公園道路，每年只在比賽前臨時封路搭建成賽道。這裡多次擔任賽季第一站，讓新賽季的強弱在這裡第一次揭曉。",
+          "2022 年賽道大幅改建：拓寬彎道、移除第 9–10 彎的減速彎，讓圈速變快，也增加了超車機會。"
+        ],
+        "layout": "順時針繞著 Albert Park 湖一圈，路面平常是一般道路，週末一開始抓地力很低，隨著比賽進行越來越好（俗稱「賽道進化」）。",
+        "sectors": [
+          "第一區段：起跑後立刻進入第 1–2 彎右左組合，起跑時常發生碰撞；接著重煞進入第 3 彎。",
+          "第二區段：沿著湖邊的高速段，第 9–10 彎改建後變成全油門的高速彎，是全場最考驗膽量的地方。",
+          "第三區段：第 11–12 彎的高速左右切換，最後經過第 13、14 彎回到起跑直線。"
+        ],
+        "features": [
+          "半街道賽道，牆離賽道很近，失誤容易撞車、出動安全車",
+          "週末賽道進化明顯，練習賽的速度不一定可靠",
+          "主要超車點在第 3 彎與第 11 彎前的直線"
+        ],
+        "tyres": "路面不算粗糙，輪胎磨耗中等，通常一停就能完賽。Pirelli 多半選擇偏軟的組合，但安全車出動的時機常常打亂策略。",
+        "weather": "三月是南半球的秋天，氣溫大約 18–28°C，天氣多變，偶爾會有陣雨或強風。"
+      },
+      "en": {
+        "tagline": "A semi-street circuit around a lakeside park, often the season opener.",
+        "country": "Australia is a sports-mad nation, and F1 weekend is a citywide event in Melbourne. The Australian Grand Prix was held in Adelaide from 1985 to 1995 and moved to Melbourne in 1996.",
+        "history": [
+          "Albert Park is normally a public park road network, closed off and turned into a circuit each year. It has often hosted the first race of the season, giving the first real look at the new pecking order.",
+          "The track was heavily revised in 2022: corners were widened and the Turn 9–10 chicane removed, making laps faster and creating more overtaking chances."
+        ],
+        "layout": "A clockwise lap around Albert Park Lake on everyday roads. Grip is very low at the start of the weekend and improves steadily as rubber is laid down (“track evolution”).",
+        "sectors": [
+          "Sector 1: straight into the Turn 1–2 right-left after the start, a frequent spot for first-lap contact, then heavy braking for Turn 3.",
+          "Sector 2: the fast lakeside section. Since the rebuild, Turns 9–10 are a flat-out high-speed sweep — the bravest part of the lap.",
+          "Sector 3: the quick left-right flick of Turns 11–12, then Turns 13 and 14 back onto the main straight."
+        ],
+        "features": [
+          "Semi-street circuit with walls close by, so mistakes often bring out the safety car",
+          "Strong track evolution — practice pace can be misleading",
+          "Main overtaking spots on the straights into Turns 3 and 11"
+        ],
+        "tyres": "The surface isn’t very abrasive, so wear is moderate and one stop is usually enough. Pirelli tends to bring the softer end of its range, but safety-car timing often scrambles strategy.",
+        "weather": "March is autumn in the southern hemisphere: around 18–28°C and changeable, with occasional showers or strong wind."
+      }
+    },
+    "shanghai": {
+      "facts": { "lengthKm": 5.451, "turns": 16, "laps": 56, "firstGP": 2004, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 4, "downforce": 3, "overtaking": 4 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "形狀像中文「上」字的現代賽道，有 F1 最長的直線之一。",
+        "country": "中國大獎賽 2004 年首次舉辦，是 F1 進軍中國市場的重要一步。上海是中國最大的國際都市。",
+        "history": [
+          "上海國際賽車場由 Hermann Tilke 設計，賽道的輪廓取自「上海」的「上」字。2004 年首場比賽由 Rubens Barrichello 替 Ferrari 奪冠。",
+          "2020–2023 年因疫情停辦，2024 年回歸，周冠宇成為第一位在主場出賽的中國車手。"
+        ],
+        "layout": "順時針，最有名的是開頭像蝸牛殼一樣越轉越緊的第 1–2 彎，以及長約 1.2 公里的後直線。",
+        "sectors": [
+          "第一區段：第 1–2 彎是一個不斷收緊的長右彎，對左前胎負擔很大，接著是第 3 彎的髮夾彎。",
+          "第二區段：第 7–8 彎的高速組合，接著第 9–10 彎的慢速段。",
+          "第三區段：第 13 彎長長的右彎接上超長後直線，直線尾端重煞進入第 14 彎髮夾彎，是全場最好的超車點。"
+        ],
+        "features": [
+          "後直線與第 14 彎是主要超車點",
+          "長時間轉彎讓左前胎容易顆粒化（graining）",
+          "沙塵與溫差會影響抓地力"
+        ],
+        "tyres": "第 1 彎與第 13 彎這種長時間受力的彎道讓前胎負擔很重，常見一停或兩停策略，取決於當天氣溫。",
+        "weather": "春季比賽，氣溫大約 12–22°C，有下雨的機會，過去曾有雨戰。"
+      },
+      "en": {
+        "tagline": "A modern circuit shaped like the Chinese character “上”, with one of F1’s longest straights.",
+        "country": "The Chinese Grand Prix was first held in 2004, a major step for F1 into the Chinese market. Shanghai is China’s largest international city.",
+        "history": [
+          "Designed by Hermann Tilke, the Shanghai International Circuit is shaped after “上”, the first character of Shanghai’s name. Rubens Barrichello won the first race in 2004 for Ferrari.",
+          "The race was off the calendar from 2020 to 2023 because of the pandemic and returned in 2024, when Zhou Guanyu became the first Chinese driver to race at home."
+        ],
+        "layout": "Clockwise, famous for the snail-shell Turns 1–2 that keep tightening, and a back straight of about 1.2 km.",
+        "sectors": [
+          "Sector 1: Turns 1–2, a long ever-tightening right-hander that punishes the front-left tyre, followed by the Turn 3 hairpin.",
+          "Sector 2: the fast Turn 7–8 combination, then the slower Turns 9–10.",
+          "Sector 3: the long right of Turn 13 onto the huge back straight, ending in heavy braking for the Turn 14 hairpin — the best overtaking spot."
+        ],
+        "features": [
+          "The back straight and Turn 14 are the main overtaking spots",
+          "Long, loaded corners make the front-left prone to graining",
+          "Dust and temperature swings affect grip"
+        ],
+        "tyres": "Long loaded corners like Turns 1 and 13 are hard on the front tyres. One- and two-stop strategies are both common, depending on the temperature.",
+        "weather": "A spring race at around 12–22°C, with a chance of rain — there have been wet races here before."
+      }
+    },
+    "suzuka": {
+      "facts": { "lengthKm": 5.807, "turns": 18, "laps": 53, "firstGP": 1987, "direction": "fig8", "type": "permanent" },
+      "ratings": { "tyreStress": 5, "downforce": 4, "overtaking": 2 },
+      "tyreRange": "hard",
+      "zh": {
+        "tagline": "車手最愛的經典賽道，F1 唯一的「8」字形賽道。",
+        "country": "日本是 Honda 的故鄉，日本車迷以熱情、守規矩又有創意的應援聞名，看台上常見自製的車手帽子與道具。",
+        "history": [
+          "鈴鹿賽道由 Honda 興建，荷蘭設計師 John Hugenholtz 設計，1962 年啟用，1987 年起舉辦 F1。",
+          "這裡上演過許多決定冠軍的經典戰役，最有名的是 1989、1990 年 Senna 與 Prost 的兩次碰撞。"
+        ],
+        "layout": "賽道用一座立體交叉橋把自己交叉成「8」字，左彎右彎數量接近，完整考驗賽車與車手。",
+        "sectors": [
+          "第一區段：起跑後的第 1–2 彎，接著是著名的 S 彎（第 3–7 彎）連續左右切換，再到 Dunlop 彎。這段被認為是 F1 最能看出賽車底盤好壞的地方。",
+          "第二區段：兩個 Degner 彎、穿過橋下到髮夾彎，然後是長長的 Spoon 彎。",
+          "第三區段：後直線接上幾乎全油門的高速左彎 130R，最後是 Casio 三角減速彎，是最後的超車機會。"
+        ],
+        "features": [
+          "高速連續彎多，賽車下壓力與平衡非常重要",
+          "賽道窄、草地與砂石區近，失誤代價高",
+          "超車不容易，排位賽很關鍵"
+        ],
+        "tyres": "粗糙的路面加上高速彎，輪胎負擔是全年最重之一，Pirelli 通常帶最硬的組合，兩停很常見。",
+        "weather": "過去在十月舉辦，常遇到颱風（2019 年排位賽延到週日）；2024 年起改在春季，氣溫大約 10–20°C，仍可能下雨。"
+      },
+      "en": {
+        "tagline": "A drivers’ favourite and F1’s only figure-of-eight circuit.",
+        "country": "Japan is Honda’s home, and Japanese fans are famous for their passionate, polite and creative support — home-made driver hats and props fill the grandstands.",
+        "history": [
+          "Suzuka was built by Honda and designed by Dutchman John Hugenholtz. It opened in 1962 and has hosted F1 since 1987.",
+          "Many title deciders have been settled here, most famously the Senna–Prost collisions of 1989 and 1990."
+        ],
+        "layout": "The track crosses over itself on a bridge to form a figure of eight, with a near-even mix of left and right corners — a complete test of car and driver.",
+        "sectors": [
+          "Sector 1: Turns 1–2 after the start, then the famous Esses (Turns 3–7) flicking left and right up to Dunlop. Widely seen as the best test of a car’s chassis in F1.",
+          "Sector 2: the two Degner corners, under the bridge to the hairpin, then the long Spoon Curve.",
+          "Sector 3: the back straight into 130R, an almost flat-out fast left, and finally the Casio Triangle chicane — the last overtaking chance."
+        ],
+        "features": [
+          "Many high-speed sequences, so downforce and balance are crucial",
+          "Narrow track with grass and gravel close by — mistakes are costly",
+          "Hard to overtake, so qualifying is key"
+        ],
+        "tyres": "An abrasive surface and fast corners make this one of the toughest tracks of the year on tyres. Pirelli usually brings its hardest compounds, and two stops are common.",
+        "weather": "When held in October it often met typhoons (qualifying moved to Sunday in 2019). Since 2024 it runs in spring at about 10–20°C, still with a chance of rain."
+      }
+    },
+    "bahrain": {
+      "facts": { "lengthKm": 5.412, "turns": 15, "laps": 57, "firstGP": 2004, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 5, "downforce": 3, "overtaking": 4 },
+      "tyreRange": "hard",
+      "zh": {
+        "tagline": "沙漠中的夜賽，粗糙路面讓輪胎管理成為勝負關鍵。",
+        "country": "巴林是波斯灣上的島國，2004 年舉辦了中東第一場 F1 大獎賽。",
+        "history": [
+          "賽道位在薩基爾沙漠，由 Hermann Tilke 設計。2014 年起改成夜間比賽，在燈光下進行。",
+          "這裡也常是季前測試的場地；2020 年 Romain Grosjean 在這裡發生火燒車事故後奇蹟生還，2020 年另一場使用外圈短版賽道的薩基爾大獎賽則由 Pérez 奪冠。"
+        ],
+        "layout": "順時針，幾段長直線接上慢速彎，屬於「直線＋重煞」型賽道，需要穩定的煞車與出彎牽引力。",
+        "sectors": [
+          "第一區段：長長的起跑直線後重煞進入第 1 彎，接著第 4 彎又是一個重煞點。",
+          "第二區段：第 5–7 彎的流暢高速段，然後是下坡進入第 10 彎，這是一個容易鎖死前輪的左彎。",
+          "第三區段：後直線進入第 11 彎，最後經過第 13 與第 14 彎回到起跑線。"
+        ],
+        "features": [
+          "第 1、4、11 彎前都有不錯的超車機會",
+          "沙漠風沙會吹上賽道，抓地力變化大",
+          "夜間氣溫下降，排位與正賽的賽道溫度和白天練習差很多"
+        ],
+        "tyres": "路面非常粗糙，後輪磨耗很大，Pirelli 通常帶最硬的組合，兩停甚至三停都常見。",
+        "weather": "沙漠氣候，乾燥少雨。夜間氣溫大約 20–28°C，但白天的賽道溫度可以很高。"
+      },
+      "en": {
+        "tagline": "A desert night race where the abrasive surface makes tyre management decisive.",
+        "country": "Bahrain is an island nation in the Persian Gulf, and in 2004 it hosted the first F1 Grand Prix in the Middle East.",
+        "history": [
+          "The circuit sits in the Sakhir desert and was designed by Hermann Tilke. Since 2014 it has been a night race under floodlights.",
+          "It is often the pre-season testing venue too. In 2020 Romain Grosjean miraculously escaped a fiery crash here, and a separate Sakhir Grand Prix on the short outer loop was won by Pérez."
+        ],
+        "layout": "Clockwise, with several long straights into slow corners — a “straight-and-brake” track that demands stable braking and good traction.",
+        "sectors": [
+          "Sector 1: heavy braking into Turn 1 after the long main straight, then another big stop at Turn 4.",
+          "Sector 2: the flowing Turns 5–7, then downhill into Turn 10, a left-hander where it’s easy to lock a front wheel.",
+          "Sector 3: the back straight into Turn 11, then Turns 13 and 14 back to the line."
+        ],
+        "features": [
+          "Good overtaking chances into Turns 1, 4 and 11",
+          "Desert sand blows onto the track, so grip changes a lot",
+          "Temperatures drop at night, so track conditions differ greatly from daytime practice"
+        ],
+        "tyres": "A very abrasive surface makes rear-tyre wear high. Pirelli usually brings its hardest compounds, and two or even three stops are common.",
+        "weather": "Dry desert climate with little rain. About 20–28°C at night, though daytime track temperatures can be very high."
+      }
+    },
+    "jeddah": {
+      "facts": { "lengthKm": 6.174, "turns": 27, "laps": 50, "firstGP": 2021, "direction": "acw", "type": "street" },
+      "ratings": { "tyreStress": 2, "downforce": 2, "overtaking": 4 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "F1 最快的街道賽道，在紅海邊高速穿梭於牆壁之間。",
+        "country": "沙烏地阿拉伯近年大力投資體育與娛樂產業，2021 年首次舉辦 F1。吉達是紅海邊的港口城市。",
+        "history": [
+          "吉達濱海賽道在短短幾個月內建成，2021 年 12 月首次比賽，當年 Hamilton 與 Verstappen 在這裡上演激烈又充滿爭議的對決。",
+          "它是彎道數最多的現役賽道之一，平均速度卻高達每小時約 250 公里。"
+        ],
+        "layout": "逆時針，沿著紅海濱海大道來回，大量高速盲彎，牆壁就在賽道旁邊。",
+        "sectors": [
+          "第一區段：第 1–2 彎的減速彎是開局的超車點，接著是一連串快速左右切換的高速彎。",
+          "第二區段：第 13 彎是有傾斜角度的高速彎，接著繼續高速穿梭。",
+          "第三區段：沿著海邊的長直線，最後是第 27 彎回到起跑線，接著重煞進入第 1 彎。"
+        ],
+        "features": [
+          "高速＋牆壁近，事故與安全車很常見",
+          "許多盲彎，看不到前方狀況，危險度高",
+          "長直線的尾流效應明顯"
+        ],
+        "tyres": "路面平滑、輪胎磨耗低，通常一停。安全車時機往往決定誰能「便宜進站」。",
+        "weather": "夜間比賽，氣溫大約 25–30°C，靠海、濕度高，幾乎不下雨。"
+      },
+      "en": {
+        "tagline": "F1’s fastest street circuit, threading between walls at high speed beside the Red Sea.",
+        "country": "Saudi Arabia has invested heavily in sport and entertainment in recent years and first hosted F1 in 2021. Jeddah is a port city on the Red Sea.",
+        "history": [
+          "The Jeddah Corniche Circuit was built in just a few months and first raced in December 2021, when Hamilton and Verstappen fought a fierce and controversial battle here.",
+          "It has one of the highest corner counts on the calendar, yet averages around 250 km/h."
+        ],
+        "layout": "Anticlockwise, running up and down the Red Sea corniche, with many high-speed blind corners and walls right next to the track.",
+        "sectors": [
+          "Sector 1: the Turn 1–2 chicane is the opening overtaking spot, followed by a run of fast left-right flicks.",
+          "Sector 2: the banked high-speed Turn 13, then more fast threading.",
+          "Sector 3: the long seafront straight and Turn 27 onto the main straight, ending in heavy braking for Turn 1."
+        ],
+        "features": [
+          "High speed plus close walls means frequent crashes and safety cars",
+          "Many blind corners where drivers can’t see what’s ahead",
+          "A strong slipstream on the long straights"
+        ],
+        "tyres": "A smooth surface means low wear and usually one stop. Safety-car timing often decides who gets a “cheap” pit stop.",
+        "weather": "A night race at around 25–30°C, humid by the sea, with almost no rain."
+      }
+    },
+    "miami": {
+      "facts": { "lengthKm": 5.412, "turns": 19, "laps": 57, "firstGP": 2022, "direction": "acw", "type": "street" },
+      "ratings": { "tyreStress": 3, "downforce": 3, "overtaking": 3 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "圍繞美式足球場的臨時賽道，充滿娛樂與名人氣息。",
+        "country": "Netflix《Drive to Survive》帶動美國 F1 熱潮，邁阿密在 2022 年成為美國第二場 F1 大獎賽。",
+        "history": [
+          "賽道建在 Miami Gardens 的 Hard Rock Stadium（NFL 海豚隊主場）周圍的停車場與道路上，旁邊還有一座只有裝飾用、沒有真水的「假碼頭」。",
+          "2024 年 Lando Norris 在這裡拿下生涯首勝。"
+        ],
+        "layout": "逆時針，有三段長直線，也有第 14–15 彎這種窄又慢的減速彎，高低速彎都有。",
+        "sectors": [
+          "第一區段：起跑後的第 1 彎是超車點，接著第 4–8 彎是流暢的高速段。",
+          "第二區段：第 11 彎慢彎後接上長長的後直線，尾端重煞進入第 17 彎，是最好的超車點。",
+          "第三區段：體育場旁的第 14–15 彎低速減速彎，路面有坡度，很容易失誤。"
+        ],
+        "features": [
+          "第 1 彎、第 11 彎與第 17 彎前都可以超車",
+          "臨時路面抓地力低，偏離行車線就很滑",
+          "高溫讓車手體能與賽車散熱都受考驗"
+        ],
+        "tyres": "路面較平滑，但高溫會讓輪胎過熱，通常一停。",
+        "weather": "五月的邁阿密炎熱潮濕，氣溫大約 28–32°C，午後可能有雷陣雨。"
+      },
+      "en": {
+        "tagline": "A temporary track around an NFL stadium, packed with entertainment and celebrities.",
+        "country": "Netflix’s Drive to Survive fuelled an F1 boom in the US, and in 2022 Miami became the country’s second Grand Prix.",
+        "history": [
+          "The circuit uses car parks and roads around the Hard Rock Stadium in Miami Gardens, home of the NFL’s Dolphins, complete with a decorative “marina” with no real water.",
+          "Lando Norris took his first win here in 2024."
+        ],
+        "layout": "Anticlockwise, with three long straights as well as tight, slow sections like the Turn 14–15 chicane — a mix of high- and low-speed corners.",
+        "sectors": [
+          "Sector 1: Turn 1 is an overtaking spot after the start, followed by the flowing high-speed Turns 4–8.",
+          "Sector 2: the slow Turn 11 onto the long back straight, ending with heavy braking into Turn 17 — the best overtaking spot.",
+          "Sector 3: the slow, cambered Turn 14–15 chicane beside the stadium, where mistakes are easy."
+        ],
+        "features": [
+          "Overtaking possible into Turns 1, 11 and 17",
+          "Temporary surface with low grip — off the racing line it’s very slippery",
+          "Heat tests both drivers’ fitness and car cooling"
+        ],
+        "tyres": "The surface is fairly smooth but the heat can overheat tyres. Usually one stop.",
+        "weather": "Hot and humid in May at about 28–32°C, with possible afternoon thunderstorms."
+      }
+    },
+    "imola": {
+      "facts": { "lengthKm": 4.909, "turns": 19, "laps": 63, "firstGP": 1980, "direction": "acw", "type": "permanent" },
+      "ratings": { "tyreStress": 3, "downforce": 4, "overtaking": 1 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "Ferrari 家鄉附近的老派賽道，承載著 F1 最悲傷的一個週末。",
+        "country": "伊莫拉位在義大利艾米利亞－羅馬涅大區，離 Ferrari 總部馬拉內羅不遠，是「賽車之鄉」。",
+        "history": [
+          "賽道以 Enzo Ferrari 和他早逝的兒子 Dino 命名。1981–2006 年舉辦聖馬利諾大獎賽，2020–2025 年以艾米利亞－羅馬涅大獎賽之名回歸（2023 年因水災取消）。",
+          "1994 年聖馬利諾大獎賽週末，Roland Ratzenberger 與 Ayrton Senna 相繼身亡，促成 F1 安全性的全面改革。2026 年伊莫拉不在賽程上。"
+        ],
+        "layout": "逆時針，丘陵起伏、賽道狹窄，彎道之間沒有太多緩衝空間，是很「老派」的賽道。",
+        "sectors": [
+          "第一區段：起跑後經過 Tamburello 減速彎（原本是 Senna 出事的高速彎），再到 Villeneuve 減速彎與 Tosa 髮夾彎。",
+          "第二區段：上坡到 Piratella，下坡進入 Acque Minerali 的左右組合，再爬坡到 Variante Alta 減速彎，越過路肩是關鍵。",
+          "第三區段：下坡穿過 Rivazza 兩個左彎，回到起跑直線。"
+        ],
+        "features": [
+          "非常難超車，排位賽幾乎決定一切",
+          "砂石區與牆壁近，失誤就會出局",
+          "路肩使用很重要"
+        ],
+        "tyres": "輪胎負擔中等，因為很難超車，車隊常選一停並靠進站時機（undercut/overcut）換位置。",
+        "weather": "春季，氣溫大約 15–25°C，可能下雨。"
+      },
+      "en": {
+        "tagline": "An old-school circuit near Ferrari’s home, carrying F1’s saddest weekend.",
+        "country": "Imola is in Italy’s Emilia-Romagna region, not far from Ferrari’s Maranello headquarters — the heart of “Motor Valley”.",
+        "history": [
+          "The circuit is named after Enzo Ferrari and his son Dino, who died young. It hosted the San Marino Grand Prix from 1981 to 2006 and returned as the Emilia Romagna Grand Prix from 2020 to 2025 (cancelled in 2023 due to floods).",
+          "At the 1994 San Marino Grand Prix, Roland Ratzenberger and Ayrton Senna were both killed, prompting a complete overhaul of F1 safety. Imola is not on the 2026 calendar."
+        ],
+        "layout": "Anticlockwise, hilly and narrow, with little run-off between corners — a truly old-school track.",
+        "sectors": [
+          "Sector 1: from the start through the Tamburello chicane (once the fast corner where Senna crashed), then the Villeneuve chicane and the Tosa hairpin.",
+          "Sector 2: uphill to Piratella, downhill into the Acque Minerali left-right, then climbing to the Variante Alta chicane, where riding the kerbs is key.",
+          "Sector 3: downhill through the two Rivazza lefts and back onto the main straight."
+        ],
+        "features": [
+          "Very hard to overtake — qualifying decides almost everything",
+          "Gravel and walls close by; one mistake ends your race",
+          "Kerb usage is crucial"
+        ],
+        "tyres": "Moderate tyre load. Because overtaking is so hard, teams usually go for one stop and use pit timing (undercut / overcut) to gain places.",
+        "weather": "Spring, about 15–25°C, with a chance of rain."
+      }
+    },
+    "monaco": {
+      "facts": { "lengthKm": 3.337, "turns": 19, "laps": 78, "firstGP": 1950, "direction": "cw", "type": "street" },
+      "ratings": { "tyreStress": 1, "downforce": 5, "overtaking": 1 },
+      "tyreRange": "soft",
+      "zh": {
+        "tagline": "F1 皇冠上的明珠：最慢、最窄、最難，也最有名的一站。",
+        "country": "摩納哥是地中海邊面積只有約 2 平方公里的城邦，以賭場、遊艇與富豪聞名。",
+        "history": [
+          "摩納哥大獎賽 1929 年首次舉辦，1950 年是 F1 世界錦標賽的第一批分站之一，1955 年起除了 2020 年停辦之外每年都有比賽。",
+          "它與印第 500、利曼 24 小時並稱「賽車三冠王」。Ayrton Senna 在這裡贏了 6 次，是勝場最多的車手。"
+        ],
+        "layout": "順時針，在山坡上的市區街道進行，賽道又窄又彎，牆壁就貼在路邊，賽車幾乎沒有失誤空間。",
+        "sectors": [
+          "第一區段：起跑後的 Sainte Dévote 右彎，上坡經過 Beau Rivage 到 Massenet 與 Casino 廣場。",
+          "第二區段：下坡到 Mirabeau，接著是 F1 最慢的彎 —— Grand Hotel 髮夾彎（時速只有約 50 公里），再穿過唯一的隧道。",
+          "第三區段：出隧道後重煞進入港口邊的 Nouvelle 減速彎，經過 Tabac、游泳池彎組、Rascasse，最後是 Anthony Noghès 彎。"
+        ],
+        "features": [
+          "幾乎無法超車，排位賽就是一切",
+          "需要最高的下壓力設定與精準的操控",
+          "一次碰牆就可能出動安全車甚至紅旗"
+        ],
+        "tyres": "車速慢、輪胎磨耗極低，Pirelli 帶最軟的組合。2025 年起規定正賽至少要進站兩次，增加策略變化。",
+        "weather": "五月底到六月初，氣溫大約 20–25°C，大多晴朗，偶爾下雨會讓比賽變得極度混亂。"
+      },
+      "en": {
+        "tagline": "The jewel in F1’s crown: the slowest, narrowest, hardest and most famous race of all.",
+        "country": "Monaco is a Mediterranean city-state of only about 2 km², famous for its casino, yachts and the super-rich.",
+        "history": [
+          "The Monaco Grand Prix was first held in 1929 and was among the first rounds of the F1 World Championship in 1950. It has run every year since 1955 except 2020.",
+          "Together with the Indy 500 and the Le Mans 24 Hours it forms motorsport’s “Triple Crown”. Ayrton Senna won here six times, more than anyone."
+        ],
+        "layout": "Clockwise through the hillside streets of the principality. Narrow and twisty, with walls right at the edge of the road — there is almost no margin for error.",
+        "sectors": [
+          "Sector 1: Sainte Dévote after the start, then uphill past Beau Rivage to Massenet and Casino Square.",
+          "Sector 2: downhill to Mirabeau, then F1’s slowest corner, the Grand Hotel hairpin (about 50 km/h), and through the only tunnel on the calendar.",
+          "Sector 3: heavy braking out of the tunnel into the harbourside Nouvelle chicane, then Tabac, the Swimming Pool, Rascasse and finally Anthony Noghès."
+        ],
+        "features": [
+          "Overtaking is nearly impossible — qualifying is everything",
+          "Maximum downforce and absolute precision required",
+          "A single brush with the wall can bring a safety car or red flag"
+        ],
+        "tyres": "Low speeds mean extremely low wear, so Pirelli brings its softest compounds. Since 2025 at least two pit stops are mandatory in the race to add strategic variety.",
+        "weather": "Late May to early June, about 20–25°C and mostly sunny. Occasional rain turns the race into chaos."
+      }
+    },
+    "catalunya": {
+      "facts": { "lengthKm": 4.657, "turns": 14, "laps": 66, "firstGP": 1991, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 4, "downforce": 4, "overtaking": 2 },
+      "tyreRange": "hard",
+      "zh": {
+        "tagline": "車隊最熟悉的測試賽道，跑得快就代表賽車的空力好。",
+        "country": "西班牙在 Fernando Alonso 的時代掀起 F1 熱潮。巴塞隆納所在的加泰隆尼亞地區有自己的語言與強烈的地方認同。",
+        "history": [
+          "加泰隆尼亞賽道位在巴塞隆納北邊的蒙梅洛，1991 年啟用，長年舉辦西班牙大獎賽，也是最常見的季前測試場地。",
+          "2023 年取消了最後的減速彎，恢復原本流暢的高速最後彎。2026 年西班牙大獎賽移到馬德里，這裡改辦「巴塞隆納－加泰隆尼亞大獎賽」。"
+        ],
+        "layout": "順時針，高、中、低速彎道齊全，車隊對這裡的資料最多，所以被當成檢驗賽車整體實力的標準賽道。",
+        "sectors": [
+          "第一區段：長直線後的第 1–2 彎是主要超車點，接著是很長的高速右彎第 3 彎，非常考驗前輪與下壓力。",
+          "第二區段：第 5 彎下坡，接著第 7–9 彎爬坡與高速 Campsa 彎。",
+          "第三區段：第 10 彎慢彎之後，經過第 12–14 彎的流暢高速段回到超長直線。"
+        ],
+        "features": [
+          "超車困難，排位賽與策略很重要",
+          "高速彎多，被視為賽車空力的試金石",
+          "車隊非常熟悉，賽車設定差距小"
+        ],
+        "tyres": "長時間受力的高速彎讓輪胎（特別是左前胎）負擔很重，Pirelli 通常帶偏硬的組合，兩停常見。",
+        "weather": "六月初的地中海氣候，氣溫大約 25–30°C，乾燥炎熱，風向會影響賽車平衡。"
+      },
+      "en": {
+        "tagline": "The test track teams know best — if you’re fast here, your car’s aerodynamics are good.",
+        "country": "Spain caught F1 fever in the Fernando Alonso era. Barcelona’s region, Catalonia, has its own language and a strong regional identity.",
+        "history": [
+          "The Circuit de Barcelona-Catalunya at Montmeló, north of Barcelona, opened in 1991. It long hosted the Spanish Grand Prix and is the most common pre-season testing venue.",
+          "In 2023 the final chicane was removed, restoring the fast, flowing last corner. From 2026 the Spanish Grand Prix moves to Madrid, and this venue hosts the “Barcelona-Catalunya Grand Prix”."
+        ],
+        "layout": "Clockwise, with a full mix of high-, medium- and low-speed corners. Teams have more data here than anywhere else, so it’s treated as the benchmark for overall car performance.",
+        "sectors": [
+          "Sector 1: Turns 1–2 after the long straight are the main overtaking spot, followed by the long, fast right of Turn 3, a big test of the front tyres and downforce.",
+          "Sector 2: downhill through Turn 5, then uphill via Turns 7–9 and the fast Campsa corner.",
+          "Sector 3: after the slow Turn 10, the flowing quick Turns 12–14 lead back onto the very long straight."
+        ],
+        "features": [
+          "Overtaking is difficult, so qualifying and strategy matter",
+          "Lots of fast corners — the classic test of a car’s aerodynamics",
+          "Teams know it inside out, so set-up differences are small"
+        ],
+        "tyres": "Long, loaded high-speed corners put a lot of energy into the tyres, especially the front-left. Pirelli usually brings harder compounds and two stops are common.",
+        "weather": "Mediterranean early June: about 25–30°C, dry and hot. Wind direction can upset car balance."
+      }
+    },
+    "villeneuve": {
+      "facts": { "lengthKm": 4.361, "turns": 14, "laps": 70, "firstGP": 1978, "direction": "cw", "type": "hybrid" },
+      "ratings": { "tyreStress": 2, "downforce": 2, "overtaking": 4 },
+      "tyreRange": "soft",
+      "zh": {
+        "tagline": "人工島上的「走走停停」賽道，終點前有著名的「冠軍之牆」。",
+        "country": "加拿大大獎賽在蒙特婁舉辦，這座法語城市的車迷氣氛熱烈，是賽季中最受歡迎的週末之一。",
+        "history": [
+          "賽道位在聖羅倫斯河上的 Notre-Dame 島，這座島是為 1967 年世界博覽會而建。1978 年首場比賽由加拿大車手 Gilles Villeneuve 奪冠，他 1982 年去世後賽道改用他的名字。",
+          "最後減速彎出口的牆被稱為「冠軍之牆」，因為 1999 年 Damon Hill、Michael Schumacher、Jacques Villeneuve 三位世界冠軍都撞上這面牆。2011 年 Jenson Button 在這裡贏得了 F1 史上最長（超過 4 小時）的比賽。"
+        ],
+        "layout": "順時針，由長直線與減速彎組成，「直線—重煞—減速彎—加速」不斷重複，對煞車負擔很大。",
+        "sectors": [
+          "第一區段：起跑後的第 1–2 彎左右組合，接著一連串減速彎。",
+          "第二區段：第 6–7 彎減速彎，第 8–9 彎，然後是第 10 彎的慢速髮夾彎。",
+          "第三區段：全場最長的直線後重煞進入最後減速彎，出口就是「冠軍之牆」，一點失誤就會撞牆。"
+        ],
+        "features": [
+          "煞車負擔是全年最重之一",
+          "長直線讓超車容易",
+          "安全車機率高，島上的土撥鼠偶爾也會跑上賽道"
+        ],
+        "tyres": "路面平滑、彎道慢，輪胎磨耗低，Pirelli 多半帶偏軟的組合；低溫時輪胎不容易熱起來。",
+        "weather": "春末夏初，氣溫大約 15–25°C，天氣變化快，常有雨。"
+      },
+      "en": {
+        "tagline": "A stop-start track on an artificial island, with the famous “Wall of Champions” before the finish.",
+        "country": "The Canadian Grand Prix is held in Montreal, a French-speaking city with a buzzing atmosphere — one of the most popular weekends of the year.",
+        "history": [
+          "The circuit is on Île Notre-Dame in the St Lawrence River, an island built for Expo 67. Local hero Gilles Villeneuve won the first race in 1978, and the track was renamed after him following his death in 1982.",
+          "The wall at the exit of the final chicane is called the “Wall of Champions” after world champions Damon Hill, Michael Schumacher and Jacques Villeneuve all hit it in 1999. In 2011 Jenson Button won the longest race in F1 history here, at over four hours."
+        ],
+        "layout": "Clockwise, made of long straights and chicanes — “straight, brake hard, chicane, accelerate” over and over, putting a huge load on the brakes.",
+        "sectors": [
+          "Sector 1: the Turn 1–2 left-right after the start, then a series of chicanes.",
+          "Sector 2: the Turn 6–7 chicane, Turns 8–9, then the slow Turn 10 hairpin.",
+          "Sector 3: the longest straight into the final chicane, whose exit is the Wall of Champions — one small mistake and you’re in it."
+        ],
+        "features": [
+          "One of the hardest tracks of the year on brakes",
+          "Long straights make overtaking relatively easy",
+          "High safety-car chance — the island’s groundhogs sometimes wander onto the track"
+        ],
+        "tyres": "A smooth surface and slow corners mean low wear, so Pirelli tends to bring softer compounds. In cool weather the tyres struggle to warm up.",
+        "weather": "Late spring / early summer, around 15–25°C, changeable and often wet."
+      }
+    },
+    "red_bull_ring": {
+      "facts": { "lengthKm": 4.318, "turns": 10, "laps": 71, "firstGP": 1970, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 3, "downforce": 3, "overtaking": 4 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "阿爾卑斯山腳下的短賽道，一圈只要大約 65 秒。",
+        "country": "奧地利是 Niki Lauda 與 Red Bull 的故鄉，賽道位在施泰爾馬克邦的山區，風景優美。",
+        "history": [
+          "這裡原本是 1970 年啟用的超高速 Österreichring，1997 年改建成較短的 A1-Ring，之後被 Red Bull 老闆 Dietrich Mateschitz 買下，2014 年以 Red Bull Ring 之名回到 F1。",
+          "2020 年疫情期間，F1 在這裡連續舉辦兩場比賽，揭開那個特殊賽季的序幕。"
+        ],
+        "layout": "順時針，只有 10 個彎，三段上坡長直線接重煞，高低落差很大。",
+        "sectors": [
+          "第一區段：起跑後上坡進入第 1 彎，接著是長長的上坡直線，重煞進入第 3 彎髮夾彎，是最好的超車點。",
+          "第二區段：下坡直線到第 4 彎，然後是第 6–7 彎的高速段。",
+          "第三區段：第 9–10 彎兩個下坡高速右彎，出界很常發生。"
+        ],
+        "features": [
+          "圈速很短，排位賽差距常只有零點幾秒",
+          "超出白線（track limits）被取消成績的情況很多",
+          "第 3 與第 4 彎是主要超車點"
+        ],
+        "tyres": "輪胎負擔中等，高速彎會讓後輪過熱，一停或兩停都有可能。",
+        "weather": "夏天山區，氣溫大約 20–30°C，午後常有雷陣雨。"
+      },
+      "en": {
+        "tagline": "A short track at the foot of the Alps — a lap takes only about 65 seconds.",
+        "country": "Austria is the home of Niki Lauda and Red Bull. The circuit sits in the beautiful mountains of Styria.",
+        "history": [
+          "It began as the ultra-fast Österreichring in 1970, was rebuilt as the shorter A1-Ring in 1997, and was later bought by Red Bull owner Dietrich Mateschitz, returning to F1 as the Red Bull Ring in 2014.",
+          "In 2020, during the pandemic, F1 held two back-to-back races here to open that unusual season."
+        ],
+        "layout": "Clockwise with only 10 corners: three long uphill straights into heavy braking, with big elevation changes.",
+        "sectors": [
+          "Sector 1: uphill from the start into Turn 1, then a long uphill straight with heavy braking for the Turn 3 hairpin — the best overtaking spot.",
+          "Sector 2: a downhill straight to Turn 4, then the fast Turns 6–7.",
+          "Sector 3: Turns 9–10, two fast downhill right-handers where drivers often run wide."
+        ],
+        "features": [
+          "A very short lap, so qualifying gaps are often tenths of a second",
+          "Many lap times deleted for track-limits violations",
+          "Turns 3 and 4 are the main overtaking spots"
+        ],
+        "tyres": "Moderate tyre load; the fast corners can overheat the rears. One or two stops are both possible.",
+        "weather": "Summer in the mountains: about 20–30°C, with frequent afternoon thunderstorms."
+      }
+    },
+    "silverstone": {
+      "facts": { "lengthKm": 5.891, "turns": 18, "laps": 52, "firstGP": 1950, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 5, "downforce": 4, "overtaking": 3 },
+      "tyreRange": "hard",
+      "zh": {
+        "tagline": "F1 的發源地：1950 年第一場世界錦標賽就在這裡。",
+        "country": "英國是賽車工業的大本營，大多數 F1 車隊的工廠都設在英國，被稱為「賽車谷」。英國大獎賽的觀眾人數常居全年之冠。",
+        "history": [
+          "Silverstone 原本是二戰時的皇家空軍機場，跑道後來被改成賽道。1950 年 5 月 13 日，F1 史上第一場世界錦標賽就在這裡舉行。",
+          "Lewis Hamilton 在主場贏過 9 次，是在單一大獎賽勝場最多的紀錄之一。"
+        ],
+        "layout": "順時針，以高速彎聞名，車手可以感受到極大的橫向 G 力。",
+        "sectors": [
+          "第一區段：Abbey 與 Farm 高速彎，接著 Village、The Loop 的慢速段，再到 Aintree 與 Wellington 直線。",
+          "第二區段：Brooklands、Luffield 後，經過高速的 Copse，進入傳奇的 Maggotts–Becketts–Chapel 連續 S 彎，接著是 Hangar 直線。",
+          "第三區段：重煞進入 Stowe，再經過 Vale 與 Club 回到起跑線。"
+        ],
+        "features": [
+          "Maggotts–Becketts–Chapel 是全年最精彩的高速彎組之一",
+          "Hangar 直線與 Wellington 直線是主要超車點",
+          "強風會讓賽車在高速彎變得難以預測"
+        ],
+        "tyres": "高速彎讓輪胎承受巨大的側向負荷，Pirelli 通常帶最硬的組合；天氣變化讓換胎時機變得關鍵。",
+        "weather": "七月的英國，氣溫大約 18–25°C，天氣說變就變，隨時可能下雨。"
+      },
+      "en": {
+        "tagline": "F1’s birthplace: the first-ever World Championship race was held here in 1950.",
+        "country": "Britain is the heart of the racing industry — most F1 teams have their factories there, in what’s called “Motorsport Valley”. The British Grand Prix often draws the biggest crowd of the year.",
+        "history": [
+          "Silverstone began as a World War II RAF airfield whose runways were turned into a race track. On 13 May 1950 it hosted the first race of the F1 World Championship.",
+          "Lewis Hamilton has won his home race nine times, one of the records for most wins at a single Grand Prix."
+        ],
+        "layout": "Clockwise, famous for high-speed corners where drivers feel enormous lateral g-forces.",
+        "sectors": [
+          "Sector 1: the fast Abbey and Farm, then the slower Village and The Loop, onto Aintree and the Wellington Straight.",
+          "Sector 2: Brooklands and Luffield, then the fast Copse and into the legendary Maggotts–Becketts–Chapel esses, followed by the Hangar Straight.",
+          "Sector 3: heavy braking into Stowe, then Vale and Club back to the line."
+        ],
+        "features": [
+          "Maggotts–Becketts–Chapel is one of the most spectacular fast sequences of the year",
+          "The Hangar and Wellington straights are the main overtaking spots",
+          "Strong wind can make cars unpredictable in the fast corners"
+        ],
+        "tyres": "Fast corners put huge lateral loads through the tyres, so Pirelli usually brings its hardest compounds. Changeable weather makes pit timing critical.",
+        "weather": "Britain in July: about 18–25°C and famously changeable — rain can arrive at any moment."
+      }
+    },
+    "spa": {
+      "facts": { "lengthKm": 7.004, "turns": 19, "laps": 44, "firstGP": 1950, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 4, "downforce": 2, "overtaking": 4 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "全年最長的賽道，穿梭在阿登森林的高低起伏之間。",
+        "country": "比利時位在西歐的十字路口，賽道所在的阿登山區森林茂密、天氣多變。",
+        "history": [
+          "Spa-Francorchamps 原本是長約 14 公里、使用公路的超長賽道，1950 年就是第一屆世界錦標賽的分站之一。因為太危險，1979 年改成現在約 7 公里的版本。",
+          "Michael Schumacher 1991 年在這裡出道，1992 年拿下生涯首勝。"
+        ],
+        "layout": "順時針，全長約 7 公里，有大量高低落差，多數時間都是全油門，需要低下壓力的設定。",
+        "sectors": [
+          "第一區段：起跑後的 La Source 髮夾彎，下坡衝向傳奇的 Eau Rouge–Raidillon 上坡彎，接著是長長的 Kemmel 直線，尾端的 Les Combes 是主要超車點。",
+          "第二區段：一路下坡的技術段，包括 Bruxelles、Pouhon 雙左彎等，最考驗下壓力。",
+          "第三區段：高速的 Blanchimont 之後重煞進入 Bus Stop 減速彎，回到起跑線。"
+        ],
+        "features": [
+          "Eau Rouge–Raidillon 是 F1 最著名的彎道之一",
+          "第一、三區段要直線速度，第二區段要下壓力，設定很難兩全",
+          "賽道太長，常常一邊下雨一邊乾"
+        ],
+        "tyres": "高速彎與長圈數讓輪胎負擔偏高，一停或兩停都有，天氣常常讓策略大亂。",
+        "weather": "七月底，氣溫大約 15–25°C，山區微氣候明顯，同一圈內可能有些路段下雨、有些路段乾燥。"
+      },
+      "en": {
+        "tagline": "The longest track of the year, swooping through the hills of the Ardennes forest.",
+        "country": "Belgium sits at the crossroads of Western Europe. The circuit is in the densely wooded, weather-prone Ardennes.",
+        "history": [
+          "Spa-Francorchamps was originally a public-road circuit of about 14 km and was part of the very first World Championship in 1950. Because it was so dangerous it was shortened to today’s 7 km layout in 1979.",
+          "Michael Schumacher made his debut here in 1991 and took his first win here in 1992."
+        ],
+        "layout": "Clockwise, about 7 km long, with big elevation changes and long full-throttle stretches that call for a low-downforce set-up.",
+        "sectors": [
+          "Sector 1: La Source hairpin after the start, then down and up through the legendary Eau Rouge–Raidillon, onto the long Kemmel Straight, ending at Les Combes, the main overtaking spot.",
+          "Sector 2: the downhill technical section, including Bruxelles and the double-left Pouhon — the biggest test of downforce.",
+          "Sector 3: the fast Blanchimont, then heavy braking into the Bus Stop chicane and back to the line."
+        ],
+        "features": [
+          "Eau Rouge–Raidillon is one of the most famous corners in F1",
+          "Sectors 1 and 3 need top speed while Sector 2 needs downforce — a tough set-up compromise",
+          "The track is so long it can be raining on one part and dry on another"
+        ],
+        "tyres": "Fast corners and a long lap put fairly high loads on the tyres. One or two stops are both seen, and the weather often throws strategy into chaos.",
+        "weather": "Late July, about 15–25°C with a strong microclimate — part of the lap can be wet while the rest is dry."
+      }
+    },
+    "hungaroring": {
+      "facts": { "lengthKm": 4.381, "turns": 14, "laps": 70, "firstGP": 1986, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 3, "downforce": 5, "overtaking": 1 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "像「沒有牆的摩納哥」，又熱又彎、超車很難。",
+        "country": "匈牙利首都布達佩斯以多瑙河與溫泉聞名。1986 年匈牙利大獎賽是 F1 第一場在「鐵幕」後方舉辦的比賽。",
+        "history": [
+          "Hungaroring 位在布達佩斯郊外的盆地，1986 年首次舉辦後每年都在賽程上。",
+          "許多車手在這裡拿下首勝，例如 1989 年從第 12 位起跑奪冠的 Nigel Mansell 是經典之一；近年 Ocon（2021）與 Piastri（2024）也在此首勝。"
+        ],
+        "layout": "順時針，賽道窄、彎道一個接一個，除了起跑直線之外幾乎沒有能讓車手喘息的地方。",
+        "sectors": [
+          "第一區段：起跑直線重煞進入第 1 彎下坡右彎，是唯一真正的超車點，接著第 2、3 彎。",
+          "第二區段：第 4 彎高速左彎，接著第 6–7 減速彎與一連串中速彎。",
+          "第三區段：第 11–13 彎的慢速段，最後經過第 14 彎回到起跑直線。"
+        ],
+        "features": [
+          "超車非常困難，排位賽與進站策略決定名次",
+          "高溫加上彎道多，車手體能消耗大",
+          "需要最大下壓力設定"
+        ],
+        "tyres": "輪胎磨耗中等，但高溫會讓輪胎過熱，車隊常用 undercut 提早進站搶位置，兩停常見。",
+        "weather": "七月底到八月初，氣溫大約 28–35°C，賽道溫度可超過 50°C，偶有雷陣雨。"
+      },
+      "en": {
+        "tagline": "Like “Monaco without the walls” — hot, twisty and very hard to overtake.",
+        "country": "Hungary’s capital, Budapest, is famous for the Danube and its thermal baths. The 1986 Hungarian Grand Prix was F1’s first race behind the “Iron Curtain”.",
+        "history": [
+          "The Hungaroring sits in a valley outside Budapest and has been on the calendar every year since 1986.",
+          "Many drivers took their first win here; Nigel Mansell’s 1989 victory from 12th on the grid is a classic, and more recently Ocon (2021) and Piastri (2024) won for the first time here."
+        ],
+        "layout": "Clockwise, narrow, with one corner after another — apart from the main straight there’s barely a moment to breathe.",
+        "sectors": [
+          "Sector 1: heavy braking from the main straight into the downhill Turn 1 right-hander, the only real overtaking spot, then Turns 2 and 3.",
+          "Sector 2: the fast left of Turn 4, then the Turn 6–7 chicane and a string of medium-speed corners.",
+          "Sector 3: the slow Turns 11–13, then Turn 14 back onto the main straight."
+        ],
+        "features": [
+          "Overtaking is very difficult — qualifying and pit strategy decide positions",
+          "Heat and constant cornering make it physically draining",
+          "Maximum downforce set-up required"
+        ],
+        "tyres": "Moderate wear, but heat can overheat the tyres. Teams often use the undercut to gain places, and two stops are common.",
+        "weather": "Late July to early August, about 28–35°C with track temperatures above 50°C, and occasional thunderstorms."
+      }
+    },
+    "zandvoort": {
+      "facts": { "lengthKm": 4.259, "turns": 14, "laps": 72, "firstGP": 1952, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 4, "downforce": 5, "overtaking": 1 },
+      "tyreRange": "hard",
+      "zh": {
+        "tagline": "沙丘間的雲霄飛車，傾斜彎道與滿場橘色人海。",
+        "country": "荷蘭因為 Max Verstappen 掀起 F1 熱潮，車迷穿著橘色湧進賽道，被稱為「橘色大軍」。",
+        "history": [
+          "Zandvoort 位在北海海邊的沙丘之中，1952–1985 年舉辦荷蘭大獎賽，之後停辦了 35 年。",
+          "2021 年因 Verstappen 的人氣回歸，並改建出兩個大角度的傾斜彎。主辦單位已宣布 2026 年是最後一屆荷蘭大獎賽。"
+        ],
+        "layout": "順時針，賽道窄又起伏，像雲霄飛車；第 3 彎與最後一彎有大約 18 度的傾斜角，讓車手可以用不同路線過彎。",
+        "sectors": [
+          "第一區段：起跑後的 Tarzan 第 1 彎是最主要的超車點，接著是傾斜的 Hugenholtz 第 3 彎。",
+          "第二區段：Scheivlak 等高速彎在沙丘間起伏，牆壁與砂石區都很近。",
+          "第三區段：第 11–12 彎減速彎，最後的 Arie Luyendyk 傾斜彎幾乎全油門進入起跑直線。"
+        ],
+        "features": [
+          "非常難超車，排位賽極為關鍵",
+          "傾斜彎道在 F1 很少見",
+          "海風會把沙子吹上賽道，抓地力不穩定"
+        ],
+        "tyres": "傾斜彎與高速彎讓輪胎負擔大，Pirelli 通常帶最硬的組合。",
+        "weather": "八月底的海邊，氣溫大約 18–22°C，風大，常有陣雨。"
+      },
+      "en": {
+        "tagline": "A rollercoaster through the dunes, with banked corners and a sea of orange.",
+        "country": "Max Verstappen sparked an F1 boom in the Netherlands, and fans pour into the circuit dressed in orange — the “Orange Army”.",
+        "history": [
+          "Zandvoort sits among the dunes on the North Sea coast. It hosted the Dutch Grand Prix from 1952 to 1985, then disappeared from the calendar for 35 years.",
+          "It returned in 2021 on the back of Verstappen’s popularity, rebuilt with two steeply banked corners. Organisers have announced that 2026 will be the final Dutch Grand Prix."
+        ],
+        "layout": "Clockwise, narrow and undulating like a rollercoaster. Turn 3 and the final corner are banked at about 18°, letting drivers take different lines.",
+        "sectors": [
+          "Sector 1: Tarzan (Turn 1) after the start is the main overtaking spot, followed by the banked Hugenholtz (Turn 3).",
+          "Sector 2: fast corners such as Scheivlak swoop through the dunes, with walls and gravel close by.",
+          "Sector 3: the Turn 11–12 chicane, then the banked Arie Luyendyk final corner taken almost flat onto the main straight."
+        ],
+        "features": [
+          "Very hard to overtake — qualifying is critical",
+          "Banked corners are rare in F1",
+          "Sea wind blows sand onto the track, making grip unpredictable"
+        ],
+        "tyres": "Banking and fast corners load the tyres heavily, so Pirelli usually brings its hardest compounds.",
+        "weather": "Seaside late August, about 18–22°C, windy and often showery."
+      }
+    },
+    "monza": {
+      "facts": { "lengthKm": 5.793, "turns": 11, "laps": 53, "firstGP": 1950, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 2, "downforce": 1, "overtaking": 4 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "「速度神殿」：全年平均速度最快的賽道。",
+        "country": "義大利是 Ferrari 的國度，蒙札的 Tifosi（Ferrari 車迷）會在賽後湧上賽道，在頒獎台下形成一片紅色海洋。",
+        "history": [
+          "蒙札賽道建於 1922 年，位在米蘭北方的皇家公園內，是全世界最古老的賽道之一。義大利大獎賽除了 1980 年之外每年都在這裡舉辦。",
+          "舊賽道還有高聳的傾斜彎道，現在仍保留在公園裡。2008 年 Vettel 與 2020 年 Gasly 都在這裡替小車隊拿下驚奇的勝利。"
+        ],
+        "layout": "順時針，主要由長直線與減速彎組成，大部分時間全油門，車隊會換上專用的低下壓力尾翼。",
+        "sectors": [
+          "第一區段：起跑直線重煞進入第一減速彎（Rettifilo），接著是全油門的 Curva Grande，再進入第二減速彎（Roggia）。",
+          "第二區段：兩個 Lesmo 右彎，穿過舊賽道的橋下，高速衝向 Ascari 減速彎。",
+          "第三區段：後直線之後是長長的 Parabolica（現名 Curva Alboreto），出彎速度決定整條起跑直線的速度。"
+        ],
+        "features": [
+          "全年最低下壓力設定，極速超過每小時 340 公里",
+          "排位賽中車手會互相「借尾流」",
+          "煞車與減速彎路肩使用是關鍵"
+        ],
+        "tyres": "彎道少、輪胎磨耗不大，大多一停；但高速會讓輪胎與煞車溫度很高。",
+        "weather": "九月初，氣溫大約 25–30°C，通常晴朗溫暖，偶有雷雨。"
+      },
+      "en": {
+        "tagline": "The “Temple of Speed”: the fastest average speed of the year.",
+        "country": "Italy is Ferrari’s nation. At Monza the Tifosi (Ferrari fans) flood the track after the race, forming a sea of red beneath the podium.",
+        "history": [
+          "Built in 1922 in a royal park north of Milan, Monza is one of the oldest circuits in the world. The Italian Grand Prix has been held here every year except 1980.",
+          "The old steeply banked oval still stands in the park. Vettel in 2008 and Gasly in 2020 both took astonishing wins here for a small team."
+        ],
+        "layout": "Clockwise, mostly long straights and chicanes. Cars spend most of the lap at full throttle, and teams fit special low-downforce rear wings.",
+        "sectors": [
+          "Sector 1: heavy braking from the main straight into the first chicane (Rettifilo), flat out through Curva Grande, then the second chicane (Roggia).",
+          "Sector 2: the two Lesmo right-handers, under the old banking bridge and flat out to the Ascari chicane.",
+          "Sector 3: the back straight and the long Parabolica (now Curva Alboreto) — exit speed here sets your speed for the whole main straight."
+        ],
+        "features": [
+          "Lowest downforce of the year, with top speeds above 340 km/h",
+          "Drivers hunt for slipstreams (“tows”) in qualifying",
+          "Braking and kerb use in the chicanes are key"
+        ],
+        "tyres": "Few corners and modest wear — usually one stop — though high speeds push tyre and brake temperatures up.",
+        "weather": "Early September, around 25–30°C, usually warm and sunny with the odd thunderstorm."
+      }
+    },
+    "baku": {
+      "facts": { "lengthKm": 6.003, "turns": 20, "laps": 51, "firstGP": 2016, "direction": "acw", "type": "street" },
+      "ratings": { "tyreStress": 2, "downforce": 2, "overtaking": 4 },
+      "tyreRange": "soft",
+      "zh": {
+        "tagline": "從古城牆到海濱大道：最窄的彎道與最長的全油門路段同在一圈。",
+        "country": "亞塞拜然位在裏海西岸，首都巴庫有「風之城」的稱號，融合古城與現代高樓。",
+        "history": [
+          "巴庫街道賽道 2016 年首次舉辦時叫做「歐洲大獎賽」，2017 年起改為亞塞拜然大獎賽。",
+          "這裡幾乎每年都很混亂：事故、安全車、意外的冠軍與頒獎台，例如 2017 年 Stroll 18 歲就登上頒獎台。"
+        ],
+        "layout": "逆時針，一邊是穿過世界遺產古城的超窄彎道，一邊是長約 2.2 公里的全油門海濱直線。",
+        "sectors": [
+          "第一區段：起跑後一連串 90 度直角彎，第 1 彎與第 3 彎是超車點。",
+          "第二區段：爬坡穿過古城，第 8 彎城堡彎寬度只有約 7.6 公尺，是全年最窄的彎之一。",
+          "第三區段：沿著海濱的超長全油門路段，車手可以吸尾流在終點前超車，最後還有第 16 彎前的重煞。"
+        ],
+        "features": [
+          "長直線尾流效應極強，超車機會多",
+          "牆壁很近，安全車與紅旗頻繁",
+          "低下壓力與彎道速度很難兼顧"
+        ],
+        "tyres": "路面平滑、輪胎磨耗低，Pirelli 帶偏軟的組合；低溫時輪胎不容易進入工作溫度。",
+        "weather": "九月，氣溫大約 22–28°C，裏海吹來的強風會影響賽車平衡。"
+      },
+      "en": {
+        "tagline": "From ancient city walls to the seafront: the narrowest corner and the longest flat-out run in one lap.",
+        "country": "Azerbaijan lies on the western shore of the Caspian Sea. Its capital Baku, the “City of Winds”, mixes an old walled city with modern skyscrapers.",
+        "history": [
+          "The Baku City Circuit hosted the “European Grand Prix” in 2016 and has been the Azerbaijan Grand Prix since 2017.",
+          "Almost every race here is chaotic, with crashes, safety cars and surprise winners and podiums — Stroll reached the podium here aged 18 in 2017."
+        ],
+        "layout": "Anticlockwise. One part winds through the narrow streets of the UNESCO-listed Old City; the other is a flat-out seafront run of about 2.2 km.",
+        "sectors": [
+          "Sector 1: a series of 90-degree corners after the start, with Turns 1 and 3 as overtaking spots.",
+          "Sector 2: climbing through the Old City; the Turn 8 castle section is only about 7.6 m wide, one of the narrowest corners of the year.",
+          "Sector 3: the huge full-throttle seafront run, where slipstreaming allows passes before the line, plus heavy braking into Turn 16."
+        ],
+        "features": [
+          "A massive slipstream on the long straight creates lots of overtaking",
+          "Close walls mean frequent safety cars and red flags",
+          "Hard to balance low drag with cornering speed"
+        ],
+        "tyres": "A smooth surface and low wear, so Pirelli brings softer compounds. In cool conditions the tyres struggle to reach their working range.",
+        "weather": "September, about 22–28°C, with strong winds off the Caspian Sea upsetting car balance."
+      }
+    },
+    "marina_bay": {
+      "facts": { "lengthKm": 4.94, "turns": 19, "laps": 62, "firstGP": 2008, "direction": "acw", "type": "street" },
+      "ratings": { "tyreStress": 3, "downforce": 5, "overtaking": 2 },
+      "tyreRange": "soft",
+      "zh": {
+        "tagline": "F1 第一場夜賽，在城市燈光下進行的體能大考驗。",
+        "country": "新加坡是東南亞的金融中心，濱海灣的天際線在夜賽燈光下特別壯觀。",
+        "history": [
+          "2008 年新加坡舉辦了 F1 史上第一場夜間比賽，同年也發生了 Renault 故意製造事故的「撞車門」醜聞。",
+          "2023 年賽道改道，移除了看台下的彎道組，全長縮短到約 4.94 公里。"
+        ],
+        "layout": "逆時針，在濱海灣市區街道上進行，彎道多、路面顛簸，比賽常接近兩小時的時間上限。",
+        "sectors": [
+          "第一區段：起跑後的第 1–3 彎組合，接著第 5 彎後的 Raffles 大道直線，第 7 彎是重煞超車點。",
+          "第二區段：經過市政廳與舊國會大廈附近的 90 度彎，再穿過 Anderson 橋。",
+          "第三區段：濱海灣周邊的彎道與直線，經過浮動平台附近的彎道組回到起跑線。"
+        ],
+        "features": [
+          "高溫高濕加上長時間比賽，是全年體能最吃重的一站",
+          "幾乎每年都有安全車",
+          "需要最大下壓力，超車困難"
+        ],
+        "tyres": "彎道多、溫度高，輪胎容易過熱，Pirelli 帶偏軟的組合，安全車時機常決定策略。",
+        "weather": "熱帶氣候，夜間仍有約 28–30°C，濕度約 80%，有雷雨的可能。"
+      },
+      "en": {
+        "tagline": "F1’s first night race, a brutal physical test under the city lights.",
+        "country": "Singapore is Southeast Asia’s financial hub, and the Marina Bay skyline looks spectacular under the floodlights.",
+        "history": [
+          "In 2008 Singapore hosted the first night race in F1 history — the same year as the “Crashgate” scandal, in which Renault deliberately caused a crash.",
+          "In 2023 the layout was changed to remove the corners under the grandstand, shortening the lap to about 4.94 km."
+        ],
+        "layout": "Anticlockwise on the streets of Marina Bay — many corners and bumps, and races often run close to the two-hour time limit.",
+        "sectors": [
+          "Sector 1: the Turn 1–3 complex after the start, then the Raffles Boulevard straight after Turn 5; Turn 7 is a heavy-braking overtaking spot.",
+          "Sector 2: 90-degree corners near City Hall and the old Parliament House, then across the Anderson Bridge.",
+          "Sector 3: corners and straights around the bay, passing the corners near the floating platform back to the line."
+        ],
+        "features": [
+          "Heat, humidity and race length make it the most physically demanding race of the year",
+          "A safety car appears almost every year",
+          "Maximum downforce needed; overtaking is difficult"
+        ],
+        "tyres": "Many corners and high temperatures make tyres overheat easily. Pirelli brings softer compounds, and safety-car timing often decides the strategy.",
+        "weather": "Tropical: still around 28–30°C at night with about 80% humidity, and a chance of thunderstorms."
+      }
+    },
+    "americas": {
+      "facts": { "lengthKm": 5.513, "turns": 20, "laps": 56, "firstGP": 2012, "direction": "acw", "type": "permanent" },
+      "ratings": { "tyreStress": 4, "downforce": 4, "overtaking": 4 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "德州的大賽道，融合了世界各地名彎的特色。",
+        "country": "美國大獎賽在德州奧斯汀舉辦，結合賽車、音樂與德州文化，是美國最成功的 F1 賽事之一。",
+        "history": [
+          "美洲賽道（COTA）2012 年啟用，是美國第一座專為 F1 興建的賽道。設計時參考了 Silverstone、Istanbul 等名賽道的經典彎道。",
+          "這裡也舉辦 MotoGP 等賽事，大量使用讓路面變得顛簸，是車手常抱怨的問題。"
+        ],
+        "layout": "逆時針，起伏很大，有陡坡、高速 S 彎、長直線與多頂點彎，各種彎道類型都有。",
+        "sectors": [
+          "第一區段：起跑後衝上陡坡進入盲的第 1 彎髮夾彎，可以走不同路線，起跑時非常混亂；接著是仿 Silverstone 的高速 S 彎。",
+          "第二區段：第 11 彎髮夾彎後接上約 1 公里的後直線，尾端第 12 彎是最好的超車點。",
+          "第三區段：慢速的體育場區段，以及仿伊斯坦堡第 8 彎的多頂點第 16–18 彎，最後第 19–20 彎回到起跑線。"
+        ],
+        "features": [
+          "第 1 彎與第 12 彎都是主要超車點",
+          "路面顛簸，賽車底盤高度設定困難",
+          "S 彎與多頂點彎考驗下壓力與輪胎"
+        ],
+        "tyres": "高速 S 彎與長彎讓輪胎負擔偏重，一停或兩停都很常見。",
+        "weather": "十月的德州，氣溫大約 20–30°C，天氣變化大，偶有強風或雨。"
+      },
+      "en": {
+        "tagline": "A big Texas circuit that borrows the best ideas from famous corners around the world.",
+        "country": "The United States Grand Prix in Austin, Texas, blends racing, music and Texan culture, and is one of America’s most successful F1 events.",
+        "history": [
+          "The Circuit of the Americas (COTA) opened in 2012 as the first US track purpose-built for F1. Its designers borrowed classic corners from circuits such as Silverstone and Istanbul.",
+          "It also hosts MotoGP and other series, and the heavy use has made the surface bumpy — a regular driver complaint."
+        ],
+        "layout": "Anticlockwise with big elevation changes: a steep climb, fast esses, a long straight and multi-apex corners — every type of corner.",
+        "sectors": [
+          "Sector 1: a steep climb from the start to the blind Turn 1 hairpin, where drivers can take different lines and the start is chaotic, then fast Silverstone-style esses.",
+          "Sector 2: after the Turn 11 hairpin comes a back straight of about 1 km; Turn 12 at its end is the best overtaking spot.",
+          "Sector 3: the slow stadium section and the multi-apex Turns 16–18, modelled on Istanbul’s Turn 8, then Turns 19–20 back to the line."
+        ],
+        "features": [
+          "Turns 1 and 12 are the main overtaking spots",
+          "A bumpy surface makes ride-height set-up difficult",
+          "The esses and multi-apex corners test downforce and tyres"
+        ],
+        "tyres": "Fast esses and long corners put fairly high loads on the tyres; one and two stops are both common.",
+        "weather": "Texas in October, about 20–30°C and changeable, with occasional strong wind or rain."
+      }
+    },
+    "rodriguez": {
+      "facts": { "lengthKm": 4.304, "turns": 17, "laps": 71, "firstGP": 1963, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 2, "downforce": 4, "overtaking": 3 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "海拔超過 2,200 公尺的高原賽道，終點前穿過棒球場。",
+        "country": "墨西哥大獎賽在首都墨西哥城舉辦，在地英雄 Sergio Pérez 讓觀眾的熱情更加沸騰。",
+        "history": [
+          "賽道以墨西哥賽車手 Ricardo 與 Pedro Rodríguez 兄弟命名，1963 年首次舉辦 F1，1992 年後停辦，2015 年回歸。",
+          "回歸時賽道改建，最後一段改成穿過 Foro Sol 棒球場，觀眾坐滿看台，是全年最有氣氛的頒獎台之一。"
+        ],
+        "layout": "順時針，有長約 1.2 公里的起跑直線，加上中段的蛇形 S 彎與體育場區段。",
+        "sectors": [
+          "第一區段：超長起跑直線重煞進入第 1–3 彎，是最好的超車點，起跑時常有碰撞。",
+          "第二區段：第 7–11 彎的高速 S 形彎組。",
+          "第三區段：慢速穿過 Foro Sol 棒球場的體育場區段，最後經過部分舊的 Peraltada 彎回到起跑直線。"
+        ],
+        "features": [
+          "空氣稀薄：下壓力與引擎、煞車的冷卻都會變差，車隊要裝最大尾翼",
+          "極速很高，長直線尾流效應明顯",
+          "路面抓地力低"
+        ],
+        "tyres": "下壓力不足讓賽車容易滑動，輪胎磨耗不高但容易過熱，通常一停。",
+        "weather": "十月底到十一月初，氣溫大約 18–25°C，高原陽光強，偶有午後雷陣雨。"
+      },
+      "en": {
+        "tagline": "A high-altitude circuit over 2,200 m up, finishing through a baseball stadium.",
+        "country": "The Mexico City Grand Prix is held in the capital, and local hero Sergio Pérez has made the crowd even more passionate.",
+        "history": [
+          "The circuit is named after Mexican racing brothers Ricardo and Pedro Rodríguez. It first hosted F1 in 1963, dropped off after 1992 and returned in 2015.",
+          "For its return the final section was rerouted through the Foro Sol baseball stadium, whose packed stands make for one of the best podium atmospheres of the year."
+        ],
+        "layout": "Clockwise, with a main straight of about 1.2 km, a snaking esses section in the middle and the stadium section at the end.",
+        "sectors": [
+          "Sector 1: the very long main straight into Turns 1–3, the best overtaking spot and a frequent scene of first-lap contact.",
+          "Sector 2: the fast Turn 7–11 esses.",
+          "Sector 3: slowly through the Foro Sol stadium section, then part of the old Peraltada back onto the main straight."
+        ],
+        "features": [
+          "Thin air reduces downforce and cooling for engines and brakes, so teams run their biggest wings",
+          "Very high top speeds and a strong slipstream on the straight",
+          "Low grip from the surface"
+        ],
+        "tyres": "Lack of downforce makes cars slide, so tyres overheat easily even though wear isn’t high. Usually one stop.",
+        "weather": "Late October / early November, about 18–25°C, with strong high-altitude sun and occasional afternoon thunderstorms."
+      }
+    },
+    "interlagos": {
+      "facts": { "lengthKm": 4.309, "turns": 15, "laps": 71, "firstGP": 1973, "direction": "acw", "type": "permanent" },
+      "ratings": { "tyreStress": 3, "downforce": 3, "overtaking": 4 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "南美的傳奇賽道，雨戰與冠軍決戰的舞台。",
+        "country": "巴西出過 Emerson Fittipaldi、Nelson Piquet 與 Ayrton Senna 三位世界冠軍，是熱愛賽車的國度。",
+        "history": [
+          "Interlagos 位在聖保羅市郊兩座湖之間（名字意思就是「湖之間」），正式名稱紀念巴西車手 José Carlos Pace。1973 年首次舉辦 F1 世界錦標賽。",
+          "這裡上演過許多經典：1991 年 Senna 只剩六檔仍在主場奪冠；2008 年 Hamilton 在最後一個彎超車拿下冠軍；2016 年 Verstappen 的雨中逆轉。"
+        ],
+        "layout": "逆時針，在天然的碗狀地形上，起伏大、圈速短，有很多超車機會。",
+        "sectors": [
+          "第一區段：起跑後下坡進入著名的「Senna S 彎」，接著是 Curva do Sol 與 Reta Oposta 直線，尾端第 4 彎是主要超車點。",
+          "第二區段：中段的慢速技術彎，包括 Ferradura 與 Pinheirinho。",
+          "第三區段：Junção 彎出來後，一路上坡全油門回到起跑線，可以吸尾流在第 1 彎超車。"
+        ],
+        "features": [
+          "第 1 彎與第 4 彎是主要超車點",
+          "上坡全油門的最後路段，出 Junção 的速度非常關鍵",
+          "突如其來的大雨常常改寫比賽"
+        ],
+        "tyres": "輪胎負擔中等，一停或兩停都有；天氣多變讓換胎時機變得非常重要。",
+        "weather": "十一月是南半球春天，氣溫大約 18–28°C，午後雷陣雨很常見，雨勢說來就來。"
+      },
+      "en": {
+        "tagline": "South America’s legendary track, home of wet races and title showdowns.",
+        "country": "Brazil has produced three World Champions — Emerson Fittipaldi, Nelson Piquet and Ayrton Senna — and is a racing-mad nation.",
+        "history": [
+          "Interlagos (“between the lakes”) sits between two reservoirs on the edge of São Paulo; its official name honours Brazilian driver José Carlos Pace. It first hosted a World Championship race in 1973.",
+          "It has staged many classics: Senna winning at home in 1991 with only sixth gear left; Hamilton’s last-corner pass for the 2008 title; Verstappen’s 2016 wet-weather charge."
+        ],
+        "layout": "Anticlockwise in a natural bowl, undulating, with a short lap and plenty of overtaking chances.",
+        "sectors": [
+          "Sector 1: downhill from the start into the famous “Senna S”, then Curva do Sol and the Reta Oposta straight; Turn 4 at its end is a main overtaking spot.",
+          "Sector 2: the slow, technical infield including Ferradura and Pinheirinho.",
+          "Sector 3: out of Junção, flat out uphill back to the line, with a chance to slipstream into Turn 1."
+        ],
+        "features": [
+          "Turns 1 and 4 are the main overtaking spots",
+          "The flat-out uphill final section makes exit speed from Junção crucial",
+          "Sudden downpours often rewrite the race"
+        ],
+        "tyres": "Moderate tyre load; one or two stops are both seen. Changeable weather makes pit timing very important.",
+        "weather": "November is spring in the southern hemisphere: about 18–28°C, with frequent afternoon thunderstorms that arrive without warning."
+      }
+    },
+    "vegas": {
+      "facts": { "lengthKm": 6.201, "turns": 17, "laps": 50, "firstGP": 2023, "direction": "acw", "type": "street" },
+      "ratings": { "tyreStress": 2, "downforce": 1, "overtaking": 4 },
+      "tyreRange": "soft",
+      "zh": {
+        "tagline": "在賭城大道上飆速的週六深夜比賽。",
+        "country": "拉斯維加斯是美國的娛樂之都，F1 自己擔任主辦人，把比賽打造成一場大型娛樂秀。",
+        "history": [
+          "F1 早在 1981–1982 年曾在 Caesars Palace 停車場比賽，但與現在的賽道無關。現在的拉斯維加斯大道賽道 2023 年首次登場。",
+          "比賽在當地週六晚上 10 點左右開跑，賽車沿著賭城大道經過 Caesars Palace、Bellagio 與巨型球體 Sphere。"
+        ],
+        "layout": "逆時針，有一段約 1.9 公里的大道直線，以及多段長直線與慢彎，是低下壓力的高速賽道。",
+        "sectors": [
+          "第一區段：起跑後的第 1 彎慢速左彎，接著繞過 Sphere 附近的彎道。",
+          "第二區段：長直線接上 Koval Lane 的彎道，然後轉進賭城大道。",
+          "第三區段：沿著賭城大道全油門衝刺，尾端的減速彎是主要超車點，最後幾個彎回到起跑線。"
+        ],
+        "features": [
+          "長直線讓尾流與超車機會很多",
+          "深夜低溫，輪胎很難熱起來，容易顆粒化",
+          "路面一開始抓地力極低"
+        ],
+        "tyres": "磨耗低，但低溫會讓輪胎抓不住地、容易顆粒化，Pirelli 帶偏軟的組合。",
+        "weather": "十一月的沙漠深夜，氣溫可能只有約 10°C 甚至更低，乾燥少雨。"
+      },
+      "en": {
+        "tagline": "A Saturday late-night race flat out down the Las Vegas Strip.",
+        "country": "Las Vegas is America’s entertainment capital, and F1 itself promotes this race, turning it into a huge show.",
+        "history": [
+          "F1 raced in the Caesars Palace car park in 1981–1982, but that has nothing to do with today’s track. The current Las Vegas Strip Circuit debuted in 2023.",
+          "The race starts at around 10 pm local time on Saturday, with cars racing down the Strip past Caesars Palace, the Bellagio and the giant Sphere."
+        ],
+        "layout": "Anticlockwise, with a Strip straight of about 1.9 km plus several other long straights and slow corners — a high-speed, low-downforce track.",
+        "sectors": [
+          "Sector 1: the slow left of Turn 1 after the start, then corners around the Sphere.",
+          "Sector 2: a long straight into the corners on Koval Lane, then onto the Strip.",
+          "Sector 3: flat out along the Strip; the chicane at its end is the main overtaking spot, and a few more corners lead back to the line."
+        ],
+        "features": [
+          "Long straights mean plenty of slipstreaming and overtaking",
+          "Cold late-night conditions make it hard to warm the tyres, which grain easily",
+          "Very low grip at the start of the weekend"
+        ],
+        "tyres": "Low wear, but cold conditions leave tyres short of grip and prone to graining. Pirelli brings softer compounds.",
+        "weather": "A desert night in November — it can drop to around 10°C or colder. Dry, with little rain."
+      }
+    },
+    "losail": {
+      "facts": { "lengthKm": 5.419, "turns": 16, "laps": 57, "firstGP": 2021, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 5, "downforce": 4, "overtaking": 3 },
+      "tyreRange": "hard",
+      "zh": {
+        "tagline": "原本為摩托車打造的高速賽道，流暢的中高速彎一個接一個。",
+        "country": "卡達是波斯灣上的小國，近年積極舉辦國際賽事，包括 2022 年足球世界盃。",
+        "history": [
+          "Lusail 賽道 2004 年為 MotoGP 興建，2021 年首次舉辦 F1，2023 年起成為固定分站。",
+          "2023 年因為路肩會損傷輪胎，Pirelli 規定每套輪胎最多只能跑 18 圈；同年高溫潮濕讓多位車手身體不適。"
+        ],
+        "layout": "順時針，除了長長的起跑直線外，大多是連續的中高速彎，幾乎沒有慢彎。",
+        "sectors": [
+          "第一區段：起跑直線重煞進入第 1 彎，是主要超車點，接著是高速的第 2–3 彎。",
+          "第二區段：一連串流暢的中高速彎，車手幾乎一直在轉向。",
+          "第三區段：第 12–14 彎高速連續右彎，最後第 16 彎回到起跑直線。"
+        ],
+        "features": [
+          "高速彎多，輪胎與車手頸部負擔很大",
+          "超車機會主要在第 1 彎",
+          "夜間比賽，但濕度可能很高"
+        ],
+        "tyres": "長時間高速彎讓輪胎負擔是全年最重之一，Pirelli 通常帶最硬的組合，常見兩停以上。",
+        "weather": "夜間比賽，氣溫大約 25–30°C，濕度變化大，幾乎不下雨。"
+      },
+      "en": {
+        "tagline": "A fast track built for motorbikes, with flowing medium- and high-speed corners one after another.",
+        "country": "Qatar is a small Gulf nation that has hosted many international events in recent years, including the 2022 FIFA World Cup.",
+        "history": [
+          "The Lusail circuit was built for MotoGP in 2004. It first hosted F1 in 2021 and has been a regular round since 2023.",
+          "In 2023 kerbs were damaging tyres, so Pirelli limited each set to 18 laps; the same year, heat and humidity left several drivers unwell."
+        ],
+        "layout": "Clockwise. Apart from the long main straight, it’s almost all flowing medium- and high-speed corners, with hardly any slow ones.",
+        "sectors": [
+          "Sector 1: heavy braking from the main straight into Turn 1, the main overtaking spot, then the fast Turns 2–3.",
+          "Sector 2: a flowing sequence of medium- and high-speed corners where drivers are almost always turning.",
+          "Sector 3: the fast run of right-handers at Turns 12–14, then Turn 16 back onto the main straight."
+        ],
+        "features": [
+          "Many fast corners put heavy loads on tyres and drivers’ necks",
+          "Overtaking mainly into Turn 1",
+          "A night race, but humidity can be high"
+        ],
+        "tyres": "Long fast corners make this one of the toughest tracks of the year on tyres. Pirelli usually brings its hardest compounds, and two or more stops are common.",
+        "weather": "A night race at about 25–30°C, with varying humidity and almost no rain."
+      }
+    },
+    "yas_marina": {
+      "facts": { "lengthKm": 5.281, "turns": 16, "laps": 58, "firstGP": 2009, "direction": "acw", "type": "permanent" },
+      "ratings": { "tyreStress": 3, "downforce": 3, "overtaking": 3 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "從黃昏跑進黑夜的賽季終站，飯店橫跨在賽道上方。",
+        "country": "阿布達比是阿拉伯聯合大公國的首都，亞斯島上還有法拉利主題樂園等娛樂設施。",
+        "history": [
+          "Yas Marina 賽道 2009 年首次舉辦，最具代表性的是橫跨賽道的 W Hotel，以及從黃昏開跑、在燈光下結束的比賽。",
+          "這裡多次是賽季最後一站，包括 2021 年 Verstappen 與 Hamilton 最後一圈決定冠軍的經典戰役，以及 2025 年 Norris 在此封王。2021 年賽道也改建，讓超車更容易。"
+        ],
+        "layout": "逆時針，有兩段長直線與重煞彎，後段是穿過飯店與港口的慢速彎。",
+        "sectors": [
+          "第一區段：起跑後的第 1 彎左彎，接著第 2–4 彎的高速段，進入第 5 彎髮夾彎。",
+          "第二區段：第 5 彎後的長直線接第 6–7 彎，再一段長直線進入第 9 彎，這兩處都是超車點。",
+          "第三區段：穿過飯店下方與港口邊的慢速彎組，最後回到起跑線。"
+        ],
+        "features": [
+          "第 6 彎與第 9 彎前是主要超車點",
+          "黃昏到夜晚的溫度變化，讓練習賽數據不一定準",
+          "後段慢彎考驗牽引力"
+        ],
+        "tyres": "輪胎負擔中等，通常一停。",
+        "weather": "十二月初的沙漠，比賽時氣溫大約 25–30°C，隨著入夜逐漸下降，乾燥少雨。"
+      },
+      "en": {
+        "tagline": "The season finale that runs from dusk into night, with a hotel straddling the track.",
+        "country": "Abu Dhabi is the capital of the United Arab Emirates. Yas Island is also home to Ferrari World and other attractions.",
+        "history": [
+          "The Yas Marina Circuit first hosted F1 in 2009. Its icons are the W Hotel bridging the track and races that start at dusk and finish under floodlights.",
+          "It has often been the season finale, including the 2021 last-lap Verstappen–Hamilton title decider and Norris clinching the 2025 title here. The track was revised in 2021 to make overtaking easier."
+        ],
+        "layout": "Anticlockwise, with two long straights into heavy braking zones and a slow final section winding past the hotel and marina.",
+        "sectors": [
+          "Sector 1: the Turn 1 left after the start, the fast Turns 2–4, then the Turn 5 hairpin.",
+          "Sector 2: the long straight after Turn 5 into Turns 6–7, then another long straight into Turn 9 — both overtaking spots.",
+          "Sector 3: slow corners under the hotel and along the marina, back to the line."
+        ],
+        "features": [
+          "Turns 6 and 9 are the main overtaking spots",
+          "Temperatures change from dusk to night, so practice data can mislead",
+          "The slow final sector tests traction"
+        ],
+        "tyres": "Moderate tyre load; usually one stop.",
+        "weather": "Early December in the desert: about 25–30°C at the start, falling after dark. Dry, with little rain."
+      }
+    },
+    "madring": {
+      "aliases": ["madrid", "madring_circuit", "ifema"],
+      "match": ["Madrid"],
+      "facts": { "lengthKm": 5.47, "turns": 22, "firstGP": 2026, "type": "hybrid" },
+      "ratings": { "tyreStress": 3, "downforce": 3, "overtaking": 3 },
+      "tyreRange": "mid",
+      "zh": {
+        "tagline": "2026 年登場的全新半街道賽道，有一個大角度傾斜彎。",
+        "country": "西班牙首都馬德里 2026 年接手西班牙大獎賽，讓 F1 回到首都（馬德里上一次辦 F1 是 1981 年的 Jarama 賽道）。",
+        "history": [
+          "這條被稱為「Madring」的賽道圍繞 IFEMA 會展中心興建，靠近馬德里巴拉哈斯機場，部分使用一般道路、部分是新建路段。",
+          "最大特色是名為「La Monumental」的大角度傾斜彎。由於是新賽道，車隊與車手都沒有過去的資料可以參考。"
+        ],
+        "layout": "全長約 5.47 公里、22 個彎，混合街道與新建路段，有長直線、慢彎與一個大型傾斜彎。",
+        "sectors": [
+          "第一區段：起跑後的慢速彎組，經過會展中心周邊。",
+          "第二區段：「La Monumental」傾斜彎，高速通過時車手會承受很大的垂直負荷。",
+          "第三區段：長直線與重煞彎，是主要的超車機會，最後回到起跑線。"
+        ],
+        "features": [
+          "全新賽道，所有人都從零開始",
+          "傾斜彎在 F1 很少見",
+          "半街道賽道，路面抓地力一開始可能很低"
+        ],
+        "tyres": "新賽道的輪胎負擔還不清楚，首屆比賽的資料會是重要參考。",
+        "weather": "九月的馬德里，氣溫大約 25–30°C，通常乾燥晴朗。"
+      },
+      "en": {
+        "tagline": "A brand-new semi-street circuit debuting in 2026, featuring a steeply banked corner.",
+        "country": "Spain’s capital, Madrid, takes over the Spanish Grand Prix in 2026, bringing F1 back to the capital (the last race near Madrid was at Jarama in 1981).",
+        "history": [
+          "Nicknamed “Madring”, the circuit is built around the IFEMA exhibition centre near Madrid-Barajas Airport, using a mix of public roads and newly built sections.",
+          "Its signature feature is a steeply banked corner called “La Monumental”. As a new venue, no team or driver has past data to rely on."
+        ],
+        "layout": "About 5.47 km with 22 corners, mixing street and purpose-built sections: long straights, slow corners and a big banked turn.",
+        "sectors": [
+          "Sector 1: a slow series of corners after the start around the exhibition centre.",
+          "Sector 2: the banked “La Monumental”, taken at speed with big vertical loads on the drivers.",
+          "Sector 3: long straights and heavy braking zones, the main overtaking chances, back to the line."
+        ],
+        "features": [
+          "A brand-new track — everyone starts from zero",
+          "Banked corners are rare in F1",
+          "Semi-street circuit, so grip may be very low at first"
+        ],
+        "tyres": "Tyre demands at the new track aren’t yet well known; data from the first race will be the key reference.",
+        "weather": "Madrid in September, about 25–30°C and usually dry and sunny."
+      }
+    }
+  }
+}

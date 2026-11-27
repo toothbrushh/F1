@@ -413,3 +413,30 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
   .step-next .step-dot, .spinner, .live-badge { animation: none; }
   .timeline { scroll-behavior: auto; }
 }
+
+/* ---------- 賽道介紹 ---------- */
+.circuit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
+.circuit-grid .circuit-card { margin-bottom: 0; }
+.circuit-card { display: block; text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
+.circuit-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.circuit-card h3 { color: var(--text); font-size: 1rem; margin: 8px 0 4px; }
+.circuit-card p { margin: 4px 0; }
+.circuit-facts { color: var(--accent); font-weight: 600; }
+.circuit-hero { align-items: flex-start; }
+.circuit-flag { font-size: clamp(3rem, 12vw, 5.5rem); line-height: 1; }
+.circuit-hero .tagline { margin: 8px 0; }
+.circuit-hero .more { margin-right: 14px; }
+.stat small { margin-top: 2px; }
+.rating { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.rating-dots { display: inline-flex; gap: 4px; }
+.rating-dots i { width: 22px; height: 8px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--border); }
+.rating-dots i.on { background: var(--accent); border-color: var(--accent); }
+.sector-list { list-style: none; padding: 0; margin: 0; }
+.sector-list li { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.sector-list li:last-child { border-bottom: 0; }
+.sector-list p { margin: 0; max-width: 72ch; }
+.sector-badge { flex: 0 0 auto; background: var(--accent); color: #fff; font-weight: 800; font-size: .8rem; padding: 2px 8px; border-radius: 6px; margin-top: 2px; }
+.forecast { display: flex; flex-wrap: wrap; gap: 8px; }
+.fc-day { flex: 1 1 90px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px; background: var(--surface-2); border-radius: 8px; text-align: center; }
+.fc-day small { color: var(--muted); font-size: .72rem; }
+.fc-icon { font-size: 1.6rem; }

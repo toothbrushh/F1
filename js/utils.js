@@ -171,6 +171,14 @@ export function teamColor(constructorId) {
 export const driverUrl = (id, season) => `driver.html?id=${encodeURIComponent(id)}&season=${season}`;
 export const teamUrl = (id, season) => `team.html?id=${encodeURIComponent(id)}&season=${season}`;
 
+export const circuitUrl = (id, season) => `circuit.html?id=${encodeURIComponent(id)}&season=${season}`;
+
+/** 賽道名稱連結到賽道介紹頁 */
+export function circuitLink(circuit, season) {
+  if (!circuit?.circuitId) return esc(circuit?.circuitName || '');
+  return `<a class="name-link" href="${circuitUrl(circuit.circuitId, season)}">${esc(circuit.circuitName)}</a>`;
+}
+
 export const driverName = (d) => `${d.givenName} ${d.familyName}`;
 
 export function driverLink(driver, season) {

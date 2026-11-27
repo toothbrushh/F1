@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F1 賽道</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏁</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<!-- 賽道介紹頁：circuit.html?id=suzuka&season=2026，由 circuit.js 產生內容 -->
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="./"><span class="brand-mark">F1</span> <span data-i18n="site.brand">賽季成績</span></a>
+      <div class="header-tools">
+        <a class="btn" data-back href="./" data-i18n="profile.backDefault">← 回到賽季</a>
+        <button class="btn lang-btn" type="button" data-lang-toggle>EN</button>
+      </div>
+    </div>
+  </header>
+  <main class="wrap" id="circuit">
+    <div class="loading"><div class="spinner"></div><p data-i18n="common.loading">載入中…</p></div>
+  </main>
+  <footer class="site-footer wrap">
+    <p data-i18n-html="footer.profile">資料來源：<a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica F1 API</a>。</p>
+  </footer>
+  <script type="module" src="js/circuit.js"></script>
+</body>
+</html>
