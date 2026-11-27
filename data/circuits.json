@@ -1153,7 +1153,7 @@
           "傾斜彎在 F1 很少見",
           "半街道賽道，路面抓地力一開始可能很低"
         ],
-        "tyres": "新賽道的輪胎負擔還不清楚，首屆比賽的資料會是重要參考。",
+        "tyres": "新賽道的輪胎負擔要等累積更多比賽才看得清楚；2026 年首屆比賽各隊的實際策略可以參考下方的資料。",
         "weather": "九月的馬德里，氣溫大約 25–30°C，通常乾燥晴朗。"
       },
       "en": {
@@ -1174,8 +1174,55 @@
           "Banked corners are rare in F1",
           "Semi-street circuit, so grip may be very low at first"
         ],
-        "tyres": "Tyre demands at the new track aren’t yet well known; data from the first race will be the key reference.",
+        "tyres": "Tyre demands at the new track will only become clear over several races; see below for what teams actually did at the first race in 2026.",
         "weather": "Madrid in September, about 25–30°C and usually dry and sunny."
+      }
+    },
+    "sepang": {
+      "facts": { "lengthKm": 5.543, "turns": 15, "laps": 56, "firstGP": 1999, "direction": "cw", "type": "permanent" },
+      "ratings": { "tyreStress": 4, "downforce": 3, "overtaking": 4 },
+      "tyreRange": "hard",
+      "zh": {
+        "tagline": "熱帶的寬闊賽道，兩條長直線由一個髮夾彎連接。",
+        "country": "馬來西亞位在東南亞，賽道在首都吉隆坡南方、靠近吉隆坡國際機場。馬來西亞大獎賽是 F1 進軍亞洲的重要一站。",
+        "history": [
+          "雪邦賽道 1999 年啟用，是設計師 Hermann Tilke 的第一條 F1 賽道，之後他設計的許多賽道都沿用了「長直線接髮夾彎」的概念。1999 年 Michael Schumacher 在斷腿傷癒後就是在這裡復出。",
+          "馬來西亞大獎賽在 1999–2017 年舉辦，熱帶午後雷雨常常改寫比賽，例如 2009 年就因暴雨提前結束、只給一半積分。2016 年 Hamilton 在領先時引擎爆缸，也是經典一幕。停辦多年後，雪邦在 2026 年回到賽程上。"
+        ],
+        "layout": "順時針，賽道很寬，有高速彎也有慢速彎；最有名的是最後一個髮夾彎把後直線和起跑直線連在一起，兩條直線並排、方向相反。",
+        "sectors": [
+          "第一區段：起跑後的第 1–2 彎是一個先右後左的慢速髮夾組合，起跑時常常大亂鬥，接著是第 3 彎的長右彎。",
+          "第二區段：第 5–6 彎的高速 S 彎，以及第 7–8 彎的長彎，非常考驗下壓力與輪胎。",
+          "第三區段：第 13 彎後接上長長的後直線，尾端重煞進入第 15 彎髮夾彎，是最好的超車點，出彎後直接回到起跑直線。"
+        ],
+        "features": [
+          "兩條長直線，第 1 彎和第 15 彎都是超車點",
+          "高溫高濕，車手體能與賽車散熱都受考驗",
+          "賽道寬，常可以走出不同的行車線"
+        ],
+        "tyres": "高溫加上長時間的高速彎，輪胎負擔重，過去常見兩停甚至三停。",
+        "weather": "熱帶氣候，氣溫大約 30–35°C、濕度很高，午後常有雷陣雨。"
+      },
+      "en": {
+        "tagline": "A wide tropical circuit whose two long straights are joined by a hairpin.",
+        "country": "Malaysia is in Southeast Asia. The circuit lies south of the capital, Kuala Lumpur, near Kuala Lumpur International Airport, and the Malaysian Grand Prix was an important step in F1’s expansion into Asia.",
+        "history": [
+          "Sepang opened in 1999 as Hermann Tilke’s first F1 circuit; many of his later tracks reused its “long straight into a hairpin” idea. Michael Schumacher made his comeback here in 1999 after breaking his leg.",
+          "The Malaysian Grand Prix ran from 1999 to 2017, and tropical afternoon storms often rewrote the race — in 2009 a downpour ended it early with half points awarded. Hamilton’s engine failure while leading in 2016 is another famous moment. After years away, Sepang returned to the calendar in 2026."
+        ],
+        "layout": "Clockwise and very wide, with both fast and slow corners. Its signature is the final hairpin linking the back straight to the main straight, so the two straights run side by side in opposite directions.",
+        "sectors": [
+          "Sector 1: the slow right-left hairpin complex of Turns 1–2 after the start, often chaotic on the opening lap, then the long right of Turn 3.",
+          "Sector 2: the fast Turn 5–6 esses and the long Turns 7–8 — a big test of downforce and tyres.",
+          "Sector 3: after Turn 13 comes the long back straight, ending with heavy braking into the Turn 15 hairpin, the best overtaking spot, which leads straight onto the main straight."
+        ],
+        "features": [
+          "Two long straights, with overtaking into Turns 1 and 15",
+          "Heat and humidity test both drivers’ fitness and car cooling",
+          "A wide track that allows different racing lines"
+        ],
+        "tyres": "Heat and long fast corners put heavy loads on the tyres; two and even three stops were common in the past.",
+        "weather": "Tropical: about 30–35°C with high humidity and frequent afternoon thunderstorms."
       }
     }
   }
