@@ -70,6 +70,17 @@ function render() {
 }
 
 // ============================================================
+// 每個分頁最上面的標題列：大標題 + 一行說明，放在框框外面；
+// 右邊可以放這個分頁專用的控制項（例如賽程表的篩選按鈕）。六個分頁都用同一個樣式。
+// ============================================================
+function viewHead(title, hint, side = '') {
+  return `<header class="view-head">
+    <div class="view-head-text"><h2>${title}</h2>${hint ? `<p class="muted small">${hint}</p>` : ''}</div>
+    ${side ? `<div class="view-head-side">${side}</div>` : ''}
+  </header>`;
+}
+
+// ============================================================
 // 畫面 1：總覽
 // ============================================================
 function viewSummary() {
@@ -125,6 +136,7 @@ function viewSummary() {
   }
 
   $view.innerHTML = `
+    ${viewHead(t('summary.title', { season: d.season }), t('summary.hint'))}
     ${seasonBanner(d)}
     ${upcomingCard(d)}
     <div class="card-grid">${cards.join('') || `<p class="muted">${t('summary.noData')}</p>`}</div>
@@ -291,14 +303,14 @@ function teamTable(rows, compact = false) {
 }
 
 function viewDrivers() {
-  $view.innerHTML = `<article class="card"><div class="card-head"><h3>${t('drivers.title', { season: state.data.season })}</h3>
-    <span class="muted small">${t('drivers.hint')}</span></div>${driverTable(state.data.driverStandings)}</article>`;
+  $view.innerHTML = `${viewHead(t('drivers.title', { season: state.data.season }), t('drivers.hint'))}
+    <article class="card">${driverTable(state.data.driverStandings)}</article>`;
   return null;
 }
 
 function viewTeams() {
-  $view.innerHTML = `<article class="card"><div class="card-head"><h3>${t('teams.title', { season: state.data.season })}</h3>
-    <span class="muted small">${t('teams.hint')}</span></div>${teamTable(state.data.constructorStandings)}</article>`;
+  $view.innerHTML = `${viewHead(t('teams.title', { season: state.data.season }), t('teams.hint'))}
+    <article class="card">${teamTable(state.data.constructorStandings)}</article>`;
   return null;
 }
 
@@ -343,6 +355,7 @@ function viewRound(route) {
   }
 
   $view.innerHTML = `
+    ${viewHead(t('round.title', { season: d.season }), t('round.hint'))}
     <article class="card">
       <div class="round-nav">
         ${prev ? `<a class="btn" href="#round/${prev.round}/${tab}" aria-label="${t('round.prev')}">‹</a>` : '<span class="btn disabled">‹</span>'}
@@ -482,13 +495,11 @@ function viewSchedule(route) {
     return true;
   });
 
+  const chips = `<div class="chips">${filters.map(([k, label]) => `
+    <button type="button" class="chip ${state.scheduleFilter === k ? 'active' : ''}" data-filter="${k}">${label}</button>`).join('')}
+  </div>`;
   $view.innerHTML = `
-    <div class="schedule-bar">
-      <div class="chips">${filters.map(([k, label]) => `
-        <button type="button" class="chip ${state.scheduleFilter === k ? 'active' : ''}" data-filter="${k}">${label}</button>`).join('')}
-      </div>
-      <span class="muted small">${t('schedule.tz', { tz: esc(userTimeZone()) })}</span>
-    </div>
+    ${viewHead(t('schedule.title', { season: d.season }), t('schedule.hint', { tz: esc(userTimeZone()) }), chips)}
     <div class="schedule-list">${visible.map((race) => {
       const st = states[d.races.indexOf(race)];
       const loc = race.circuit?.Location || {};
@@ -540,8 +551,7 @@ function viewCircuits() {
     return null;
   }
   $view.innerHTML = `
-    <div class="card-head"><h3>${t('circuits.title', { season: d.season })}</h3>
-      <span class="muted small">${t('circuits.hint')}</span></div>
+    ${viewHead(t('circuits.title', { season: d.season }), t('circuits.hint'))}
     <div class="circuit-grid">${d.races.map((race) => {
       const loc = race.circuit?.Location || {};
       const found = findCircuit(state.circuits, race.circuit?.circuitId, loc.locality);
