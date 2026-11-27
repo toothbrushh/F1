@@ -45,6 +45,24 @@ function commonStrategies(rows) {
 }
 
 /**
+ * 輪胎策略摘要（賽道介紹頁用）：用了哪些輪胎、最常見的策略、冠軍的策略
+ * @returns {{ compounds: Array, common: Array<[string, number]>, winner: string, winnerStops: number } | null}
+ */
+export function summarizeStrategies(results, stints) {
+  const byDriver = groupByDriver(stints);
+  const rows = results.map((r) => ({ r, stints: byDriver.get(String(r.number)) || [] }));
+  if (!rows.some((x) => x.stints.length)) return null;
+  const used = new Set(stints.map((s) => s.compound));
+  const winnerStints = rows[0]?.stints || [];
+  return {
+    compounds: Object.entries(COMPOUNDS).filter(([k]) => used.has(k)).map(([, c]) => c),
+    common: commonStrategies(rows),
+    winner: winnerStints.map((s) => compound(s.compound).short).join(' → '),
+    winnerStops: Math.max(0, winnerStints.length - 1),
+  };
+}
+
+/**
  * @param {HTMLElement} el      要畫在哪裡
  * @param {Array} results       Jolpica 的正賽成績（已依名次排序）
  * @param {Array} stints        OpenF1 的 stint 資料

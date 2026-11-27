@@ -501,6 +501,76 @@ export function loadStories(lang = 'zh') {
 }
 
 // ============================================================
+// 5b. 賽道介紹（data/circuits.json，中英文都在同一個檔案）
+// ============================================================
+let circuitsPromise;
+export function loadCircuits() {
+  if (!circuitsPromise) {
+    circuitsPromise = fetch('data/circuits.json')
+      .then((r) => (r.ok ? r.json() : { circuits: {} }))
+      .then((json) => json.circuits || {})
+      .catch(() => ({}));
+  }
+  return circuitsPromise;
+}
+
+/**
+ * 找某條賽道的介紹：先用 circuitId，再用 aliases，最後用城市名稱（新賽道的代號還不確定時）
+ * @returns {{ id: string, info: object } | null}
+ */
+export function findCircuit(circuits, id, locality) {
+  if (circuits[id]) return { id, info: circuits[id] };
+  for (const [key, info] of Object.entries(circuits)) {
+    if (info.aliases?.includes(id)) return { id: key, info };
+  }
+  if (locality) {
+    for (const [key, info] of Object.entries(circuits)) {
+      if (info.match?.includes(locality)) return { id: key, info };
+    }
+  }
+  return null;
+}
+
+/** 賽道基本資料（名稱、地點、經緯度）；這一季沒在這裡比賽時才需要問 API */
+export async function loadCircuitInfo(id) {
+  const json = await get(`/circuits/${encodeURIComponent(id)}/`, 30 * DAY);
+  return json.MRData.CircuitTable.Circuits[0] || null;
+}
+
+/** 這條賽道歷屆的正賽冠軍（每一站只有第 1 名那一筆），依年份由舊到新 */
+export async function loadCircuitWinners(id) {
+  const json = await get(`/circuits/${encodeURIComponent(id)}/results/1/?limit=${PAGE_SIZE}`, DAY);
+  const first = json.MRData.RaceTable.Races;
+  const total = Number(json.MRData.total) || first.length;
+  if (total <= PAGE_SIZE) return first;
+  // 比賽次數超過 100 場的話，最近的比賽在最後一頁
+  const last = await get(`/circuits/${encodeURIComponent(id)}/results/1/?limit=${PAGE_SIZE}&offset=${total - PAGE_SIZE}`, DAY);
+  return last.MRData.RaceTable.Races;
+}
+
+/**
+ * 比賽週末的天氣預報（Open-Meteo，免費、不需要金鑰）
+ * 只有比賽在 14 天內才查得到預報；回傳每天的 { date, max, min, rain, code }
+ */
+export async function loadForecast(lat, lon, fromDate, toDate) {
+  const url = 'https://api.open-meteo.com/v1/forecast'
+    + `?latitude=${lat}&longitude=${lon}`
+    + '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code'
+    + `&timezone=auto&start_date=${fromDate}&end_date=${toDate}`;
+  const res = await config.fetchImpl(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const json = await res.json();
+  const d = json.daily || {};
+  return (d.time || []).map((date, i) => ({
+    date,
+    max: d.temperature_2m_max?.[i],
+    min: d.temperature_2m_min?.[i],
+    rain: d.precipitation_probability_max?.[i],
+    code: d.weather_code?.[i],
+  }));
+}
+
+// ============================================================
 // 6. 輪胎策略（OpenF1 API）
 // Jolpica 沒有輪胎資料，所以改問另一個免費資料庫 OpenF1：
 //   https://openf1.org
