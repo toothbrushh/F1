@@ -71,8 +71,9 @@ function renderPage(circuit, info, race) {
           <a class="more" href="./?season=${season}#schedule/${race.round}">${t('circuit.viewSchedule')}</a></p>`
     : `<p class="muted">${t('circuit.notThisSeason', { season })}</p>`;
 
+  // 用經緯度開 Google 地圖（手機上會直接開 Google Maps App）
   const mapLink = loc.lat && loc.long
-    ? `<a class="more" href="https://www.openstreetmap.org/?mlat=${esc(loc.lat)}&mlon=${esc(loc.long)}#map=15/${esc(loc.lat)}/${esc(loc.long)}" target="_blank" rel="noopener">${t('circuit.map')}</a>` : '';
+    ? `<a class="more" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(`${loc.lat},${loc.long}`)}" target="_blank" rel="noopener">${t('circuit.map')}</a>` : '';
   const wiki = circuit?.url ? `<a class="more" href="${esc(circuit.url)}" target="_blank" rel="noopener">${t('profile.wiki')}</a>` : '';
 
   $root.innerHTML = `
