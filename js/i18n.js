@@ -326,7 +326,7 @@ const DICT = {
     'circuit.winners': '最近的冠軍',
     'circuit.winnersEmpty': '沒有歷屆冠軍資料。',
     'circuit.year': '年份',
-    'circuit.map': '在地圖上看 →',
+    'circuit.map': '在 Google 地圖上看 →',
     'circuit.noStory': '還沒有撰寫這條賽道的介紹。你可以在 <code>data/circuits.json</code> 裡加上去！',
   },
 
@@ -594,7 +594,7 @@ const DICT = {
     'circuit.winners': 'Recent winners',
     'circuit.winnersEmpty': 'No past winners found.',
     'circuit.year': 'Year',
-    'circuit.map': 'View on map →',
+    'circuit.map': 'View on Google Maps →',
     'circuit.noStory': 'No guide for this circuit yet. You can add one in <code>data/circuits.json</code>!',
   },
 };
