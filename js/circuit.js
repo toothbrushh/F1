@@ -101,11 +101,14 @@ function renderPage(circuit, info, race, map) {
       <h2>🗺 ${t('circuit.mapTitle')}</h2>
       <div class="track-map-wrap">${trackMap(map, facts.lengthKm)}</div>
       <p class="tm-legend small">
+        ${map.sectors ? `<span><i class="tm-key-sector tm-key-s1"></i><i class="tm-key-sector tm-key-s2"></i><i class="tm-key-sector tm-key-s3"></i>${t('circuit.mapLegendSectors')}</span>` : ''}
+        ${map.corners?.length ? `<span><i class="tm-key-corner">1</i>${t('circuit.mapLegendCorner')}</span>` : ''}
         <span><i class="tm-key tm-key-straight"></i>${t('circuit.mapLegendStraight')}</span>
         <span><i class="tm-key tm-key-arrow">➤</i>${t('circuit.mapLegendArrow')}</span>
         <span>🏁 ${t('circuit.mapStart')}</span>
       </p>
-      <p class="muted small">${t('circuit.mapNote')}</p>
+      <p class="muted small">${t('circuit.mapNote')}
+        ${map.corners?.length ? t('circuit.mapTimingNote', { year: map.timing?.timingYear ?? map.timing?.year ?? '' }) : t('circuit.mapNoTiming')}</p>
     </article>` : ''}
 
     ${c ? `

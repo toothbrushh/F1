@@ -464,3 +464,21 @@ tr.champion td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
 .track-thumb .tm-line { stroke: var(--muted); }
 .circuit-card:hover .track-thumb .tm-line { stroke: var(--text); }
 .tm-leader { stroke: var(--muted); stroke-dasharray: none; opacity: .8; }
+/* 計時區段（S1 藍、S2 黃、S3 綠）與官方彎道編號 */
+:root { --s1: #3b82f6; --s2: #f59e0b; --s3: #10b981; }
+.tm-band { fill: none; stroke-linecap: butt; stroke-linejoin: round; }
+.tm-s1 { stroke: var(--s1); }
+.tm-s2 { stroke: var(--s2); }
+.tm-s3 { stroke: var(--s3); }
+.tm-s1-text { fill: var(--s1); }
+.tm-s2-text { fill: var(--s2); }
+.tm-s3-text { fill: var(--s3); }
+.tm-label-sector { font-weight: 800; }
+.tm-sector-tick { stroke: #fff; }
+.tm-corner circle { fill: var(--surface); stroke: var(--text); }
+.tm-corner text { fill: var(--text); font-weight: 700; font-family: var(--font); }
+.tm-key-sector { display: inline-block; width: 22px; height: 6px; border-radius: 3px; }
+.tm-key-s1 { background: var(--s1); }
+.tm-key-s2 { background: var(--s2); }
+.tm-key-s3 { background: var(--s3); }
+.tm-key-corner { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--text); font-size: .65rem; font-weight: 700; color: var(--text); font-style: normal; }
